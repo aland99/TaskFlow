@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirement-specification>
+<req_spec title="Priority, status transitions and task summaries" doc_id="SRS-C-ENUM">
+<type>2</type><node_order>1</node_order>
+<total_req>4</total_req>
+<scope><![CDATA[<p>README.md TF-REQ-004, TF-REQ-005, TF-REQ-016 and TF-REQ-017. Code-derived acceptance detail is cited to validation.js, TaskCard.jsx, SummaryCards.jsx and App.jsx. No separate customer SRS exists.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-C-001]]></docid><title><![CDATA[Priority values and validation]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>README.md TF-REQ-004 specifies Low, Medium and High. src/utils/validation.js PRIORITIES and validateTask accept exactly those case-sensitive strings; an invalid value returns &quot;Please select a valid priority.&quot; The native select in src/components/TaskFormModal.jsx offers only the three valid options.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-C-002]]></docid><title><![CDATA[Status values and validation]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>README.md TF-REQ-005 specifies To Do, In Progress and Completed. src/utils/validation.js STATUSES and validateTask accept exactly those case-sensitive strings; an invalid value returns &quot;Please select a valid status.&quot; The native selects in src/components/TaskFormModal.jsx and src/components/TaskCard.jsx offer only those options.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-C-003]]></docid><title><![CDATA[Status change and summary totals]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>README.md TF-REQ-016 requires status updates and status counts; Behaviour notes require summary cards to count all tasks regardless of search and filters. src/App.jsx changeStatus ignores unsupported values, persists an accepted status change and shows &quot;Task status updated.&quot; src/components/SummaryCards.jsx counts tasks and each status from the complete tasks array.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-C-004]]></docid><title><![CDATA[Completed task presentation]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>README.md TF-REQ-017 gives Completed its own count and exempts it from overdue treatment. src/components/TaskCard.jsx adds class &quot;completed&quot; for Completed tasks, uses isOverdue for the Overdue badge/red date, and suppresses the Due today badge for Completed tasks; src/utils/dates.js isOverdue excludes status Completed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+<req_spec title="Due dates, local calendar rules and formatting" doc_id="SRS-C-DATE">
+<type>2</type><node_order>2</node_order>
+<total_req>4</total_req>
+<scope><![CDATA[<p>README.md TF-REQ-006 plus its Behaviour notes on overdue dates. Code-derived acceptance detail is cited to dates.js, validation.js, TaskFormModal.jsx, TaskCard.jsx and TopBar.jsx. No separate customer SRS exists.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-C-005]]></docid><title><![CDATA[Optional due date and real calendar validation]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>README.md TF-REQ-006 allows an optional due date stored as YYYY-MM-DD and Exact messages states &quot;Please enter a valid date (YYYY-MM-DD).&quot; for an invalid real date. src/utils/validation.js validateTask accepts undefined, null and empty string as absent and rejects any other value that is not a real calendar date per src/utils/dates.js isValidDateString. src/components/TaskFormModal.jsx uses a native input type=date, which sanitizes impossible values before application validation.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-C-006]]></docid><title><![CDATA[Leap years and calendar boundaries]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>README.md TF-REQ-006 requires a due date and the source date format is YYYY-MM-DD. src/utils/dates.js isValidDateString requires the exact four-two-two digit format, month 1-12, day &gt;=1, month-specific maximum days and Gregorian leap-year rule (divisible by 4 except centuries unless divisible by 400). No separate application minimum/maximum year or due-date range is documented.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-C-007]]></docid><title><![CDATA[Overdue and due-today decision]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>README.md Behaviour notes define overdue as due date earlier than today (local date) AND status not Completed; today is not overdue and displays &quot;Due today&quot; for non-Completed tasks. src/utils/dates.js isOverdue and todayString implement the rule; src/components/TaskCard.jsx displays &quot;Overdue&quot; or &quot;Due today&quot; and colors overdue dates.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-C-008]]></docid><title><![CDATA[Local calendar day and date display]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>README.md TF-REQ-006 and Behaviour notes define due dates as local calendar days. src/utils/dates.js todayString uses local year/month/day, formatDueDate formats a YYYY-MM-DD value with en-US short month/day/year, and formatToday formats the supplied local Date as a weekday and full date. src/components/TaskCard.jsx renders &quot;Due: &lt;formatted date&gt;&quot; and src/components/TopBar.jsx renders the formatted current day.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+</requirement-specification>
