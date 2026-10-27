@@ -23,3 +23,8 @@
 ## Execution status and limitations
 
 These are designed manual cases, not execution results. No case is marked Passed; TestLink execution count is zero and all cases remain Not Run. The lecturer's existing project was not accessed or changed; this is a local preparation package for import into the assigned project. The browser control's saved permission/managed policy denied access to `http://localhost:5173/` even after the user authorized it in chat, so no live UI screenshots or visual browser review were made; no alternate browser-control workaround was attempted. TestLink and generated PDFs/XML are local preparation evidence only.
+
+
+## Leader integration, 27 October 2026
+
+The original environment notes above are historical. All five members were loaded and audited on the leader laptop, and individual PDFs/XML were regenerated after scoped design review. Final authoritative counts/mappings and PDF verification are in ../final/group-audit.json and ../final/pdf-verification.json; review corrections are documented in ../GROUP_REVIEW.md. Original author login and stable IDs are preserved. No full manual execution or passing results are claimed.

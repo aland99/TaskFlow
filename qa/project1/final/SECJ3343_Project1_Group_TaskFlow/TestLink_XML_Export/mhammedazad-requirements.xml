@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirement-specification>
+<req_spec title="Member B - Editing and priority persistence" doc_id="SRS-B-EDIT">
+<type>2</type><node_order>1</node_order>
+<total_req>7</total_req>
+<scope><![CDATA[<p>README.md TF-REQ-009/010/011/018 edit persistence; src/App.jsx updateTask; src/components/TaskFormModal.jsx; src/utils/tasks.js and validation.js. Derived refinements of documented rules, not an invented customer SRS.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-B-001]]></docid><title><![CDATA[Prefill the selected task for editing]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>Opening Edit shall show &quot;Edit Task&quot;, &quot;Cancel&quot; and &quot;Save Changes&quot;. Task Title, Description, Priority, Status and Due Date shall contain that selected task&#x27;s saved values; optional empty values remain empty. Reopening or selecting another task initializes from its latest saved object. Basis: README.md (TF-REQ-009; Exact messages / Dialog text); implementation: src/App.jsx editingTask and keyed TaskFormModal; src/components/TaskFormModal.jsx task initializer; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-002]]></docid><title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>A valid &quot;Save Changes&quot; replaces the selected task&#x27;s normalized form values, immediately saves taskflow_tasks, closes &quot;Edit Task&quot; and shows &quot;Task updated successfully.&quot; Unedited fields and all other task objects remain unchanged; empty optional description/date may be saved. Title and description are trimmed by normalizeValues (text boundary testing belongs to A). Basis: README.md (TF-REQ-010; Storage; Exact messages / Edit); implementation: src/components/TaskFormModal.jsx handleSubmit; src/App.jsx updateTask/commit; src/utils/tasks.js normalizeValues; src/utils/storage.js saveTasks; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-003]]></docid><title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>A successful edit preserves id and createdAt exactly and sets updatedAt to the current ISO timestamp, even when form values are unchanged. With a clock later than the fixture timestamp, updatedAt must be strictly later than before the save. A title change must not create a new task. Basis: README.md (TF-REQ-010; Storage / Task fields); implementation: src/App.jsx updateTask object spread and new Date().toISOString(); baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-004]]></docid><title><![CDATA[Reject invalid edits without any partial commit]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>Any validation error keeps &quot;Edit Task&quot; open and leaves every stored task field, including updatedAt, unchanged. Representative failures: blank/space-only title gives &quot;Title is required.&quot;; two trimmed characters gives &quot;Title must be at least 3 characters.&quot;; 81 characters gives &quot;Title must be 80 characters or fewer.&quot;; 501 description characters gives &quot;Description must be 500 characters or fewer.&quot; No &quot;Task updated successfully.&quot; is emitted. These are edit rejection checks, not A&#x27;s text boundary sweep or C&#x27;s enum/date partitions. Basis: README.md (TF-REQ-011; Exact messages / Validation); implementation: src/components/TaskFormModal.jsx handleSubmit return before onSave; src/utils/validation.js validateTask; src/App.jsx updateTask; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-005]]></docid><title><![CDATA[Recover a rejected edit and commit only the corrected values]]></title>
+<version>1</version><revision>1</revision><node_order>5</node_order>
+<description><![CDATA[<p>A rejected edit retains the entered draft. Correcting its invalid values then choosing &quot;Save Changes&quot; commits exactly one update, closes the form and shows &quot;Task updated successfully.&quot; Original id/createdAt remain intact. Basis: README.md (TF-REQ-010/011; Exact messages / Edit); implementation: src/components/TaskFormModal.jsx values/submitted/handleSubmit; src/App.jsx updateTask; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-006]]></docid><title><![CDATA[Persist priority edits through the edit workflow]]></title>
+<version>1</version><revision>1</revision><node_order>6</node_order>
+<description><![CDATA[<p>Saving a changed Priority through &quot;Save Changes&quot; retains the selected priority in taskflow_tasks, the card badge and the next edit form, including after reload. Repeated priority edits retain the latest saved choice. Query/filter semantics and enum partition validation are excluded. Basis: README.md (TF-REQ-018 (edit persistence only); TF-REQ-010; Storage); implementation: src/components/TaskFormModal.jsx priority select; src/App.jsx updateTask/commit; src/utils/tasks.js normalizeValues; src/components/TaskCard.jsx priority badge; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-007]]></docid><title><![CDATA[Apply repeated edits and target only the selected identity]]></title>
+<version>1</version><revision>1</revision><node_order>7</node_order>
+<description><![CDATA[<p>Successive edit sessions start from the latest committed values. Editing a task among same-title siblings updates only its id; switching between tasks must not reuse another task&#x27;s draft. Each successful save shows &quot;Task updated successfully.&quot; Basis: README.md (TF-REQ-009/010; Exact messages / Edit); implementation: src/App.jsx updateTask id comparison, editingTask and keyed TaskFormModal; src/components/TaskFormModal.jsx task initializer; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+<req_spec title="Member B - Editing dismissal and draft isolation" doc_id="SRS-B-CANCEL">
+<type>2</type><node_order>2</node_order>
+<total_req>3</total_req>
+<scope><![CDATA[<p>README.md TF-REQ-012 plus code-derived dismissal refinements; src/components/Modal.jsx, TaskFormModal.jsx; src/App.jsx closeModal.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-B-008]]></docid><title><![CDATA[Discard editing through every supported dismissal path]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>&quot;Cancel&quot;, &quot;Close&quot; (X), Escape and a mouse press on the dark backdrop close &quot;Edit Task&quot; without saving any draft, changing id/createdAt/updatedAt, or showing &quot;Task updated successfully.&quot; This applies to valid, invalid, unchanged and priority-only drafts. Basis: README.md (TF-REQ-012; Exact messages / Dialog text); implementation: src/components/TaskFormModal.jsx Cancel; src/components/Modal.jsx Close/onKeyDown/onMouseDown; src/App.jsx closeModal; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-009]]></docid><title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>After dismissal, a new &quot;Edit Task&quot; session contains only the saved values and no previous draft/error state. A canceled priority edit cannot appear on the next edit session or reload. Basis: README.md (TF-REQ-009/012); implementation: src/App.jsx closeModal and conditional TaskFormModal mount; src/components/TaskFormModal.jsx useState initializers; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-010]]></docid><title><![CDATA[Interior modal interaction is not backdrop dismissal]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>A mouse press inside either dialog must not close it or commit an edit/delete. Only event.target === event.currentTarget on the dark backdrop invokes onClose. Ordinary interaction with edit controls keeps &quot;Edit Task&quot; open until explicit save/dismissal. Basis: README.md (TF-REQ-012/015 supplemented by code-derived backdrop hit-test behavior); implementation: src/components/Modal.jsx onMouseDown target equality; src/App.jsx closeModal; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+<req_spec title="Member B - Deletion confirmation and target isolation" doc_id="SRS-B-DELETE">
+<type>2</type><node_order>3</node_order>
+<total_req>4</total_req>
+<scope><![CDATA[<p>README.md TF-REQ-013/014/015; src/components/ConfirmDeleteModal.jsx and Modal.jsx; src/App.jsx deleteTask. Only normal writable-storage workflows.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-B-011]]></docid><title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>&quot;Delete&quot; opens &quot;Delete Task&quot; with exactly: Are you sure you want to delete &quot;&lt;title&gt;&quot;? This cannot be undone. The title is the current saved target title (including quotes or punctuation), and buttons are &quot;Cancel&quot; and &quot;Confirm Delete&quot;. Opening the dialog alone must not remove or mutate any task. Basis: README.md (TF-REQ-013; Exact messages / Dialog text); implementation: src/App.jsx deletingTask by modal.id; src/components/ConfirmDeleteModal.jsx; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-012]]></docid><title><![CDATA[Confirm deletion of only the intended task]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>&quot;Confirm Delete&quot; removes only the selected id, immediately saves the remaining array, closes &quot;Delete Task&quot; and shows &quot;Task deleted successfully.&quot; Every other task object remains exactly unchanged. The deleted object remains absent after reload, including when it was the sole task or shared a title with another object. Same-title setup is not a creation assertion. Basis: README.md (TF-REQ-014; Storage; Exact messages / Delete); implementation: src/App.jsx deleteTask/commit; src/components/ConfirmDeleteModal.jsx onConfirm; src/utils/storage.js saveTasks; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-013]]></docid><title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>&quot;Cancel&quot;, &quot;Close&quot; (X), Escape and pressing the dark backdrop close &quot;Delete Task&quot; without removing or changing any task or timestamp and without &quot;Task deleted successfully.&quot; Reopening must offer confirmation for the correct saved task. Basis: README.md (TF-REQ-015 supplemented by shared Modal close paths); implementation: src/components/ConfirmDeleteModal.jsx onClose; src/components/Modal.jsx Close/onKeyDown/onMouseDown; src/App.jsx closeModal; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-B-014]]></docid><title><![CDATA[Keep deletion targets correct across repeated and mixed operations]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>Canceling and reopening a deletion, deleting different tasks in sequence, or canceling an edit before deletion shall use the latest selected saved object. A confirmed id is removed once; siblings remain intact. Each completed deletion shows &quot;Task deleted successfully.&quot; Basis: README.md (TF-REQ-013/014/015 supplemented by code-derived repeated workflow behavior); implementation: src/App.jsx modal/deletingTask/deleteTask/closeModal; src/components/ConfirmDeleteModal.jsx; baseline main@5133a6c. Code-derived refinements supplement the documented rule; no separate customer SRS is claimed.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+</requirement-specification>

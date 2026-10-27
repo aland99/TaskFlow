@@ -1,0 +1,308 @@
+{
+  "xml_checks": [
+    {
+      "author": "aland",
+      "cases": 43,
+      "links": 95,
+      "all_steps_and_mappings_match": true
+    },
+    {
+      "author": "mhammedazad",
+      "cases": 41,
+      "links": 83,
+      "all_steps_and_mappings_match": true
+    },
+    {
+      "author": "lanya",
+      "cases": 41,
+      "links": 61,
+      "all_steps_and_mappings_match": true
+    },
+    {
+      "author": "ahmed",
+      "cases": 40,
+      "links": 80,
+      "all_steps_and_mappings_match": true
+    },
+    {
+      "author": "rasan",
+      "cases": 38,
+      "links": 42,
+      "all_steps_and_mappings_match": true
+    }
+  ],
+  "pdf_checks": [
+    {
+      "path": "qa/project1/aland/Aland_TestLink_Test_Case_Report.pdf",
+      "sha256": "2e3243799bacd5f88d00a753f99f865f66bec397b4a1e9b3c879508bb560d264",
+      "pages": 49,
+      "distinct_cases": 43,
+      "distinct_requirements": 14,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        25,
+        49
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/01-001.png",
+        "qa/project1/tmp/final-review/01-006.png",
+        "qa/project1/tmp/final-review/01-025.png",
+        "qa/project1/tmp/final-review/01-049.png"
+      ]
+    },
+    {
+      "path": "qa/project1/aland/Aland_Test_Basis_Requirements.pdf",
+      "sha256": "8273fc505f6663ab9d718824586b5e448054d29d3c0adcc32dfde9b011cd13bf",
+      "pages": 8,
+      "distinct_cases": 43,
+      "distinct_requirements": 14,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        5,
+        6,
+        8
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/02-001.png",
+        "qa/project1/tmp/final-review/02-005.png",
+        "qa/project1/tmp/final-review/02-006.png",
+        "qa/project1/tmp/final-review/02-008.png"
+      ]
+    },
+    {
+      "path": "qa/project1/mhammedazad/Mhammedazad_TestLink_Test_Case_Report.pdf",
+      "sha256": "d40ee7cb2b2263d682420dd646909af451195d9585b4598098bf04a256ba11ff",
+      "pages": 46,
+      "distinct_cases": 41,
+      "distinct_requirements": 14,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        24,
+        46
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/03-001.png",
+        "qa/project1/tmp/final-review/03-006.png",
+        "qa/project1/tmp/final-review/03-024.png",
+        "qa/project1/tmp/final-review/03-046.png"
+      ]
+    },
+    {
+      "path": "qa/project1/mhammedazad/Mhammedazad_Test_Basis_Requirements.pdf",
+      "sha256": "0aa7861df1be732956eb6715c7f59c51a05a7cc11fd21748d75f72f73b3acda4",
+      "pages": 15,
+      "distinct_cases": 41,
+      "distinct_requirements": 14,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        8,
+        15
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/04-001.png",
+        "qa/project1/tmp/final-review/04-006.png",
+        "qa/project1/tmp/final-review/04-008.png",
+        "qa/project1/tmp/final-review/04-015.png"
+      ]
+    },
+    {
+      "path": "qa/project1/lanya/Lanya_TestLink_Test_Case_Report.pdf",
+      "sha256": "09340ada9aae19784e6ac0b150a16e4f451334fc22a6418ec6d7f4f13d19448f",
+      "pages": 46,
+      "distinct_cases": 41,
+      "distinct_requirements": 8,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        24,
+        46
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/05-001.png",
+        "qa/project1/tmp/final-review/05-006.png",
+        "qa/project1/tmp/final-review/05-024.png",
+        "qa/project1/tmp/final-review/05-046.png"
+      ]
+    },
+    {
+      "path": "qa/project1/lanya/Lanya_Test_Basis_Requirements.pdf",
+      "sha256": "bd914e0d7b6500fcfd8a5f0030514344ac3aff511e3399a35d9ad159e63bcf1d",
+      "pages": 10,
+      "distinct_cases": 41,
+      "distinct_requirements": 8,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        10
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/06-001.png",
+        "qa/project1/tmp/final-review/06-006.png",
+        "qa/project1/tmp/final-review/06-010.png"
+      ]
+    },
+    {
+      "path": "qa/project1/ahmed/Ahmed_TestLink_Test_Case_Report.pdf",
+      "sha256": "838de191e8dde0bba736df4db769b434d699d75194e733009983049e02ba939e",
+      "pages": 32,
+      "distinct_cases": 40,
+      "distinct_requirements": 14,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        17,
+        32
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/07-001.png",
+        "qa/project1/tmp/final-review/07-006.png",
+        "qa/project1/tmp/final-review/07-017.png",
+        "qa/project1/tmp/final-review/07-032.png"
+      ]
+    },
+    {
+      "path": "qa/project1/ahmed/Ahmed_Test_Basis_Requirements.pdf",
+      "sha256": "74ae255b9e861eeb034ac4edd997bc51be1e438f9d8bc315ef89a1090bbd9d28",
+      "pages": 9,
+      "distinct_cases": 40,
+      "distinct_requirements": 14,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        5,
+        6,
+        9
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/08-001.png",
+        "qa/project1/tmp/final-review/08-005.png",
+        "qa/project1/tmp/final-review/08-006.png",
+        "qa/project1/tmp/final-review/08-009.png"
+      ]
+    },
+    {
+      "path": "qa/project1/rasan/Rasan_TestLink_Test_Case_Report.pdf",
+      "sha256": "df811dba3c27e0b48856b6c5dd2b565ce45647b58184ed3aa7ef87f45539b2e0",
+      "pages": 43,
+      "distinct_cases": 38,
+      "distinct_requirements": 13,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        22,
+        43
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/09-001.png",
+        "qa/project1/tmp/final-review/09-006.png",
+        "qa/project1/tmp/final-review/09-022.png",
+        "qa/project1/tmp/final-review/09-043.png"
+      ]
+    },
+    {
+      "path": "qa/project1/rasan/Rasan_Test_Basis_Requirements.pdf",
+      "sha256": "34b6edcc2651eb7c03b9f9b1384018155a89dd365c8c10110b2fe641ced2bfb0",
+      "pages": 7,
+      "distinct_cases": 38,
+      "distinct_requirements": 13,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        4,
+        6,
+        7
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/10-001.png",
+        "qa/project1/tmp/final-review/10-004.png",
+        "qa/project1/tmp/final-review/10-006.png",
+        "qa/project1/tmp/final-review/10-007.png"
+      ]
+    },
+    {
+      "path": "qa/project1/final/TaskFlow_TestLink_Test_Case_Report.pdf",
+      "sha256": "af36459949055c64ba3f39fb1b36b857deab9c9d9293c8e9150bafc3f60ca8bc",
+      "pages": 205,
+      "distinct_cases": 203,
+      "distinct_requirements": 63,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        103,
+        205
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/11-001.png",
+        "qa/project1/tmp/final-review/11-006.png",
+        "qa/project1/tmp/final-review/11-103.png",
+        "qa/project1/tmp/final-review/11-205.png"
+      ]
+    },
+    {
+      "path": "qa/project1/final/TaskFlow_Test_Basis_Requirements.pdf",
+      "sha256": "b30afbc334ea362bc262880e10440c346ae67752df6aefbfd1fc5be2a4ded238",
+      "pages": 37,
+      "distinct_cases": 203,
+      "distinct_requirements": 63,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        19,
+        37
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/12-001.png",
+        "qa/project1/tmp/final-review/12-006.png",
+        "qa/project1/tmp/final-review/12-019.png",
+        "qa/project1/tmp/final-review/12-037.png"
+      ]
+    },
+    {
+      "path": "qa/project1/final/TaskFlow_Requirements_Traceability_Matrix.pdf",
+      "sha256": "c04ffb4a591dfd78bbb3907ba3e93859fd2fccc1b74f42095b79a768251a2ed0",
+      "pages": 16,
+      "distinct_cases": 203,
+      "distinct_requirements": 63,
+      "inventory_matches": true,
+      "out_of_bounds_pages": [],
+      "rendered_sample_pages": [
+        1,
+        6,
+        9,
+        16
+      ],
+      "rendered_images": [
+        "qa/project1/tmp/final-review/13-001.png",
+        "qa/project1/tmp/final-review/13-006.png",
+        "qa/project1/tmp/final-review/13-009.png",
+        "qa/project1/tmp/final-review/13-016.png"
+      ]
+    }
+  ],
+  "visual_review": "Completed: rendered first/body/middle/last samples from all 13 PDFs were visually inspected. Headers, author labels, long test data, requirement links, page numbers and matrix tables are readable. The two multi-specification individual basis reports were reprinted with explicit section page breaks and those corrected pages were inspected."
+}

@@ -128,3 +128,8 @@ Local preparation only: no lecturer import or university submission occurred.
 The slides were not physically available, so their review is not claimed. Import
 XML into the lecturer's EXISTING assigned project with existing roles, and verify
 that server's prefix and mappings. No new lecturer project, invitation or merge.
+
+
+## Leader integration, 27 October 2026
+
+The original environment notes above are historical. All five members were loaded and audited on the leader laptop, and individual PDFs/XML were regenerated after scoped design review. Final authoritative counts/mappings and PDF verification are in ../final/group-audit.json and ../final/pdf-verification.json; review corrections are documented in ../GROUP_REVIEW.md. Original author login and stable IDs are preserved. No full manual execution or passing results are claimed.

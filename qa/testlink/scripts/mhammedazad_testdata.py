@@ -3,11 +3,11 @@
 Basis: TaskFlow main@5133a6c; data shape follows aland_testdata.py only.
 """
 AUTHOR = 'mhammedazad'
-FULL_NAME = 'MhammedAzad'
+FULL_NAME = 'Mhamad'
 LETTER = 'B'
-TOP_SUITE = 'B - MhammedAzad - Editing and deletion'
+TOP_SUITE = 'B - Mhamad - Editing and deletion'
 TOP_SUITE_DETAILS = (
-    '<p>Member 2 / B: MhammedAzad. Group TaskFlow; leader Aland Karwan. '
+    '<p>Member 2 / B: Mhamad (GitHub MhammedAzad). Group TaskFlow; leader Aland Karwan. '
     'SECJ3343 Project 1 Test Case Design, due 27 October 2026. '
     'Basis: README.md TF-REQ-009 through TF-REQ-015 and editing persistence in TF-REQ-018, '
     'TaskFlow main@5133a6c. Code-derived refinements are identified in the requirements.</p>'
@@ -18,7 +18,7 @@ TOP_SUITE_DETAILS = (
     'belong to other members. Their actions are setup only. All cases are manual and Not Run.</p>'
     '<p>Each case independently resets ONLY a disposable Chrome profile at http://localhost:5173 '
     'using the complete fixture instructions in its preconditions. Never use personal task storage. '
-    'Read ISO timestamps in stored JSON, not the minute-resolution Created label. '
+    'Read ISO timestamps in stored JSON, not the day-resolution Created label. '
     'Observe specified success messages within three seconds. Numbered steps are generated from '
     'the ordered action/expected-result tuples.</p>'
 )

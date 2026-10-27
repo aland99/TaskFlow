@@ -1,0 +1,2405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="32" name="A - Aland Karwan - Creation and text validation" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[<p>Tester: Aland Karwan. SECJ3343 Project 1. Group TaskFlow. Baseline: TaskFlow main@5133a6c. Test basis: README.md TF-REQ-001/002/003/007/008 and the default-only portions of TF-REQ-004/005/006. Code: src/utils/validation.js, tasks.js; src/components/TaskFormModal.jsx, Modal.jsx; src/App.jsx.</p><p>Scope: creation workflow, trimmed Unicode text limits, counters, inline errors, cancel and reopen. Member C owns enum/date validation and subsequent status changes; B owns editing/deletion; D owns querying; E owns storage failure/recovery and navigation. Techniques: EP, BVA, Decision Table, State Transition, Use Case, Error Guessing. All cases are designed manual tests, initially Not Run.</p><p>Use a dedicated Chrome profile at http://localhost:5173. Before EACH independent case open DevTools Console, run localStorage.removeItem("taskflow_tasks"); localStorage.removeItem("taskflow_tasks_backup"); location.reload(); close DevTools. Leave Dashboard, empty search, All Statuses, All Priorities, Newest first. Unless overridden: title = Write Weekly Report; description empty; priority Medium; status To Do; due date empty. In literal repetition notation, a x N means exactly N copies of ASCII a, with no separators. Use the supplied Console copy expressions to put exact data on the clipboard. Observe toasts immediately (they disappear after 3000 ms). Never clear personal task data.</p>]]></details>
+<testsuite id="33" name="TS-A1 - Required title and Unicode boundaries" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[<p>Title EP and BVA: 0,1,2,3,4,79,80,81; padding and emoji.</p>]]></details>
+
+<testcase internalid="34" name="TC-A-001 - Title length 0">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-001 - Title length 0.</p><p><b>Test design technique:</b> EP - empty required-title partition</p><p><b>Requirements:</b> REQ-A-001, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(0)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;0 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Required trimmed title]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="40" name="TC-A-002 - Title length 1">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-002 - Title length 1.</p><p><b>Test design technique:</b> EP - below-minimum invalid partition</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(1)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;1 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be at least 3 characters.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="46" name="TC-A-003 - Title length 2">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-003 - Title length 2.</p><p><b>Test design technique:</b> BVA - title length 2; inclusive bounds 3 and 80</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(2)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;2 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be at least 3 characters.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="52" name="TC-A-004 - Title length 3">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-004 - Title length 3.</p><p><b>Test design technique:</b> BVA - title length 3; inclusive bounds 3 and 80</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(3)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;3 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;aaa&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="58" name="TC-A-005 - Title length 4">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-005 - Title length 4.</p><p><b>Test design technique:</b> BVA - title length 4; inclusive bounds 3 and 80</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(4)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;4 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;aaaa&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="64" name="TC-A-006 - Title length 79">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-006 - Title length 79.</p><p><b>Test design technique:</b> BVA - title length 79; inclusive bounds 3 and 80</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(79)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;79 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="70" name="TC-A-007 - Title length 80">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-007 - Title length 80.</p><p><b>Test design technique:</b> BVA - title length 80; inclusive bounds 3 and 80</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(80)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;80 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="76" name="TC-A-008 - Title length 81">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-008 - Title length 81.</p><p><b>Test design technique:</b> BVA - title length 81; inclusive bounds 3 and 80</p><p><b>Requirements:</b> REQ-A-002, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;a&quot;.repeat(81)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;81 / 80&quot;; counter is red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be 80 characters or fewer.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="82" name="TC-A-009 - Whitespace-only title">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-009 - Whitespace-only title.</p><p><b>Test design technique:</b> EP - whitespace-only invalid partition</p><p><b>Requirements:</b> REQ-A-001, REQ-A-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then Enter exactly &#x27;     &#x27; in Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;0 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Required trimmed title]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="88" name="TC-A-010 - Trim title before counting and saving">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-010 - Trim title before counting and saving.</p><p><b>Test design technique:</b> EP - padded valid partition</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then Enter exactly &#x27;  abc  &#x27; in Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;3 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;abc&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="94" name="TC-A-011 - Padding cannot bypass minimum">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-011 - Padding cannot bypass minimum.</p><p><b>Test design technique:</b> BVA - trimmed min-1</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then Enter exactly &#x27;  ab  &#x27; in Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;2 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be at least 3 characters.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="100" name="TC-A-012 - Padded maximum title">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-012 - Padded maximum title.</p><p><b>Test design technique:</b> BVA - trimmed max despite 84 raw characters</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;  &quot; + &quot;a&quot;.repeat(80) + &quot;  &quot;); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;80 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="106" name="TC-A-013 - Emoji title 2 code points">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-013 - Emoji title 2 code points.</p><p><b>Test design technique:</b> BVA - Unicode code points at min-1/min/max/max+1</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;&#128512;&quot;.repeat(2)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;2 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be at least 3 characters.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="162" name="TC-A-014 - Emoji title 3 code points">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-014 - Emoji title 3 code points.</p><p><b>Test design technique:</b> BVA - Unicode code points at min-1/min/max/max+1</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;&#128512;&quot;.repeat(3)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;3 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;&#128512;&#128512;&#128512;&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="168" name="TC-A-015 - Emoji title 80 code points">
+	<node_order><![CDATA[15]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-015 - Emoji title 80 code points.</p><p><b>Test design technique:</b> BVA - Unicode code points at min-1/min/max/max+1</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;&#128512;&quot;.repeat(80)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;80 / 80&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved title equals &#x27;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="174" name="TC-A-016 - Emoji title 81 code points">
+	<node_order><![CDATA[16]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-016 - Emoji title 81 code points.</p><p><b>Test design technique:</b> BVA - Unicode code points at min-1/min/max/max+1</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;&#128512;&quot;.repeat(81)); close DevTools and paste into Task Title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title counter is &quot;81 / 80&quot;; counter is red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be 80 characters or fewer.&quot; appears under Task Title; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="180" name="TS-A2 - Description limits and live counters" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>Optional description EP and BVA: 0,1,499,500,501; padded and emoji data.</p>]]></details>
+
+<testcase internalid="181" name="TC-A-017 - Description length 0">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-017 - Description length 0.</p><p><b>Test design technique:</b> BVA - optional min 0, min+1, max-1/max/max+1</p><p><b>Requirements:</b> REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;d&quot;.repeat(0)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;0 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="187" name="TC-A-018 - Description length 1">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-018 - Description length 1.</p><p><b>Test design technique:</b> BVA - optional min 0, min+1, max-1/max/max+1</p><p><b>Requirements:</b> REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;d&quot;.repeat(1)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;1 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;d&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="193" name="TC-A-019 - Description length 499">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-019 - Description length 499.</p><p><b>Test design technique:</b> BVA - optional min 0, min+1, max-1/max/max+1</p><p><b>Requirements:</b> REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;d&quot;.repeat(499)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;499 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="199" name="TC-A-020 - Description length 500">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-020 - Description length 500.</p><p><b>Test design technique:</b> BVA - optional min 0, min+1, max-1/max/max+1</p><p><b>Requirements:</b> REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;d&quot;.repeat(500)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;500 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="205" name="TC-A-021 - Description length 501">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-021 - Description length 501.</p><p><b>Test design technique:</b> BVA - optional min 0, min+1, max-1/max/max+1</p><p><b>Requirements:</b> REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;d&quot;.repeat(501)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;501 / 500&quot;; counter is red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Description must be 500 characters or fewer.&quot; appears under Description; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="211" name="TC-A-022 - Trim padded description maximum">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-022 - Trim padded description maximum.</p><p><b>Test design technique:</b> BVA - trimmed max</p><p><b>Requirements:</b> REQ-A-003, REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;  &quot; + &quot;d&quot;.repeat(500) + &quot;  &quot;); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;500 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="217" name="TC-A-023 - Whitespace-only optional description">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-023 - Whitespace-only optional description.</p><p><b>Test design technique:</b> EP - optional whitespace partition</p><p><b>Requirements:</b> REQ-A-003, REQ-A-004</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then Enter exactly &#x27;   \n\t  &#x27; in Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;0 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="223" name="TC-A-024 - Emoji description maximum">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-024 - Emoji description maximum.</p><p><b>Test design technique:</b> BVA - 500 code points / 1000 UTF-16 units</p><p><b>Requirements:</b> REQ-A-003, REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;&#128512;&quot;.repeat(500)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;500 / 500&quot;; counter is not red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. Exactly one card appears; toast &quot;Task created successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect taskflow_tasks in DevTools Application &gt; Local Storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains. Saved description equals &#x27;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#128512;&#x27;; no surrounding whitespace remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="229" name="TC-A-025 - Emoji description above maximum">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-025 - Emoji description above maximum.</p><p><b>Test design technique:</b> BVA - max+1 code points</p><p><b>Requirements:</b> REQ-A-003, REQ-A-004, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>+ New Task: click the button.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog &quot;New Task&quot; opens with &quot;Create Task&quot; and &quot;Cancel&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Task Title to Write Weekly Report, then In Chrome DevTools Console run copy(&quot;&#128512;&quot;.repeat(501)); close DevTools and paste into Description.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description counter is &quot;501 / 500&quot;; counter is red.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Description must be 500 characters or fewer.&quot; appears under Description; &quot;New Task&quot; stays open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage taskflow_tasks and the list after Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No task was saved. &quot;No tasks yet&quot; is shown; no success toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="235" name="TS-A3 - Creation, cancellation and error recovery" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>Creation use cases, draft state transitions, decision table and error guessing.</p>]]></details>
+
+<testcase internalid="236" name="TC-A-026 - Create using default values">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-026 - Create using default values.</p><p><b>Test design technique:</b> Use Case - minimum valid creation</p><p><b>Requirements:</b> REQ-A-006, REQ-A-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click + New Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;New Task&quot; has blank text/date, &quot;Medium&quot;, &quot;To Do&quot;, &quot;0 / 80&quot;, &quot;0 / 500&quot;, &quot;Cancel&quot; and &quot;Create Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Enter Write Weekly Report as Task Title; click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Form closes; card &quot;Write Weekly Report&quot; has &quot;Medium&quot; and &quot;To Do&quot;; toast &quot;Task created successfully.&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect saved JSON and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>One object in taskflow_tasks has title Write Weekly Report, description &quot;&quot;, priority Medium, status To Do, dueDate &quot;&quot;, nonempty id, valid ISO createdAt equal to updatedAt. Same card remains after reload.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation form defaults]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Successful creation and persistence]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="241" name="TC-A-027 - Create with every field supplied">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-027 - Create with every field supplied.</p><p><b>Test design technique:</b> Use Case - complete valid creation</p><p><b>Requirements:</b> REQ-A-007, REQ-A-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; enter title &quot;  Plan sprint  &quot;, description &quot;  Agenda
+  keep two spaces  &quot;, choose High, In Progress, due date 2028-02-29.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Form displays entered values and &quot;High&quot;, &quot;In Progress&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Create Task and inspect stored JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Toast &quot;Task created successfully.&quot;; one task has title &quot;Plan sprint&quot;, description &quot;Agenda
+  keep two spaces&quot;, High, In Progress and &quot;2028-02-29&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Card &quot;Plan sprint&quot; remains with &quot;High&quot;, &quot;In Progress&quot; and &quot;Due: Feb 29, 2028&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Successful creation and persistence]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[All creation values retained]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="246" name="TC-A-028 - Discard creation via Cancel">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-028 - Discard creation via Cancel.</p><p><b>Test design technique:</b> State Transition - draft to discarded</p><p><b>Requirements:</b> REQ-A-009, REQ-A-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; enter Unsaved draft and description Must disappear.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is visible in &quot;New Task&quot;; no task saved yet.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;No tasks yet&quot; remains; no &quot;Task created successfully.&quot; toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Open New Task again and inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title, description and date are blank; Medium, To Do; no errors; no saved task.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel creation through every close path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Fresh creation form on reopen]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="251" name="TC-A-029 - Discard creation via Close X">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-029 - Discard creation via Close X.</p><p><b>Test design technique:</b> State Transition - draft to discarded</p><p><b>Requirements:</b> REQ-A-009, REQ-A-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; enter Unsaved draft and description Must disappear.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is visible in &quot;New Task&quot;; no task saved yet.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click the X button labelled Close.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;No tasks yet&quot; remains; no &quot;Task created successfully.&quot; toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Open New Task again and inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title, description and date are blank; Medium, To Do; no errors; no saved task.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel creation through every close path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Fresh creation form on reopen]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="256" name="TC-A-030 - Discard creation via Escape">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-030 - Discard creation via Escape.</p><p><b>Test design technique:</b> State Transition - draft to discarded</p><p><b>Requirements:</b> REQ-A-009, REQ-A-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; enter Unsaved draft and description Must disappear.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is visible in &quot;New Task&quot;; no task saved yet.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Press Escape.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;No tasks yet&quot; remains; no &quot;Task created successfully.&quot; toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Open New Task again and inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title, description and date are blank; Medium, To Do; no errors; no saved task.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel creation through every close path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Fresh creation form on reopen]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="261" name="TC-A-031 - Discard creation via Backdrop">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-031 - Discard creation via Backdrop.</p><p><b>Test design technique:</b> State Transition - draft to discarded</p><p><b>Requirements:</b> REQ-A-009, REQ-A-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; enter Unsaved draft and description Must disappear.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is visible in &quot;New Task&quot;; no task saved yet.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Press and release on the dark backdrop outside the white dialog.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;No tasks yet&quot; remains; no &quot;Task created successfully.&quot; toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Open New Task again and inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title, description and date are blank; Medium, To Do; no errors; no saved task.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel creation through every close path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Fresh creation form on reopen]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="266" name="TC-A-032 - Validation appears only after submit">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-032 - Validation appears only after submit.</p><p><b>Test design technique:</b> State Transition - pristine to submitted invalid</p><p><b>Requirements:</b> REQ-A-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; type ab in Task Title without submitting.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Counter &quot;2 / 80&quot;; no &quot;Title must be at least 3 characters.&quot; message yet; title aria-invalid=&quot;false&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title must be at least 3 characters.&quot; appears; title aria-invalid=&quot;true&quot;; focus returns to Task Title; modal remains; no task saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Error timing and focus]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="270" name="TC-A-033 - Correct invalid title without resubmitting">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-033 - Correct invalid title without resubmitting.</p><p><b>Test design technique:</b> State Transition - invalid to corrected to saved</p><p><b>Requirements:</b> REQ-A-011, REQ-A-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; submit empty form.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot; appears, title focused; no task saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Type ab, then abc without clicking Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>At ab: &quot;Title must be at least 3 characters.&quot;. At abc: title error disappears immediately and aria-invalid=&quot;false&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one abc card saved; &quot;Task created successfully.&quot;; modal closes.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Error timing and focus]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live recovery after failed submit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="275" name="TC-A-034 - Simultaneous text errors and first-invalid focus">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-034 - Simultaneous text errors and first-invalid focus.</p><p><b>Test design technique:</b> Decision Table - title invalid AND description invalid</p><p><b>Requirements:</b> REQ-A-002, REQ-A-004, REQ-A-011, REQ-A-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; title ab; paste 501 d characters using Console copy(&quot;d&quot;.repeat(501)); click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both &quot;Title must be at least 3 characters.&quot; and &quot;Description must be 500 characters or fewer.&quot; appear; focus is Task Title; no save.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change title to abc and click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title error clears; description error remains; focus is Description; no save.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Remove one d (500 remain); click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description error clears; &quot;Task created successfully.&quot;; exactly one abc task saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional description maximum]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Error timing and focus]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live recovery after failed submit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="280" name="TC-A-035 - Fresh form after successful creation">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-035 - Fresh form after successful creation.</p><p><b>Test design technique:</b> State Transition - saved to fresh draft</p><p><b>Requirements:</b> REQ-A-007, REQ-A-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Create Write Weekly Report with default fields.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task created successfully.&quot; and one Write Weekly Report card.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Open + New Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;New Task&quot; shows blank title/description/date, Medium and To Do; counters &quot;0 / 80&quot; and &quot;0 / 500&quot;; no errors.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly the original card remains; no second task.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Successful creation and persistence]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Fresh creation form on reopen]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="285" name="TC-A-036 - Duplicate titles have separate identities">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-036 - Duplicate titles have separate identities.</p><p><b>Test design technique:</b> EP - duplicate title allowed</p><p><b>Requirements:</b> REQ-A-007, REQ-A-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Create Write Weekly Report twice, reopening + New Task each time.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Each submit closes its dialog with &quot;Task created successfully.&quot;; two cards share title Write Weekly Report.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect taskflow_tasks and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Two objects have distinct nonempty ids; both title values equal Write Weekly Report; both cards remain.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Successful creation and persistence]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[All creation values retained]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="289" name="TC-A-037 - Empty-state creation entry point">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-037 - Empty-state creation entry point.</p><p><b>Test design technique:</b> Use Case - first-task entry</p><p><b>Requirements:</b> REQ-A-013, REQ-A-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load clean app.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks yet&quot;, &quot;Tasks you create will appear here.&quot; and &quot;Create your first task&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Create your first task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Same &quot;New Task&quot; form with blank fields, Medium, To Do and &quot;Create Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Enter First task; click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;First task&quot; card replaces empty state; &quot;Task created successfully.&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation form defaults]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation entry points]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="294" name="TC-A-038 - Markup-like text stays literal">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-038 - Markup-like text stays literal.</p><p><b>Test design technique:</b> Error Guessing - HTML/script text injection</p><p><b>Requirements:</b> REQ-A-014, REQ-A-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; title &lt;b&gt;Report&lt;/b&gt;; description &lt;img src=x onerror=alert(1)&gt;; submit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Toast &quot;Task created successfully.&quot;; card visibly displays literal &quot;&lt;b&gt;Report&lt;/b&gt;&quot; and &quot;&lt;img src=x onerror=alert(1)&gt;&quot;; no alert.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect the card DOM and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No b or img child element from those strings; content remains literal after reload; no script runs.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Successful creation and persistence]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Safe literal text rendering]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="298" name="TC-A-039 - Internal spaces and newlines preserved">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-039 - Internal spaces and newlines preserved.</p><p><b>Test design technique:</b> EP - internal whitespace valid partition</p><p><b>Requirements:</b> REQ-A-003, REQ-A-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Create title &quot;  Plan  sprint  &quot; and description &quot;  Line one
+Line two  &quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task created successfully.&quot;; card title &quot;Plan  sprint&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>title equals &quot;Plan  sprint&quot; with two internal spaces. description equals &quot;Line one
+Line two&quot;. Surrounding spaces removed; newline retained.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[All creation values retained]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="302" name="TC-A-040 - Clicks inside dialog do not cancel draft">
+	<node_order><![CDATA[15]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-040 - Clicks inside dialog do not cancel draft.</p><p><b>Test design technique:</b> Error Guessing - backdrop target discrimination</p><p><b>Requirements:</b> REQ-A-009</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; type Keep draft; click the New Task heading and empty padding inside the white dialog.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog remains open with Keep draft; no save or toast.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task created successfully.&quot;; exactly one Keep draft card.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel creation through every close path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="306" name="TC-A-041 - Fresh validation state after cancelling errors">
+	<node_order><![CDATA[16]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-041 - Fresh validation state after cancelling errors.</p><p><b>Test design technique:</b> State Transition - invalid to dismissed to pristine</p><p><b>Requirements:</b> REQ-A-010, REQ-A-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; submit empty title; click Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot; appears before Cancel; then dialog closes without saving.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Reopen New Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Blank title; &quot;0 / 80&quot;; no &quot;Title is required.&quot; message and aria-invalid=&quot;false&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks yet&quot; remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Fresh creation form on reopen]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Error timing and focus]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="311" name="TC-A-042 - Counter returns from over-limit state">
+	<node_order><![CDATA[17]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-042 - Counter returns from over-limit state.</p><p><b>Test design technique:</b> BVA - max+1 to max for both text fields</p><p><b>Requirements:</b> REQ-A-005, REQ-A-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; paste 81 a characters and 501 d characters using copy(&quot;a&quot;.repeat(81)) and copy(&quot;d&quot;.repeat(501)); submit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Counters &quot;81 / 80&quot;, &quot;501 / 500&quot; are red; both length errors appear; no save.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Remove one character from each field.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Counters &quot;80 / 80&quot;, &quot;500 / 500&quot; are not red; both errors disappear immediately.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task created successfully.&quot;; one saved task has 80-character title and 500-character description.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live recovery after failed submit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="316" name="TC-A-043 - Combining sequence is counted as code points">
+	<node_order><![CDATA[18]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-A-043 - Combining sequence is counted as code points.</p><p><b>Test design technique:</b> BVA - Unicode min-1 and min without canonical normalization</p><p><b>Requirements:</b> REQ-A-002, REQ-A-003, REQ-A-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use dedicated Chrome profile; TaskFlow at http://localhost:5173 from main@5133a6c. Before this case clear only that profile&#x27;s taskflow_tasks and taskflow_tasks_backup keys and reload. Dashboard; no search/filters; Newest first. Browser storage writable. Unless specified: Write Weekly Report, empty description/date, Medium, To Do. Observe toast within 3 seconds. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; use DevTools copy(&quot;e\u0301&quot;) and paste as title; submit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title visually resembles accented e but counter is &quot;2 / 80&quot;; &quot;Title must be at least 3 characters.&quot;; no save.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Append x to title.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Counter &quot;3 / 80&quot;; error clears live.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click Create Task; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task created successfully.&quot;; stored title is e + U+0301 + x, three code points with no canonical normalization.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Title inclusive length boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trim and Unicode normalization]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Task creation and text validation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-A-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Live trimmed counters]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite></testsuite>

@@ -1,0 +1,2361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="1250" name="B - Mhamad - Editing and deletion" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>Member 2 / B: Mhamad (GitHub MhammedAzad). Group TaskFlow; leader Aland Karwan. SECJ3343 Project 1 Test Case Design, due 27 October 2026. Basis: README.md TF-REQ-009 through TF-REQ-015 and editing persistence in TF-REQ-018, TaskFlow main@5133a6c. Code-derived refinements are identified in the requirements.</p><p>Scope: prefilled edits, valid and rejected edits, identity/timestamps, every edit dismissal path, priority edit persistence, exact deletion confirmation, every deletion dismissal path, intended-target isolation and repeated operations. Creation, text boundary sweeps, enum/date partitions, counts/status transitions, queries, general storage recovery and navigation belong to other members. Their actions are setup only. All cases are manual and Not Run.</p><p>Each case independently resets ONLY a disposable Chrome profile at http://localhost:5173 using the complete fixture instructions in its preconditions. Never use personal task storage. Read ISO timestamps in stored JSON, not the day-resolution Created label. Observe specified success messages within three seconds. Numbered steps are generated from the ordered action/expected-result tuples.</p>]]></details>
+<testsuite id="1251" name="TS-B1 - Prefilled editing and committed changes" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[<p>18 independent manual cases; valid/rejected edits, atomicity, identity/timestamps, latest-value/target isolation and priority persistence. Representative invalid text inputs exercise edit rejection; A owns comprehensive text boundaries; C owns enum/date semantics.</p>]]></details>
+
+<testcase internalid="1252" name="TC-B-001 - Prefill all saved fields">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-001 - Prefill all saved fields.</p><p><b>Test design technique:</b> Use Case - selected existing task opens for edit</p><p><b>Requirements:</b> REQ-B-001</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect the five form controls without changing or submitting them.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title &quot;Prepare sprint review&quot;; Description &quot;Agenda draft&quot;; Priority &quot;Low&quot;; Status &quot;In Progress&quot;; Due Date value &quot;2028-02-29&quot;. No saved value has been replaced by a creation default.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; no edit is committed.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Prefill the selected task for editing]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1257" name="TC-B-002 - Prefill empty optional fields">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-002 - Prefill empty optional fields.</p><p><b>Test design technique:</b> EP - existing task with absent optional content</p><p><b>Requirements:</b> REQ-B-001</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>For this case only, before opening edit, set B.description to &quot;&quot; in stored JSON and reload; recapture bBefore.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Fixture B is available with description &quot;&quot; and dueDate &quot;&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Book meeting room&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; has title &quot;Book meeting room&quot;, empty Description and Due Date, &quot;Medium&quot;, &quot;To Do&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes without saving.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Prefill the selected task for editing]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1262" name="TC-B-003 - Save title-only edit with identity retained">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-003 - Save title-only edit with identity retained.</p><p><b>Test design technique:</b> Use Case - single-field edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Replace Task Title with &quot;Prepare final sprint review&quot;; leave other controls unchanged.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft title is &quot;Prepare final sprint review&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.title is &quot;Prepare final sprint review&quot;; description, priority, status and dueDate equal bBefore A.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1267" name="TC-B-004 - Save description-only edit">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-004 - Save description-only edit.</p><p><b>Test design technique:</b> Use Case - optional text edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Replace Description with &quot;Final agenda
+Bring demo&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft retains the two entered lines.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.description is exactly &quot;Final agenda
+Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1272" name="TC-B-005 - Save all editable fields together">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-005 - Save all editable fields together.</p><p><b>Test design technique:</b> Use Case - complete valid edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-006</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Enter title &quot;Review launch plan&quot;, description &quot;Review checklist&quot;; select High, Completed; set Due Date to 2028-03-15.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft contains those five values (status/date selection is setup, not a validation or status/count assertion).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A stores &quot;Review launch plan&quot;, &quot;Review checklist&quot;, &quot;High&quot;, &quot;Completed&quot;, &quot;2028-03-15&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reopen &quot;Edit Review launch plan&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; contains all five saved values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Persist priority edits through the edit workflow]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1278" name="TC-B-006 - Clear existing optional description and date">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-006 - Clear existing optional description and date.</p><p><b>Test design technique:</b> EP - valid removal of optional values during edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clear Description and Due Date; leave the other values unchanged.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both optional controls are empty.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.description and A.dueDate are both &quot;&quot;; other editable values remain unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Description and Due Date are empty in &quot;Edit Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1284" name="TC-B-007 - Save unchanged form still updates metadata">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-007 - Save unchanged form still updates metadata.</p><p><b>Test design technique:</b> Error Guessing - no-op submit still calls updateTask</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. All five editable values equal bBefore A; only updatedAt changes.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1288" name="TC-B-008 - Edit one same-title sibling only">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-008 - Edit one same-title sibling only.</p><p><b>Test design technique:</b> Error Guessing - target identity differs despite equal titles</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-007</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Before opening edit, set B.title to &quot;Prepare sprint review&quot; in stored JSON; reload; recapture bBefore.</p>]]></actions>
+	<expectedresults><![CDATA[<p>A and B share the title but retain ids b-alpha and b-beta and distinct descriptions.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Within the card whose description is &quot;Room 4&quot;, click Edit; replace Description with &quot;Room 7&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens with B&#x27;s values and accepts the draft description.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Save Changes&quot;; inspect JSON by id.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task updated successfully.&quot;; only b-beta.description becomes &quot;Room 7&quot; and its updatedAt advances. Its id/createdAt stay unchanged; A and C equal bBefore. There are still three objects.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Apply repeated edits and target only the selected identity]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1293" name="TC-B-009 - Repeat edits to the same task">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-009 - Repeat edits to the same task.</p><p><b>Test design technique:</b> State Transition - saved original -&gt; saved revision one -&gt; saved revision two</p><p><b>Requirements:</b> REQ-B-001, REQ-B-003, REQ-B-007</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Description to &quot;Revision one&quot;; save; inspect A JSON and record first updatedAt.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task updated successfully.&quot;; A.description &quot;Revision one&quot;; original id/createdAt preserved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Wait at least 1 second; reopen A edit, set Description to &quot;Revision two&quot;; save.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Form initially shows &quot;Revision one&quot;; closes with &quot;Task updated successfully.&quot; after save.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Inspect JSON by id.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only A contains &quot;Revision two&quot;; updatedAt is later than the first save. No extra object; B/C unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Prefill the selected task for editing]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Apply repeated edits and target only the selected identity]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1299" name="TC-B-010 - Edit different tasks in sequence">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-010 - Edit different tasks in sequence.</p><p><b>Test design technique:</b> State Transition - A edit saved -&gt; B edit opened</p><p><b>Requirements:</b> REQ-B-001, REQ-B-007</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Description to &quot;A revised&quot;; click &quot;Save Changes&quot;; then click &quot;Edit Book meeting room&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Edit success toast; new &quot;Edit Task&quot; shows B: &quot;Book meeting room&quot;, &quot;Room 4&quot;, &quot;Medium&quot;, &quot;To Do&quot;, empty date.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Set Description to &quot;B revised&quot;; save; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task updated successfully.&quot;; A has &quot;A revised&quot;, B has &quot;B revised&quot;. Their original ids/createdAt remain; C unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Prefill the selected task for editing]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Apply repeated edits and target only the selected identity]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1304" name="TC-B-011 - Reject blank-title edit atomically">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-011 - Reject blank-title edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Replace Task Title with three spaces. Also select High as a proposed valid edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is entered; stored A still has Low.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; stays open. &quot;Title is required.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; original A remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1310" name="TC-B-012 - Reject short-title edit atomically">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-012 - Reject short-title edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Replace Task Title with &quot;ab&quot;. Also select High as a proposed valid edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is entered; stored A still has Low.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; stays open. &quot;Title must be at least 3 characters.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; original A remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1316" name="TC-B-013 - Reject overlong-title edit atomically">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-013 - Reject overlong-title edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Use DevTools copy(&quot;x&quot;.repeat(81)); close Console and paste into Task Title. Also select High as a proposed valid edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is entered; stored A still has Low.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; stays open. &quot;Title must be 80 characters or fewer.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; original A remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1322" name="TC-B-014 - Reject overlong-description edit atomically">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-014 - Reject overlong-description edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Use DevTools copy(&quot;d&quot;.repeat(501)); close Console and paste into Description. Also select High as a proposed valid edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is entered; stored A still has Low.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; stays open. &quot;Description must be 500 characters or fewer.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; original A remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1328" name="TC-B-015 - Reject two invalid fields without partial save">
+	<node_order><![CDATA[15]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-015 - Reject two invalid fields without partial save.</p><p><b>Test design technique:</b> Decision Table - title valid=No, description valid=No, remaining fields valid=Yes; action=reject entire edit</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clear Task Title; paste exactly 501 copies of d into Description using copy(&quot;d&quot;.repeat(501)). Also select High as a proposed valid edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft is entered; stored A still has Low.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; stays open. Both &quot;Title is required.&quot; and &quot;Description must be 500 characters or fewer.&quot; are displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; original A remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1334" name="TC-B-016 - Correct rejected edit and save once">
+	<node_order><![CDATA[16]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-016 - Correct rejected edit and save once.</p><p><b>Test design technique:</b> State Transition - edit draft -&gt; rejected draft -&gt; corrected saved task</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-004, REQ-B-005</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clear Task Title; set Description to &quot;Revised agenda&quot;; click &quot;Save Changes&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot;; &quot;Edit Task&quot; stays open; Description draft remains &quot;Revised agenda&quot;; stored JSON equals bBefore.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Replace Task Title with &quot;Prepare corrected review&quot;; click &quot;Save Changes&quot;; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Form closes; &quot;Task updated successfully.&quot;; A stores corrected title and &quot;Revised agenda&quot;; same id/createdAt, later updatedAt. Three objects; B and C unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Recover a rejected edit and commit only the corrected values]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1339" name="TC-B-017 - Save priority edit and retain it after reload">
+	<node_order><![CDATA[17]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-017 - Save priority edit and retain it after reload.</p><p><b>Test design technique:</b> Use Case - priority-only edit persistence</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-006</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change Priority from Low to High; leave every other form value unchanged.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Priority control shows &quot;High&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.priority &quot;High&quot;; its other form values are unchanged; A card badge &quot;High&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect A JSON; reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>A.priority is still &quot;High&quot;; &quot;Edit Task&quot; Priority is &quot;High&quot;; id and createdAt remain the original values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Persist priority edits through the edit workflow]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1345" name="TC-B-018 - Latest repeated priority edit wins">
+	<node_order><![CDATA[18]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-018 - Latest repeated priority edit wins.</p><p><b>Test design technique:</b> State Transition - saved Low -&gt; saved High -&gt; saved Medium</p><p><b>Requirements:</b> REQ-B-003, REQ-B-006, REQ-B-007</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose High; save; record A.updatedAt; wait at least 1 second; reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task updated successfully.&quot;; reopened Priority is &quot;High&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Choose Medium; save; reload; inspect A JSON and reopen edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task updated successfully.&quot; at save; latest saved/control/card priority is &quot;Medium&quot;. Same id/createdAt; updatedAt later than the first save. B/C unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Preserve identity and creation timestamp while advancing update time]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Persist priority edits through the edit workflow]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Apply repeated edits and target only the selected identity]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="1350" name="TS-B2 - Editing cancellation and draft isolation" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>9 independent manual cases; Cancel, Close X, Escape, dark backdrop, invalid/unchanged drafts, clean reopening, interior hit testing and abandoned priority changes. Dialog focus/navigation accessibility is owned by E.</p>]]></details>
+
+<testcase internalid="1351" name="TC-B-019 - Discard dirty edit using Cancel button">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-019 - Discard dirty edit using Cancel button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft values are visible in &quot;Edit Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1357" name="TC-B-020 - Discard dirty edit using Close X button">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-020 - Discard dirty edit using Close X button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft values are visible in &quot;Edit Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click the dialog X button with accessible label &quot;Close&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1363" name="TC-B-021 - Discard dirty edit using Escape key">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-021 - Discard dirty edit using Escape key.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft values are visible in &quot;Edit Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Press Escape while Task Title is focused.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1369" name="TC-B-022 - Discard dirty edit using dark backdrop">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-022 - Discard dirty edit using dark backdrop.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Draft values are visible in &quot;Edit Task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Press and release the mouse on the dark backdrop outside the white dialog.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1375" name="TC-B-023 - Cancel a rejected draft">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-023 - Cancel a rejected draft.</p><p><b>Test design technique:</b> State Transition - rejected editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-004, REQ-B-008</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clear Task Title; click &quot;Save Changes&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot;; dialog stays open; saved JSON unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reject invalid edits without any partial commit]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1380" name="TC-B-024 - Cancel untouched edit without advancing timestamp">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-024 - Cancel untouched edit without advancing timestamp.</p><p><b>Test design technique:</b> EP - unchanged edit dismissed rather than saved</p><p><b>Requirements:</b> REQ-B-008</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Without touching any field, click &quot;Cancel&quot;; inspect raw JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1384" name="TC-B-025 - Reopen after rejected draft dismissal clears draft and errors">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-025 - Reopen after rejected draft dismissal clears draft and errors.</p><p><b>Test design technique:</b> State Transition - rejected editing -&gt; closed -&gt; fresh editing</p><p><b>Requirements:</b> REQ-B-001, REQ-B-008, REQ-B-009</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clear title; set Description to &quot;Abandoned revision&quot;; click &quot;Save Changes&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Title is required.&quot;; draft Description remains &quot;Abandoned revision&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Press Escape; reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>New &quot;Edit Task&quot; contains &quot;Prepare sprint review&quot; and &quot;Agenda draft&quot;; previous &quot;Title is required.&quot; is absent.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Prefill the selected task for editing]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1390" name="TC-B-026 - Clicking inside edit modal does not discard draft">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-026 - Clicking inside edit modal does not discard draft.</p><p><b>Test design technique:</b> Error Guessing - bubbling mousedown from interior</p><p><b>Requirements:</b> REQ-B-010</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Description to &quot;Interior draft&quot;; click the &quot;Edit Task&quot; heading, then click the Description control.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; remains open with &quot;Interior draft&quot;; neither click saves or discards it.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect stored JSON without reload; then click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Stored JSON equals bBefore; Cancel closes the draft.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Interior modal interaction is not backdrop dismissal]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1395" name="TC-B-027 - Cancel priority-only change then reload">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-027 - Cancel priority-only change then reload.</p><p><b>Test design technique:</b> Use Case - abandoned priority edit persistence</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose High; click &quot;Cancel&quot;; reload and inspect A JSON; reopen A edit.</p>]]></actions>
+	<expectedresults><![CDATA[<p>A.priority stays &quot;Low&quot; in JSON and the form; no &quot;Task updated successfully.&quot; from cancellation; all fields and timestamps equal bBefore A.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes without saving.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reopening a canceled edit discards draft and validation state]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="1400" name="TS-B3 - Deletion confirmation and repeated targeting" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>14 independent manual cases; exact current-title warning, confirm, all four dismissal paths, interior click, sole/duplicate-title task identities, repeated/mixed operations. No execution or passing result is implied.</p>]]></details>
+
+<testcase internalid="1401" name="TC-B-028 - Exact confirmation before any deletion">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-028 - Exact confirmation before any deletion.</p><p><b>Test design technique:</b> Use Case - request deletion without confirmation</p><p><b>Requirements:</b> REQ-B-011</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Read the dialog heading, full text and buttons; inspect JSON without reloading.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Heading &quot;Delete Task&quot;; text exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone. Buttons &quot;Cancel&quot;, &quot;Confirm Delete&quot;; all saved objects still equal bBefore.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes without deleting.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1406" name="TC-B-029 - Confirmation uses latest saved title and punctuation">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-029 - Confirmation uses latest saved title and punctuation.</p><p><b>Test design technique:</b> Error Guessing - stale title or quote interpolation</p><p><b>Requirements:</b> REQ-B-001, REQ-B-002, REQ-B-011</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set title to the exact text Review &quot;Beta&quot; &amp; notes; save; click Delete on that newly titled card.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task updated successfully.&quot; at save; &quot;Delete Task&quot; opens for b-alpha.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Read full confirmation text.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly: Are you sure you want to delete &quot;Review &quot;Beta&quot; &amp; notes&quot;? This cannot be undone. Original title &quot;Prepare sprint review&quot; is not used in the confirmation; no deletion yet.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Edited task remains saved with its current title.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Prefill the selected task for editing]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing and priority persistence]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Commit a valid edit atomically to the selected task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1412" name="TC-B-030 - Confirm deletion leaves siblings intact">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-030 - Confirm deletion leaves siblings intact.</p><p><b>Test design technique:</b> Use Case - requested deletion -&gt; confirmed removal</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot;; observe toast, inspect stored objects, then reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes; &quot;Task deleted successfully.&quot; appears. Only b-alpha is absent from taskflow_tasks; B and C are unchanged, including all timestamps. Reload still contains exactly B and C.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Confirm deletion of only the intended task]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1416" name="TC-B-031 - Confirm deletion of the sole remaining task">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-031 - Confirm deletion of the sole remaining task.</p><p><b>Test design technique:</b> EP - one-task deletion partition</p><p><b>Requirements:</b> REQ-B-012</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Before opening deletion, replace stored array with only fixture A; reload; recapture bBefore.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly the valid fixture A is present (fixture setup only).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot;; observe toast; inspect taskflow_tasks and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes with &quot;Task deleted successfully.&quot;; taskflow_tasks is [] and remains [] after reload; no task with id b-alpha exists. Empty-state copy/counts are outside this assertion.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Confirm deletion of only the intended task]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1421" name="TC-B-032 - Delete only intended same-title sibling">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-032 - Delete only intended same-title sibling.</p><p><b>Test design technique:</b> Error Guessing - duplicate titles must not select by title</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Before deletion set B.title to &quot;Prepare sprint review&quot; in stored JSON; reload; recapture bBefore.</p>]]></actions>
+	<expectedresults><![CDATA[<p>A/B share a title and retain different ids/descriptions.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Within the card with Description &quot;Room 4&quot;, click Delete.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; says exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot;; inspect JSON and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task deleted successfully.&quot;; only b-beta is removed; A and C exactly equal their bBefore objects. The remaining same-title card is A with &quot;Agenda draft&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Confirm deletion of only the intended task]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1426" name="TC-B-033 - Dismiss deletion using Cancel button">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-033 - Dismiss deletion using Cancel button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;. Inspect stored JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect saved JSON again.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1431" name="TC-B-034 - Dismiss deletion using Close X button">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-034 - Dismiss deletion using Close X button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click X with accessible label &quot;Close&quot;. Inspect stored JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect saved JSON again.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1436" name="TC-B-035 - Dismiss deletion using Escape key">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-035 - Dismiss deletion using Escape key.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Press Escape while the dialog is open. Inspect stored JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect saved JSON again.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1441" name="TC-B-036 - Dismiss deletion using dark backdrop">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-036 - Dismiss deletion using dark backdrop.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Press and release on the dark backdrop outside the white dialog. Inspect stored JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Reload; inspect saved JSON again.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1446" name="TC-B-037 - Interior deletion click is not a confirmation or dismissal">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-037 - Interior deletion click is not a confirmation or dismissal.</p><p><b>Test design technique:</b> Error Guessing - event bubbling within confirmation dialog</p><p><b>Requirements:</b> REQ-B-010, REQ-B-011, REQ-B-013</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click the warning paragraph (not a button).</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; stays open with exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone. No object is changed or removed.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Interior modal interaction is not backdrop dismissal]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1451" name="TC-B-038 - Reopen after canceled deletion targets newly selected task">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-038 - Reopen after canceled deletion targets newly selected task.</p><p><b>Test design technique:</b> State Transition - A confirmation canceled -&gt; B confirmation opened</p><p><b>Requirements:</b> REQ-B-011, REQ-B-013, REQ-B-014</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;; click &quot;Delete Book meeting room&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; now says exactly: Are you sure you want to delete &quot;Book meeting room&quot;? This cannot be undone. A is not used as the new confirmation target.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot;; inspect JSON.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Task deleted successfully.&quot;; only b-beta is removed. A and C equal bBefore.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Keep deletion targets correct across repeated and mixed operations]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1456" name="TC-B-039 - Repeated cancellation then one confirmed deletion">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-039 - Repeated cancellation then one confirmed deletion.</p><p><b>Test design technique:</b> State Transition - confirmation -&gt; cancel -&gt; confirmation -&gt; cancel -&gt; confirmation -&gt; removed</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012, REQ-B-013, REQ-B-014</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Cancel&quot;; reopen A Delete; press Escape; reopen A Delete.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both dismissals retain all original objects; each reopened dialog contains exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot; once; inspect JSON and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes; &quot;Task deleted successfully.&quot; appears. Only b-alpha is absent from taskflow_tasks; B and C are unchanged, including all timestamps. Reload still contains exactly B and C. There is no second pending deletion dialog.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Confirm deletion of only the intended task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Cancel deletion through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Keep deletion targets correct across repeated and mixed operations]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1461" name="TC-B-040 - Consecutive deletions never reuse old target">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-040 - Consecutive deletions never reuse old target.</p><p><b>Test design technique:</b> State Transition - three saved -&gt; A removed -&gt; B removed</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012, REQ-B-014</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; opens; A is still present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Confirm Delete A, then click &quot;Delete Book meeting room&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>First toast &quot;Task deleted successfully.&quot;; second dialog warns exactly: Are you sure you want to delete &quot;Book meeting room&quot;? This cannot be undone.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot; on B; observe toast; inspect JSON; reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Second &quot;Task deleted successfully.&quot;; only fixture C remains, identical field-for-field to bBefore C; both b-alpha and b-beta are absent.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Confirm deletion of only the intended task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Keep deletion targets correct across repeated and mixed operations]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1466" name="TC-B-041 - Canceled edit does not contaminate subsequent deletion">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-B-041 - Canceled edit does not contaminate subsequent deletion.</p><p><b>Test design technique:</b> State Transition - dirty editing -&gt; canceled -&gt; deletion confirmation -&gt; removed</p><p><b>Requirements:</b> REQ-B-008, REQ-B-011, REQ-B-012, REQ-B-014</p>]]></summary>
+	<preconditions><![CDATA[<p>INDEPENDENT RESET: use ONLY a disposable Chrome profile, http://localhost:5173, TaskFlow main@5133a6c; writable browser storage; system clock later than 2026-01-06. Open DevTools Console and run the following exact fixture; close DevTools after reload: localStorage.removeItem(&quot;taskflow_tasks_backup&quot;); localStorage.setItem(&quot;taskflow_tasks&quot;, JSON.stringify([
+{id:&quot;b-alpha&quot;,title:&quot;Prepare sprint review&quot;,description:&quot;Agenda draft&quot;,priority:&quot;Low&quot;,status:&quot;In Progress&quot;,dueDate:&quot;2028-02-29&quot;,createdAt:&quot;2026-01-01T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-02T10:00:00.000Z&quot;},
+{id:&quot;b-beta&quot;,title:&quot;Book meeting room&quot;,description:&quot;Room 4&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-03T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-04T10:00:00.000Z&quot;},
+{id:&quot;b-gamma&quot;,title:&quot;Archive review notes&quot;,description:&quot;Keep signed copy&quot;,priority:&quot;High&quot;,status:&quot;Completed&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-05T09:00:00.000Z&quot;,updatedAt:&quot;2026-01-06T10:00:00.000Z&quot;}
+])); location.reload(); Dashboard, search empty, status/priority filters All, Newest first (setup only). A means id b-alpha, B means b-beta, C means b-gamma, irrespective of card order. Before acting, use Console: window.bBefore = JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); close DevTools. To inspect persisted objects later, reopen Console and evaluate JSON.parse(localStorage.getItem(&quot;taskflow_tasks&quot;)); compare by id with bBefore, not array position. Do not reload before completing an in-memory draft step. Read toasts immediately within 3 seconds. Inspect id/createdAt/updatedAt as raw JSON; list date formatting, counts, query behavior, generic reload/recovery, enum/date semantics and creation are not assertions of these cases. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Replace title with &quot;Unsaved deletion title&quot;; click &quot;Cancel&quot;; click &quot;Delete Prepare sprint review&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; shows exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone. The abandoned title is not used.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Confirm Delete&quot;; inspect JSON and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Delete Task&quot; closes; &quot;Task deleted successfully.&quot; appears. Only b-alpha is absent from taskflow_tasks; B and C are unchanged, including all timestamps. Reload still contains exactly B and C.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Editing dismissal and draft isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Discard editing through every supported dismissal path]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Show exact deletion confirmation for the current target]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Confirm deletion of only the intended task]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Member B - Deletion confirmation and target isolation]]></req_spec_title>
+			<doc_id><![CDATA[REQ-B-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Keep deletion targets correct across repeated and mixed operations]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite></testsuite>

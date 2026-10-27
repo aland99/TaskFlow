@@ -1,0 +1,1475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="1876" name="E - Rasan soran - Storage navigation and accessibility" >
+<node_order><![CDATA[5]]></node_order>
+<details><![CDATA[<p>Tester: Rasan soran (Member 5, E). SECJ3343 Project 1, TaskFlow main@5133a6c. Scope: reload persistence; storage recovery/failure; warning behavior; navigation/title; responsive sidebar; dialog focus/name; toast timing/semantics. A owns creation/text limits/draft cancellation, B editing/deletion, C enums/dates/status/counts, D querying. Shared actions are setup only.</p><p>Basis: README.md Storage, Requirements traceability, Behaviour notes and Exact messages, plus implementing functions cited by each code-derived requirement. Cases are designs, initially Not Run; no execution or peer review claimed.</p><p>Use a disposable Chrome profile at http://localhost:5173. Only seed/remove taskflow_tasks and taskflow_tasks_backup in that profile. Never clear personal browser data. For storage functions inaccessible through normal UI, cases marked UNIT HARNESS use DevTools Console on Vite, dynamically import /src/utils/storage.js, replace window.localStorage with a stub, and call loadTasks/saveTasks/resetStorage directly. This is a unit harness, not browser-level fault injection. To simulate failed UI writes without reload, patch Storage.prototype.setItem to throw a QuotaExceededError before the action; use the disposable profile. For storage fixtures define const validTask=(id,o={})=&gt;({id,title:"Task "+id,description:"",priority:"Medium",status:"To Do",dueDate:"",createdAt:"2026-01-02T03:04:05.000Z",updatedAt:"2026-01-02T03:04:05.000Z",...o}); const seedTasks=a=&gt;localStorage.setItem("taskflow_tasks",JSON.stringify(a));. To inspect normalized loader objects use const m=await import("/src/utils/storage.js"); console.log(m.loadTasks().tasks). For read faults use UNIT HARNESS: const m=await import("/src/utils/storage.js"); Object.defineProperty(window,"localStorage",{configurable:true,value:{getItem(){throw Error("blocked")},setItem(){throw Error("blocked")},removeItem(){throw Error("blocked")}}}); console.log(m.loadTasks());. For write fault on live UI: Storage.prototype.setItem=function(){throw new DOMException("blocked","QuotaExceededError")}. Restore only by closing the disposable profile. Toast target is 3000ms; accept manual timing from 2700 through 3800ms.</p>]]></details>
+<testsuite id="1877" name="TS-E1 - Storage loading and recovery" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[<p>Reload persistence; missing/corrupt/non-array data; validation/duplicate skips; timestamps and normalization.</p>]]></details>
+
+<testcase internalid="1878" name="TC-E-001 - Missing task key loads quietly">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-001 - Missing task key loads quietly.</p><p><b>Test design technique:</b> EP - missing key</p><p><b>Requirements:</b> REQ-E-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Remove only taskflow_tasks and taskflow_tasks_backup in the disposable profile; reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No tasks yet; no warning; primary key remains absent until a mutation.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect backup key.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Backup is absent.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Missing and corrupt storage]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1882" name="TC-E-002 - Persist task through ordinary reload">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-002 - Persist task through ordinary reload.</p><p><b>Test design technique:</b> Use Case - save and restart</p><p><b>Requirements:</b> REQ-E-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Create one valid task titled Reload proof (creation is setup only).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Reload proof card appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect saved JSON, then reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>One JSON array entry has id, title, description, priority, status, dueDate, createdAt, updatedAt; same id and card values remain.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reload persistence]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1886" name="TC-E-003 - Malformed JSON copied byte-for-byte">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-003 - Malformed JSON copied byte-for-byte.</p><p><b>Test design technique:</b> EP - malformed JSON</p><p><b>Requirements:</b> REQ-E-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set taskflow_tasks to exact string { &quot;unclosed&quot;: including spaces; reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Empty list and alert Saved task data was corrupted and could not be loaded. A backup was kept. with Reset storage.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect taskflow_tasks_backup.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exact original raw string { &quot;unclosed&quot;: is retained.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Missing and corrupt storage]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1890" name="TC-E-004 - Parsed object rejected as non-array">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-004 - Parsed object rejected as non-array.</p><p><b>Test design technique:</b> EP - non-array JSON</p><p><b>Requirements:</b> REQ-E-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set taskflow_tasks to exact string {&quot;tasks&quot;:[]} and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No tasks load; exact corruption alert and Reset storage appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect backup.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Backup equals exact original string {&quot;tasks&quot;:[]}.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Missing and corrupt storage]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1894" name="TC-E-005 - Valid stored task loads normalized">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-005 - Valid stored task loads normalized.</p><p><b>Test design technique:</b> EP - valid saved-entry partition</p><p><b>Requirements:</b> REQ-E-003, REQ-E-004</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set taskflow_tasks to JSON.stringify([validTask(&quot;ok-1&quot;,{title:&quot;  Stored task  &quot;,description:&quot;  note  &quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>One card appears titled Stored task; description is note; no warning.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect original localStorage string.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Primary value stays as seeded until a later mutation; loader normalizes in memory only.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Updated timestamp fallback and normalization]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1898" name="TC-E-006 - Missing id skipped with singular warning">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-006 - Missing id skipped with singular warning.</p><p><b>Test design technique:</b> EP - invalid identity</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to exact JSON string [{&quot;title&quot;:&quot;No id&quot;,&quot;description&quot;:&quot;&quot;,&quot;priority&quot;:&quot;Medium&quot;,&quot;status&quot;:&quot;To Do&quot;,&quot;dueDate&quot;:&quot;&quot;,&quot;createdAt&quot;:&quot;2026-01-02T03:04:05.000Z&quot;,&quot;updatedAt&quot;:&quot;2026-01-02T03:04:05.000Z&quot;}]; reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No card; alert is exactly 1 saved entry was invalid and skipped. A backup was kept.; Reset storage absent.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect backup.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Full original JSON array is retained byte-for-byte.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1902" name="TC-E-007 - Empty id skipped">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-007 - Empty id skipped.</p><p><b>Test design technique:</b> EP - empty identity</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>For each id value &quot;&quot;, 42 and null, independently set taskflow_tasks to JSON.stringify([validTask(id,{title:&quot;Invalid id&quot;})]); reload after each value.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Each identity partition is skipped. Exact alert: &quot;1 saved entry was invalid and skipped. A backup was kept.&quot; No Reset storage button; backup equals the raw array for that run.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1905" name="TC-E-008 - Duplicate id keeps first valid record">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-008 - Duplicate id keeps first valid record.</p><p><b>Test design technique:</b> Error Guessing - duplicate identity</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;dup-7&quot;,{title:&quot;First&quot;}),validTask(&quot;dup-7&quot;,{title:&quot;Second&quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only First card loads; warning counts one skipped entry.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect backup.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Full original two-item JSON remains byte-for-byte as backup.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1909" name="TC-E-009 - Plural invalid count grammar">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-009 - Plural invalid count grammar.</p><p><b>Test design technique:</b> EP - multiple invalid saved-entry partition and plural count</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to exact JSON string [null,{&quot;id&quot;:&quot;bad&quot;,&quot;title&quot;:&quot;x&quot;,&quot;description&quot;:&quot;&quot;,&quot;priority&quot;:&quot;Medium&quot;,&quot;status&quot;:&quot;To Do&quot;,&quot;dueDate&quot;:&quot;&quot;,&quot;createdAt&quot;:&quot;2026-01-02T03:04:05.000Z&quot;,&quot;updatedAt&quot;:&quot;2026-01-02T03:04:05.000Z&quot;}] and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No rows load; alert exactly 2 saved entries were invalid and skipped. A backup was kept.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect Reset storage and backup.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No Reset button; backup retains complete original array string.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1913" name="TC-E-010 - Reject bad priority in storage">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-010 - Reject bad priority in storage.</p><p><b>Test design technique:</b> EP - invalid saved enum</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;p1&quot;,{priority:&quot;Urgent&quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Row is skipped; exact alert &quot;1 saved entry was invalid and skipped. A backup was kept.&quot; Backup equals the original raw JSON; no Reset storage button.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1916" name="TC-E-011 - Reject bad status in storage">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-011 - Reject bad status in storage.</p><p><b>Test design technique:</b> EP - invalid saved enum</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;s1&quot;,{status:&quot;Done&quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Row is skipped; exact alert &quot;1 saved entry was invalid and skipped. A backup was kept.&quot; Backup equals the original raw JSON; no Reset storage button.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1919" name="TC-E-012 - Reject invalid date and missing creation time">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-012 - Reject invalid date and missing creation time.</p><p><b>Test design technique:</b> EP - invalid saved fields</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;d1&quot;,{dueDate:&quot;2026-02-30&quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Row is skipped, count one, backup is exact original primary string.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;d2&quot;,{dueDate:&quot;2026-02-28&quot;,createdAt:undefined})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>JSON serialization omits undefined createdAt; row is skipped, count one because createdAt is required.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1923" name="TC-E-013 - Missing updatedAt falls back to createdAt">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-013 - Missing updatedAt falls back to createdAt.</p><p><b>Test design technique:</b> EP - omitted optional timestamp</p><p><b>Requirements:</b> REQ-E-004</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;u1&quot;,{updatedAt:undefined})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task loads without warning.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>In DevTools run const m=await import(&quot;/src/utils/storage.js&quot;); console.log(m.loadTasks().tasks[0]).</p>]]></actions>
+	<expectedresults><![CDATA[<p>updatedAt equals exactly 2026-01-02T03:04:05.000Z.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Updated timestamp fallback and normalization]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1927" name="TC-E-014 - Malformed updatedAt falls back">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-014 - Malformed updatedAt falls back.</p><p><b>Test design technique:</b> EP - invalid optional timestamp</p><p><b>Requirements:</b> REQ-E-004</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;u2&quot;,{updatedAt:&quot;not-a-date&quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task is retained; invalid updatedAt alone does not skip entry.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>In DevTools run const m=await import(&quot;/src/utils/storage.js&quot;); console.log(m.loadTasks().tasks[0]).</p>]]></actions>
+	<expectedresults><![CDATA[<p>updatedAt equals createdAt exactly.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>UNIT HARNESS: load a valid entry with description:undefined and dueDate:undefined; inspect loadTasks().tasks[0].</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both normalized description and dueDate are empty strings; no warning.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Updated timestamp fallback and normalization]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1932" name="TC-E-015 - Valid siblings retained around rejected row">
+	<node_order><![CDATA[15]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-015 - Valid siblings retained around rejected row.</p><p><b>Test design technique:</b> EP - mixed valid and invalid saved-entry partitions</p><p><b>Requirements:</b> REQ-E-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set primary to JSON.stringify([validTask(&quot;A&quot;,{title:&quot;Task A&quot;}),null,validTask(&quot;B&quot;,{title:&quot;Task B&quot;})]); reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task A and Task B load in source order (their creation times are equal); exact alert &quot;1 saved entry was invalid and skipped. A backup was kept.&quot; Backup equals the full raw array.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Dismiss warning then reload without changing storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The warning returns and both valid tasks remain.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Invalid entries and duplicate ids]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="1936" name="TS-E2 - Storage failures warnings and navigation" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>Blocked storage, optimistic failed writes, reset/backup, warning dismissal, page navigation and responsive sidebar.</p>]]></details>
+
+<testcase internalid="1937" name="TC-E-016 - Read exception returns unavailable warning">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-016 - Read exception returns unavailable warning.</p><p><b>Test design technique:</b> Error Guessing - blocked read</p><p><b>Requirements:</b> REQ-E-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>UNIT HARNESS: dynamic-import /src/utils/storage.js after replacing window.localStorage with stub whose getItem throws; call loadTasks.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No exception; result tasks=[] and warning message Browser storage is unavailable, so tasks cannot be loaded or saved. with canReset false.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect stub calls.</p>]]></actions>
+	<expectedresults><![CDATA[<p>No reset control can be offered; loadTasks does not attempt backup.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Storage read failure]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1941" name="TC-E-017 - Blocked backup write does not throw">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-017 - Blocked backup write does not throw.</p><p><b>Test design technique:</b> Error Guessing - backup write failure</p><p><b>Requirements:</b> REQ-E-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>UNIT HARNESS: const m=await import(&quot;/src/utils/storage.js&quot;); Object.defineProperty(window,&quot;localStorage&quot;,{configurable:true,value:{getItem(){return &quot;garbage&quot;},setItem(k,v){throw Error(&quot;blocked&quot;)},removeItem(){}}}); console.log(m.loadTasks()).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Returns empty tasks and corruption warning with canReset true; no exception escapes.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect stub behavior.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Backup write was attempted using taskflow_tasks_backup and exact raw string garbage.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Missing and corrupt storage]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1945" name="TC-E-018 - Failed creation save reports error but stays optimistic">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-018 - Failed creation save reports error but stays optimistic.</p><p><b>Test design technique:</b> Error Guessing - quota failure</p><p><b>Requirements:</b> REQ-E-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>On clean UI patch Storage.prototype.setItem to throw QuotaExceededError, then create valid task Unsaved optimistic.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog closes, card appears in current in-memory UI; toast is Could not save tasks to browser storage. with error semantics.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Reload disposable profile after restoring storage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task is absent because write did not persist.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Failed write remains optimistic]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1949" name="TC-E-019 - Failed status save is optimistic">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-019 - Failed status save is optimistic.</p><p><b>Test design technique:</b> Error Guessing - failed mutation write</p><p><b>Requirements:</b> REQ-E-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Seed a To Do task, load app, patch setItem to throw, change status to In Progress.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Card changes immediately and error toast appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Restore storage and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Persisted status remains To Do.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Failed write remains optimistic]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1953" name="TC-E-020 - Reset removes primary and retains backup">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-020 - Reset removes primary and retains backup.</p><p><b>Test design technique:</b> Use Case - storage reset</p><p><b>Requirements:</b> REQ-E-002, REQ-E-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set taskflow_tasks to &quot;not-json&quot; and taskflow_tasks_backup to &quot;older-backup&quot;; reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The exact corruption warning appears; loading replaces the old backup with &quot;not-json&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Reset storage, inspect keys, then reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Warning clears; &quot;No tasks yet&quot; appears. Primary key is absent and backup still equals &quot;not-json&quot;. No warning on reload.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Missing and corrupt storage]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reset and backup retention]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1957" name="TC-E-021 - Repeated reset remains safe">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-021 - Repeated reset remains safe.</p><p><b>Test design technique:</b> Error Guessing - repeated reset</p><p><b>Requirements:</b> REQ-E-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Trigger corruption warning and click Reset storage. Trigger corruption again using malformed primary and repeat.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both attempts clear warning and tasks; no runtime error.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect backup.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Backup retained unchanged by reset.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>UNIT HARNESS: import /src/utils/storage.js; replace localStorage with a stub whose removeItem throws; call resetStorage().</p>]]></actions>
+	<expectedresults><![CDATA[<p>resetStorage returns without throwing; it never removes taskflow_tasks_backup.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Reset and backup retention]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1962" name="TC-E-022 - Dismiss warning changes no storage">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-022 - Dismiss warning changes no storage.</p><p><b>Test design technique:</b> State Transition - warning visible to dismissed</p><p><b>Requirements:</b> REQ-E-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load malformed data, record primary and backup, click Dismiss warning.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alert disappears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Compare keys and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both strings unchanged; warning appears again on reload.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Warning announcement and dismissal]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1966" name="TC-E-023 - Warning role and dismissal name">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-023 - Warning role and dismissal name.</p><p><b>Test design technique:</b> Use Case - accessible warning announcement and dismissal</p><p><b>Requirements:</b> REQ-E-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Trigger invalid-entry warning and inspect DOM/accessibility tree.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Warning has role alert and Dismiss warning button accessible name.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Activate dismissal.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Banner disappears; primary and backup are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Warning announcement and dismissal]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1970" name="TC-E-024 - Dashboard and All Tasks show all statuses">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-024 - Dashboard and All Tasks show all statuses.</p><p><b>Test design technique:</b> State Transition - all-status navigation</p><p><b>Requirements:</b> REQ-E-009</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Seed one task of each status; select Dashboard.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dashboard aria-current=page; h1 Dashboard; status filter All.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select All Tasks.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All Tasks active, h1 All Tasks; status filter All.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Navigation and page title]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1974" name="TC-E-025 - Each status navigation sets title and active state">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-025 - Each status navigation sets title and active state.</p><p><b>Test design technique:</b> State Transition - status navigation</p><p><b>Requirements:</b> REQ-E-009</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Select To Do, In Progress, then Completed.</p>]]></actions>
+	<expectedresults><![CDATA[<p>After each click, matching nav item alone has aria-current=page, h1 matches label and status filter matches.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select Dashboard.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dashboard active; h1 Dashboard; filter returns All.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Navigation and page title]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1978" name="TC-E-026 - Desktop sidebar collapse toggles labels">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-026 - Desktop sidebar collapse toggles labels.</p><p><b>Test design technique:</b> State Transition - expanded/collapsed</p><p><b>Requirements:</b> REQ-E-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>At viewport 1024px inspect expanded sidebar; click Collapse sidebar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Width transitions 248px to 72px; brand/nav/profile labels hide; aria-expanded=false and control name Expand sidebar.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Expand sidebar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Width returns 248px; labels show; aria-expanded=true.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Responsive sidebar breakpoint]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1982" name="TC-E-027 - Responsive behavior at 767px">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-027 - Responsive behavior at 767px.</p><p><b>Test design technique:</b> BVA - breakpoint below 768</p><p><b>Requirements:</b> REQ-E-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set viewport exactly 767px and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Mobile media rules apply: closed sidebar off-canvas/hidden; hamburger shown; collapse hidden.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Open menu.</p>]]></actions>
+	<expectedresults><![CDATA[<p>272px drawer opens and overlay appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Responsive sidebar breakpoint]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1986" name="TC-E-028 - Responsive behavior at 768px and README discrepancy">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-028 - Responsive behavior at 768px and README discrepancy.</p><p><b>Test design technique:</b> BVA - exact breakpoint</p><p><b>Requirements:</b> REQ-E-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set viewport exactly 768px and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>App.css max-width:768px applies mobile drawer rules at this width.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Compare README Behaviour notes.</p>]]></actions>
+	<expectedresults><![CDATA[<p>README says under 768px, excluding 768; code includes 768. Record discrepancy; CSS determines implemented behavior.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Responsive sidebar breakpoint]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1990" name="TC-E-029 - Responsive behavior at 769px">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-029 - Responsive behavior at 769px.</p><p><b>Test design technique:</b> BVA - breakpoint above 768</p><p><b>Requirements:</b> REQ-E-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set viewport exactly 769px and reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Mobile rules no longer apply; desktop sidebar 248px; hamburger/close hidden; collapse shown.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Collapse sidebar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Width becomes 72px and labels hide.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Responsive sidebar breakpoint]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1994" name="TC-E-030 - Close drawer via close control and navigation">
+	<node_order><![CDATA[15]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-030 - Close drawer via close control and navigation.</p><p><b>Test design technique:</b> State Transition - drawer close paths</p><p><b>Requirements:</b> REQ-E-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>At 767px open menu, click Close menu.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Drawer and overlay disappear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Reopen and select Completed.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Drawer closes; Completed filter/title/active state updates.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Drawer close paths]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1998" name="TC-E-031 - Backdrop closes drawer but inside click does not">
+	<node_order><![CDATA[16]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-031 - Backdrop closes drawer but inside click does not.</p><p><b>Test design technique:</b> Error Guessing - overlay target</p><p><b>Requirements:</b> REQ-E-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>At 767px open menu and click overlay outside drawer.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Drawer closes and overlay disappears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Reopen; click inside drawer without selecting item.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Drawer remains open.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Drawer close paths]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="2002" name="TC-E-032 - Mobile navigation updates page title">
+	<node_order><![CDATA[17]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-032 - Mobile navigation updates page title.</p><p><b>Test design technique:</b> Use Case - drawer navigation</p><p><b>Requirements:</b> REQ-E-009, REQ-E-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>At 767px open menu and select Completed.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Drawer closes; Completed is aria-current=page; h1 Completed; status filter Completed.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Reopen and select Dashboard.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Drawer closes; h1 Dashboard; filter All.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Navigation and page title]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Drawer close paths]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="2006" name="TS-E3 - Dialog focus and toast accessibility" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>Implemented dialog semantics, autofocus and opener restoration; success/error toast roles, dismissal and timeout.</p>]]></details>
+
+<testcase internalid="2007" name="TC-E-033 - Dialog name and modal accessibility properties">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-033 - Dialog name and modal accessibility properties.</p><p><b>Test design technique:</b> Use Case - modal accessible name and semantics</p><p><b>Requirements:</b> REQ-E-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task and inspect dialog DOM/accessibility tree.</p>]]></actions>
+	<expectedresults><![CDATA[<p>role dialog, aria-modal true, aria-labelledby points to visible h2 named New Task.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Close using Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Dialog is removed; no focus trap is asserted because implementation has none.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Dialog name, focus and opener restoration]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="2011" name="TC-E-034 - Dialog autofocuses marked control">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-034 - Dialog autofocuses marked control.</p><p><b>Test design technique:</b> Use Case - modal entry focus</p><p><b>Requirements:</b> REQ-E-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open.  Seed validTask(&quot;focus&quot;) and reload before opening any dialog.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task and inspect document.activeElement.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Task Title receives focus via data-autofocus.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click Cancel, then Delete on Task focus and inspect document.activeElement.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Delete Task opens and its Cancel button receives focus via data-autofocus.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Dialog name, focus and opener restoration]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="2015" name="TC-E-035 - Dialog close restores opener focus">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-035 - Dialog close restores opener focus.</p><p><b>Test design technique:</b> State Transition - focus return</p><p><b>Requirements:</b> REQ-E-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Focus + New Task and activate it; click Cancel.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Focus returns to same + New Task opener after unmount.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Remove the primary/backup keys and reload to the empty state. Focus Create your first task, activate it, then press Escape.</p>]]></actions>
+	<expectedresults><![CDATA[<p>New Task closes and focus returns to the still-mounted Create your first task opener.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Dialog name, focus and opener restoration]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="2019" name="TC-E-036 - Success toast uses status and dismiss control">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-036 - Success toast uses status and dismiss control.</p><p><b>Test design technique:</b> EP - success announcement</p><p><b>Requirements:</b> REQ-E-013</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Create one task titled Toast success with valid defaults, then inspect the toast immediately.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exact message &quot;Task created successfully.&quot;; role=status; accessible button &quot;Dismiss notification&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Dismiss before timeout.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Toast disappears immediately.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Toast timing and semantics]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="2023" name="TC-E-037 - Error toast uses alert and dismiss control">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-037 - Error toast uses alert and dismiss control.</p><p><b>Test design technique:</b> EP - error announcement</p><p><b>Requirements:</b> REQ-E-007, REQ-E-013</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Patch setItem to throw, then perform valid mutation.</p>]]></actions>
+	<expectedresults><![CDATA[<p>role alert and exact Could not save tasks to browser storage. message; Dismiss notification button.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Dismiss notification.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Toast disappears immediately; optimistic state remains until reload.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Failed write remains optimistic]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Toast timing and semantics]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="2027" name="TC-E-038 - Toast automatic duration tolerance">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-E-038 - Toast automatic duration tolerance.</p><p><b>Test design technique:</b> State Transition - visible toast to timed automatic dismissal at 3000ms</p><p><b>Requirements:</b> REQ-E-013</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. Disposable Chrome profile; app main@5133a6c at http://localhost:5173; use DevTools only on this profile. Storage-fixture helper: define validTask=(id,o={})=&gt;({id,title:&quot;Task &quot;+id,description:&quot;&quot;,priority:&quot;Medium&quot;,status:&quot;To Do&quot;,dueDate:&quot;&quot;,createdAt:&quot;2026-01-02T03:04:05.000Z&quot;,updatedAt:&quot;2026-01-02T03:04:05.000Z&quot;,...o}) and seedTasks=a=&gt;localStorage.setItem(&quot;taskflow_tasks&quot;,JSON.stringify(a)); use seedTasks([validTask(&quot;x&quot;)]) for an exact valid baseline. Unless specified start Dashboard with no drawer/dialog open. </p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Trigger success toast and time from visible onset to removal.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Initial toast visible; measure duration.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Repeat for an error toast.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Each auto-closes between 2700 and 3800ms; outside range is a defect.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Storage recovery, navigation and accessibility]]></req_spec_title>
+			<doc_id><![CDATA[REQ-E-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Toast timing and semantics]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite></testsuite>

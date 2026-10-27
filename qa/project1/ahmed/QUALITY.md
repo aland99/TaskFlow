@@ -27,3 +27,8 @@
 
 - GitHub CLI authentication is still pending in the workspace's saved config. No fork, commit, push, or pull request has been created. After the user completes the current `gh auth login` device approval, the fork/PR steps remain.
 - Only the local TestLink environment was used. No new project was created on the lecturer's server and no lecturer-server import was attempted.
+
+
+## Leader integration, 27 October 2026
+
+The original environment notes above are historical. All five members were loaded and audited on the leader laptop, and individual PDFs/XML were regenerated after scoped design review. Final authoritative counts/mappings and PDF verification are in ../final/group-audit.json and ../final/pdf-verification.json; review corrections are documented in ../GROUP_REVIEW.md. Original author login and stable IDs are preserved. No full manual execution or passing results are claimed.

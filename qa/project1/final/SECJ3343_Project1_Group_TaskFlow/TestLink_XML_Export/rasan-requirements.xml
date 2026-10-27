@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirement-specification>
+<req_spec title="Storage recovery, navigation and accessibility" doc_id="SRS-E-STORAGE-NAV-A11Y">
+<type>2</type><node_order>1</node_order>
+<total_req>13</total_req>
+<scope><![CDATA[<p>Derived acceptance requirements supplementing README.md TF-REQ-001..019. Member E scope uses src/utils/storage.js, normalization/validation helpers, StorageBanner.jsx, Sidebar.jsx, TopBar.jsx, Toast.jsx, Modal.jsx, App.jsx and App.css. Code-derived requirements below do not claim original TF-REQ identifiers.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-E-001]]></docid><title><![CDATA[Reload persistence]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>A valid task array is loaded at app initialization and remains visible after ordinary reload. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js loadTasks; src/App.jsx useState(loadTasks); baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-002]]></docid><title><![CDATA[Missing and corrupt storage]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>A missing key loads empty without warning. Malformed JSON or parsed non-array loads empty, backs up original raw string byte-for-byte under taskflow_tasks_backup, and shows exact corruption warning with Reset storage. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js loadTasks/keepBackup; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-003]]></docid><title><![CDATA[Invalid entries and duplicate ids]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>Skip entries with missing/empty/non-string id, invalid validateTask values, unparseable/missing createdAt, or duplicate id after first valid occurrence. Keep valid entries in order. Back up original array JSON and show exact count: 1 saved entry was invalid and skipped. A backup was kept. or N saved entries were invalid and skipped. A backup was kept. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js toSavedTask/loadTasks; src/utils/validation.js validateTask; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-004]]></docid><title><![CDATA[Updated timestamp fallback and normalization]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>For valid entries missing or invalid updatedAt, use createdAt exactly. Retain normalized title/description; missing description and undefined/null/empty dueDate become empty strings. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js toSavedTask; src/utils/tasks.js normalizeValues; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-005]]></docid><title><![CDATA[Storage read failure]]></title>
+<version>1</version><revision>1</revision><node_order>5</node_order>
+<description><![CDATA[<p>If localStorage.getItem throws, return empty tasks and warning Browser storage is unavailable, so tasks cannot be loaded or saved. with canReset false. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js loadTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-006]]></docid><title><![CDATA[Reset and backup retention]]></title>
+<version>1</version><revision>1</revision><node_order>6</node_order>
+<description><![CDATA[<p>Reset removes only taskflow_tasks, ignores removal failure, clears current in-memory tasks and warning, and retains taskflow_tasks_backup. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js resetStorage; src/App.jsx handleResetStorage; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-007]]></docid><title><![CDATA[Failed write remains optimistic]]></title>
+<version>1</version><revision>1</revision><node_order>7</node_order>
+<description><![CDATA[<p>A failed save returns false; App still updates in-memory state and shows Could not save tasks to browser storage. The mutation is not persisted and can disappear after reload. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/utils/storage.js saveTasks; src/App.jsx commit/createTask/changeStatus; src/components/Toast.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-008]]></docid><title><![CDATA[Warning announcement and dismissal]]></title>
+<version>1</version><revision>1</revision><node_order>8</node_order>
+<description><![CDATA[<p>Storage warning renders as role=alert with supplied text and Dismiss warning button. Dismissal hides current warning without changing storage. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/components/StorageBanner.jsx; src/App.jsx warning state; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-009]]></docid><title><![CDATA[Navigation and page title]]></title>
+<version>1</version><revision>1</revision><node_order>9</node_order>
+<description><![CDATA[<p>Dashboard and All Tasks reset status filter to All; status navigation selects matching filter. Active nav button has aria-current=page and TopBar h1 follows active label. Code-derived; query behavior belongs to D. Sources: README.md (Storage / Behaviour notes / Exact messages); README.md Behaviour notes; src/App.jsx navigate/activeNav; src/components/Sidebar.jsx; src/components/TopBar.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-010]]></docid><title><![CDATA[Responsive sidebar breakpoint]]></title>
+<version>1</version><revision>1</revision><node_order>10</node_order>
+<description><![CDATA[<p>At 769px+, desktop collapse toggles width 248px/72px and hides brand/nav/profile labels. At &lt;=768px, CSS applies a 272px off-canvas drawer and overlay. README says under 768px, while CSS includes exactly 768px; 769px is desktop. Code-derived breakpoint detail. Sources: README.md (Storage / Behaviour notes / Exact messages); README.md Behaviour notes; src/App.css @media max-width:768px and min-width:769px; src/components/Sidebar.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-011]]></docid><title><![CDATA[Drawer close paths]]></title>
+<version>1</version><revision>1</revision><node_order>11</node_order>
+<description><![CDATA[<p>Mobile menu opens drawer; nav selection, Close menu or overlay click closes it. Nav selection also updates filter/view and heading. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/App.jsx navigate/drawerOpen; src/components/Sidebar.jsx; src/components/TopBar.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-012]]></docid><title><![CDATA[Dialog name, focus and opener restoration]]></title>
+<version>1</version><revision>1</revision><node_order>12</node_order>
+<description><![CDATA[<p>Dialog has role=dialog, aria-modal=true and aria-labelledby referencing visible h2. On open focus moves to data-autofocus control; on unmount focus returns to element active when mounted. Do not assert focus trap; none is implemented. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); src/components/Modal.jsx; src/components/TaskFormModal.jsx; src/components/ConfirmDeleteModal.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-E-013]]></docid><title><![CDATA[Toast timing and semantics]]></title>
+<version>1</version><revision>1</revision><node_order>13</node_order>
+<description><![CDATA[<p>Toast closes after 3000ms (manual tolerance 2700&#8211;3800ms), has Dismiss notification control, role=status for success and role=alert for error. Code-derived. Sources: README.md (Storage / Behaviour notes / Exact messages); README.md Exact messages; src/components/Toast.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+</requirement-specification>

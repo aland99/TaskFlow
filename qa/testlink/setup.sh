@@ -30,4 +30,4 @@ echo "Waiting for TestLink..."
 until curl -sf -o /dev/null "http://localhost:$PORT/login.php"; do sleep 3; done
 until docker compose exec -T db mariadb -uroot -proot -N testlink -e "SELECT 1 FROM users LIMIT 1" >/dev/null 2>&1; do sleep 3; done
 python3 -I scripts/bootstrap.py
-echo "TestLink ready: http://localhost:$PORT (admin/admin; aland/aland; lanya/lanya; mhamad/mhamad; ahmed/ahmed; rasan/rasan)"
+echo "TestLink ready: http://localhost:$PORT (admin/admin; aland/aland; lanya/lanya; mhammedazad/mhammedazad; ahmed/ahmed; rasan/rasan)"

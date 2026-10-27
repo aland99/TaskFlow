@@ -1,0 +1,17 @@
+{
+  "author": "lanya",
+  "letter": "C",
+  "specifications": 2,
+  "requirements": 8,
+  "suites": 4,
+  "test_cases": 41,
+  "covered_requirements": 8,
+  "coverage_percent": 100,
+  "database_cases": 41,
+  "database_steps": 99,
+  "database_requirement_links": 61,
+  "actual_db_mapping_matches_design": true,
+  "all_cases_authored_by": "lanya",
+  "all_cases_in_plan": true,
+  "execution_results_total": 0
+}

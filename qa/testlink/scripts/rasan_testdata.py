@@ -106,3 +106,50 @@ SUITES=[
  {'name':'TS-E2 - Storage failures warnings and navigation','details':'Blocked storage, optimistic failed writes, reset/backup, warning dismissal, page navigation and responsive sidebar.','cases':state},
  {'name':'TS-E3 - Dialog focus and toast accessibility','details':'Implemented dialog semantics, autofocus and opener restoration; success/error toast roles, dismissal and timeout.','cases':a11y},
 ]
+
+# Leader review: correct fixture escaping and specific code-derived expectations.
+TOP_SUITE_DETAILS = TOP_SUITE_DETAILS.replace('\\"', '"')
+for _suite in SUITES:
+    for _case in _suite['cases']:
+        _case['pre'] = ('Independent reset: in this disposable profile restore any patched storage by reloading; remove only taskflow_tasks and taskflow_tasks_backup, then reload again. '
+                        + _case['pre'].replace('\\"','"'))
+        _case['steps'] = [(a.replace('\\"','"'),e.replace('\\"','"')) for a,e in _case['steps']]
+_review_cases = {case['id']:case for suite in SUITES for case in suite['cases']}
+_review_cases['TC-E-007']['steps'] = [
+    ('For each id value "", 42 and null, independently set taskflow_tasks to JSON.stringify([validTask(id,{title:"Invalid id"})]); reload after each value.',
+     'Each identity partition is skipped. Exact alert: "1 saved entry was invalid and skipped. A backup was kept." No Reset storage button; backup equals the raw array for that run.')]
+_review_cases['TC-E-015']['steps'] = [
+    ('Set primary to JSON.stringify([validTask("A",{title:"Task A"}),null,validTask("B",{title:"Task B"})]); reload.',
+     'Task A and Task B load in source order (their creation times are equal); exact alert "1 saved entry was invalid and skipped. A backup was kept." Backup equals the full raw array.'),
+    ('Dismiss warning then reload without changing storage.', 'The warning returns and both valid tasks remain.')]
+_review_cases['TC-E-020']['steps'] = [
+    ('Set taskflow_tasks to "not-json" and taskflow_tasks_backup to "older-backup"; reload.',
+     'The exact corruption warning appears; loading replaces the old backup with "not-json".'),
+    ('Click Reset storage, inspect keys, then reload.',
+     'Warning clears; "No tasks yet" appears. Primary key is absent and backup still equals "not-json". No warning on reload.')]
+_review_cases['TC-E-021']['steps'].append((
+    'UNIT HARNESS: import /src/utils/storage.js; replace localStorage with a stub whose removeItem throws; call resetStorage().',
+    'resetStorage returns without throwing; it never removes taskflow_tasks_backup.'))
+for _id in ('TC-E-010','TC-E-011'):
+    _case=_review_cases[_id]
+    _case['steps']=[(a, 'Row is skipped; exact alert "1 saved entry was invalid and skipped. A backup was kept." Backup equals the original raw JSON; no Reset storage button.') for a,e in _case['steps']]
+_review_cases['TC-E-014']['steps'].append((
+    'UNIT HARNESS: load a valid entry with description:undefined and dueDate:undefined; inspect loadTasks().tasks[0].',
+    'Both normalized description and dueDate are empty strings; no warning.'))
+_review_cases['TC-E-034']['pre'] += ' Seed validTask("focus") and reload before opening any dialog.'
+_review_cases['TC-E-034']['steps'] = [
+    ('Open New Task and inspect document.activeElement.', 'Task Title receives focus via data-autofocus.'),
+    ('Click Cancel, then Delete on Task focus and inspect document.activeElement.', 'Delete Task opens and its Cancel button receives focus via data-autofocus.')]
+_review_cases['TC-E-035']['steps'][1] = (
+    'Remove the primary/backup keys and reload to the empty state. Focus Create your first task, activate it, then press Escape.',
+    'New Task closes and focus returns to the still-mounted Create your first task opener.')
+_review_cases['TC-E-036']['steps'][0] = (
+    'Create one task titled Toast success with valid defaults, then inspect the toast immediately.',
+    'Exact message "Task created successfully."; role=status; accessible button "Dismiss notification".')
+_review_cases['TC-E-038']['technique'] = 'State Transition - visible toast to timed automatic dismissal at 3000ms'
+_review_cases['TC-E-009']['technique'] = 'EP - multiple invalid saved-entry partition and plural count'
+_review_cases['TC-E-015']['technique'] = 'EP - mixed valid and invalid saved-entry partitions'
+_review_cases['TC-E-023']['technique'] = 'Use Case - accessible warning announcement and dismissal'
+_review_cases['TC-E-033']['technique'] = 'Use Case - modal accessible name and semantics'
+for _spec in REQ_SPECS:
+    _spec['reqs']=[(rid,title,desc.replace('missing/falsy dueDate','undefined/null/empty dueDate')) for rid,title,desc in _spec['reqs']]

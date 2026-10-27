@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite id="22" name="C - Lanya Faraidun - Status, dates and counts" >
-<node_order><![CDATA[0]]></node_order>
-<details><![CDATA[<p>Tester: Lanya Faraidun (Member 3, C). SECJ3343 Project 1, Group TaskFlow. Baseline: TaskFlow main@5133a6c. Scope: TF-REQ-004/005/006/016/017; priority and status partitions, list transitions, summary totals, Completed rendering, optional and valid/invalid due dates, calendar boundaries, overdue rules, local-day behavior, and date formatting. Requirements cite README.md and the implementing src/ paths. Reference local day: 2026-10-27, 12:00 Asia/Baghdad (UTC+03:00); date harnesses pass this value explicitly and do not depend on the wall clock. All cases are designed/manual and remain Not Run until actually executed.</p>]]></details>
-<testsuite id="23" name="TS-C1 - Priority and status partitions" >
+<testsuite id="1491" name="C - Lanya Faraidun - Status, dates and counts" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>Tester: Lanya Faraidun (Member 3, C). SECJ3343 Project 1, Group TaskFlow. Baseline: TaskFlow main@5133a6c. Scope: TF-REQ-004/005/006/016/017; priority and status partitions, list transitions, summary totals, Completed rendering, optional and valid/invalid due dates, calendar boundaries, overdue rules, local-day behavior, and date formatting. Requirements cite README.md and the implementing src/ paths. Reference local day: 2026-10-27, 12:00 Asia/Baghdad (UTC+03:00); date harnesses pass this value explicitly and do not depend on the wall clock. All cases are designed/manual and remain Not Run until actually executed.</p><p>Reproducible UI clock: set the disposable browser timezone to Asia/Baghdad. After loading the case fixture and reloading, run in DevTools: window.CRealDate=Date; window.CFixed=Date.parse("2026-10-27T12:00:00+03:00"); window.Date=class extends CRealDate {constructor(...a){super(...(a.length?a:[CFixed]))} static now(){return CFixed}}; then type a temporary search query and clear it to force a React render. This freezes application Date calls for this page only; reload restores Date. For Node utility checks run TZ=Asia/Baghdad node --input-type=module and import functions from the cited src/utils/*.js files. Each manually seeded task needs a distinct string id, a title of at least 3 code points, description "", valid priority/status, dueDate "" unless specified, and createdAt/updatedAt 2026-01-01T00:00:00.000Z. Summary fixtures named A/B/C use valid titles Task A/Task B/Task C.</p>]]></details>
+<testsuite id="1492" name="TS-C1 - Priority and status partitions" >
 <node_order><![CDATA[1]]></node_order>
 <details><![CDATA[<p>Valid enum choices plus invalid string, casing, type, missing and simultaneous invalid partitions. Unit harness is explicitly called out where native controls block tampering.</p>]]></details>
 
-<testcase internalid="24" name="TC-C-001 - Accepted priority partition: Low">
+<testcase internalid="1493" name="TC-C-001 - Accepted priority partition: Low">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-001 - Accepted priority partition: Low.</p><p><b>Test design technique:</b> EP - valid priority enumeration partition</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
@@ -44,7 +44,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="28" name="TC-C-002 - Accepted priority partition: Medium">
+<testcase internalid="1497" name="TC-C-002 - Accepted priority partition: Medium">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-002 - Accepted priority partition: Medium.</p><p><b>Test design technique:</b> EP - valid priority enumeration partition</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
@@ -82,7 +82,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="32" name="TC-C-003 - Accepted priority partition: High">
+<testcase internalid="1501" name="TC-C-003 - Accepted priority partition: High">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-003 - Accepted priority partition: High.</p><p><b>Test design technique:</b> EP - valid priority enumeration partition</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
@@ -120,11 +120,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="36" name="TC-C-004 - Accepted status partition: To Do">
+<testcase internalid="1505" name="TC-C-004 - Accepted status partition: To Do">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-004 - Accepted status partition: To Do.</p><p><b>Test design technique:</b> EP - valid status enumeration partition</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status In Progress, priority Medium and empty dueDate. Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -158,11 +158,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="40" name="TC-C-005 - Accepted status partition: In Progress">
+<testcase internalid="1509" name="TC-C-005 - Accepted status partition: In Progress">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-005 - Accepted status partition: In Progress.</p><p><b>Test design technique:</b> EP - valid status enumeration partition</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate. Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -196,11 +196,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="44" name="TC-C-006 - Accepted status partition: Completed">
+<testcase internalid="1513" name="TC-C-006 - Accepted status partition: Completed">
 	<node_order><![CDATA[6]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-006 - Accepted status partition: Completed.</p><p><b>Test design technique:</b> EP - valid status enumeration partition</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate. Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -234,7 +234,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="48" name="TC-C-007 - Reject unsupported priority string in validator harness">
+<testcase internalid="1517" name="TC-C-007 - Reject unsupported priority string in validator harness">
 	<node_order><![CDATA[7]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-007 - Reject unsupported priority string in validator harness.</p><p><b>Test design technique:</b> EP - invalid priority enumeration partition; unit harness</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
@@ -272,7 +272,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="52" name="TC-C-008 - Reject non-string and missing priority values in validator harness">
+<testcase internalid="1521" name="TC-C-008 - Reject non-string and missing priority values in validator harness">
 	<node_order><![CDATA[8]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-008 - Reject non-string and missing priority values in validator harness.</p><p><b>Test design technique:</b> EP - invalid priority type partitions; unit harness</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
@@ -303,7 +303,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="55" name="TC-C-009 - Reject unsupported status string in validator harness">
+<testcase internalid="1524" name="TC-C-009 - Reject unsupported status string in validator harness">
 	<node_order><![CDATA[9]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-009 - Reject unsupported status string in validator harness.</p><p><b>Test design technique:</b> EP - invalid status enumeration partition; unit harness</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
@@ -341,7 +341,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="59" name="TC-C-010 - Reject non-string and missing status values in validator harness">
+<testcase internalid="1528" name="TC-C-010 - Reject non-string and missing status values in validator harness">
 	<node_order><![CDATA[10]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-010 - Reject non-string and missing status values in validator harness.</p><p><b>Test design technique:</b> EP - invalid status type partitions; unit harness</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
@@ -372,7 +372,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="62" name="TC-C-011 - Report both invalid enum fields together">
+<testcase internalid="1531" name="TC-C-011 - Report both invalid enum fields together">
 	<node_order><![CDATA[11]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-011 - Report both invalid enum fields together.</p><p><b>Test design technique:</b> Decision Table - priority invalid AND status invalid; unit harness</p><p><b>Requirements:</b> REQ-C-001, REQ-C-002</p>]]></summary>
@@ -422,15 +422,15 @@
 		</requirement>
 	</requirements>
 </testcase>
-</testsuite><testsuite id="67" name="TS-C2 - Status transitions, summaries and Completed tasks" >
+</testsuite><testsuite id="1536" name="TS-C2 - Status transitions, summaries and Completed tasks" >
 <node_order><![CDATA[2]]></node_order>
 <details><![CDATA[<p>All six distinct directed transitions, same-state behavior for all three states, filter-independent summary decision table and Completed presentation/exemption.</p>]]></details>
 
-<testcase internalid="68" name="TC-C-012 - Status transition To Do to In Progress">
+<testcase internalid="1537" name="TC-C-012 - Status transition To Do to In Progress">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-012 - Status transition To Do to In Progress.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status To Do, priority Medium, dueDate empty; no filters active.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status To Do, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[3]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -477,11 +477,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="73" name="TC-C-013 - Status transition To Do to Completed">
+<testcase internalid="1542" name="TC-C-013 - Status transition To Do to Completed">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-013 - Status transition To Do to Completed.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status To Do, priority Medium, dueDate empty; no filters active.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status To Do, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[3]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -528,11 +528,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="78" name="TC-C-014 - Status transition In Progress to To Do">
+<testcase internalid="1547" name="TC-C-014 - Status transition In Progress to To Do">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-014 - Status transition In Progress to To Do.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status In Progress, priority Medium, dueDate empty; no filters active.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status In Progress, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[3]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -579,11 +579,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="83" name="TC-C-015 - Status transition In Progress to Completed">
+<testcase internalid="1552" name="TC-C-015 - Status transition In Progress to Completed">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-015 - Status transition In Progress to Completed.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status In Progress, priority Medium, dueDate empty; no filters active.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status In Progress, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[3]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -630,11 +630,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="88" name="TC-C-016 - Status transition Completed to To Do">
+<testcase internalid="1557" name="TC-C-016 - Status transition Completed to To Do">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-016 - Status transition Completed to To Do.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status Completed, priority Medium, dueDate empty; no filters active.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status Completed, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[3]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -681,11 +681,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="93" name="TC-C-017 - Status transition Completed to In Progress">
+<testcase internalid="1562" name="TC-C-017 - Status transition Completed to In Progress">
 	<node_order><![CDATA[6]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-017 - Status transition Completed to In Progress.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status Completed, priority Medium, dueDate empty; no filters active.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status Completed, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[3]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -732,11 +732,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="98" name="TC-C-018 - Same-state selection behavior for To Do">
+<testcase internalid="1567" name="TC-C-018 - Same-state selection behavior for To Do">
 	<node_order><![CDATA[7]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-018 - Same-state selection behavior for To Do.</p><p><b>Test design technique:</b> State Transition - same source and destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -783,11 +783,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="103" name="TC-C-019 - Same-state selection behavior for In Progress">
+<testcase internalid="1572" name="TC-C-019 - Same-state selection behavior for In Progress">
 	<node_order><![CDATA[8]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-019 - Same-state selection behavior for In Progress.</p><p><b>Test design technique:</b> State Transition - same source and destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -834,11 +834,11 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="108" name="TC-C-020 - Same-state selection behavior for Completed">
+<testcase internalid="1577" name="TC-C-020 - Same-state selection behavior for Completed">
 	<node_order><![CDATA[9]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-020 - Same-state selection behavior for Completed.</p><p><b>Test design technique:</b> State Transition - same source and destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
-	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change.</p>]]></preconditions>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>
 	<estimated_exec_duration></estimated_exec_duration>
@@ -885,7 +885,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="113" name="TC-C-021 - Summary totals ignore search filtering">
+<testcase internalid="1582" name="TC-C-021 - Summary totals ignore search filtering">
 	<node_order><![CDATA[10]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-021 - Summary totals ignore search filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
@@ -930,7 +930,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="118" name="TC-C-022 - Summary totals ignore status filtering">
+<testcase internalid="1587" name="TC-C-022 - Summary totals ignore status filtering">
 	<node_order><![CDATA[11]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-022 - Summary totals ignore status filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
@@ -975,7 +975,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="123" name="TC-C-023 - Summary totals ignore priority filtering">
+<testcase internalid="1592" name="TC-C-023 - Summary totals ignore priority filtering">
 	<node_order><![CDATA[12]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-023 - Summary totals ignore priority filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
@@ -1020,7 +1020,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="128" name="TC-C-024 - Summary totals ignore combined filtering">
+<testcase internalid="1597" name="TC-C-024 - Summary totals ignore combined filtering">
 	<node_order><![CDATA[13]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-024 - Summary totals ignore combined filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
@@ -1065,7 +1065,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="133" name="TC-C-025 - Completed overdue card has completed styling and no overdue treatment">
+<testcase internalid="1602" name="TC-C-025 - Completed overdue card has completed styling and no overdue treatment">
 	<node_order><![CDATA[14]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-025 - Completed overdue card has completed styling and no overdue treatment.</p><p><b>Test design technique:</b> Decision Table - overdue date AND Completed state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
@@ -1109,7 +1109,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="137" name="TC-C-026 - Completed task due today omits Due today badge">
+<testcase internalid="1606" name="TC-C-026 - Completed task due today omits Due today badge">
 	<node_order><![CDATA[15]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-026 - Completed task due today omits Due today badge.</p><p><b>Test design technique:</b> Decision Table - today date AND Completed state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
@@ -1152,11 +1152,11 @@
 		</requirement>
 	</requirements>
 </testcase>
-</testsuite><testsuite id="141" name="TS-C3 - Optional dates and calendar validation" >
+</testsuite><testsuite id="1610" name="TS-C3 - Optional dates and calendar validation" >
 <node_order><![CDATA[3]]></node_order>
 <details><![CDATA[<p>Optional/valid/invalid dates, browser sanitization distinguished from validator rejection, exact format and month/day/leap-year boundaries.</p>]]></details>
 
-<testcase internalid="142" name="TC-C-027 - Empty due date is a valid optional value">
+<testcase internalid="1611" name="TC-C-027 - Empty due date is a valid optional value">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-027 - Empty due date is a valid optional value.</p><p><b>Test design technique:</b> EP - absent optional due-date partition</p><p><b>Requirements:</b> REQ-C-005</p>]]></summary>
@@ -1194,7 +1194,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="146" name="TC-C-028 - Valid leap-day date is retained and formatted">
+<testcase internalid="1615" name="TC-C-028 - Valid leap-day date is retained and formatted">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-028 - Valid leap-day date is retained and formatted.</p><p><b>Test design technique:</b> EP - valid optional date partition</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006, REQ-C-008</p>]]></summary>
@@ -1244,7 +1244,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="150" name="TC-C-029 - Native date input sanitizes impossible date before validator">
+<testcase internalid="1619" name="TC-C-029 - Native date input sanitizes impossible date before validator">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-029 - Native date input sanitizes impossible date before validator.</p><p><b>Test design technique:</b> Error Guessing - native date sanitization boundary</p><p><b>Requirements:</b> REQ-C-005</p>]]></summary>
@@ -1282,7 +1282,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="154" name="TC-C-030 - Validator rejects impossible calendar date independently of native control">
+<testcase internalid="1623" name="TC-C-030 - Validator rejects impossible calendar date independently of native control">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-030 - Validator rejects impossible calendar date independently of native control.</p><p><b>Test design technique:</b> EP - invalid date partition; unit harness</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006</p>]]></summary>
@@ -1326,7 +1326,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="158" name="TC-C-031 - Leap-year divisibility decision table">
+<testcase internalid="1627" name="TC-C-031 - Leap-year divisibility decision table">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-031 - Leap-year divisibility decision table.</p><p><b>Test design technique:</b> Decision Table - Gregorian leap-year rule; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
@@ -1364,7 +1364,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="162" name="TC-C-032 - Day-of-month minimum and maximum boundaries">
+<testcase internalid="1631" name="TC-C-032 - Day-of-month minimum and maximum boundaries">
 	<node_order><![CDATA[6]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-032 - Day-of-month minimum and maximum boundaries.</p><p><b>Test design technique:</b> BVA - day min-1/min/max/max+1; unit harness</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006</p>]]></summary>
@@ -1408,7 +1408,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="166" name="TC-C-033 - Leap-February day maximum and max+1">
+<testcase internalid="1635" name="TC-C-033 - Leap-February day maximum and max+1">
 	<node_order><![CDATA[7]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-033 - Leap-February day maximum and max+1.</p><p><b>Test design technique:</b> BVA - leap month day max/max+1; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
@@ -1446,7 +1446,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="170" name="TC-C-034 - Thirty-day month maximum and max+1">
+<testcase internalid="1639" name="TC-C-034 - Thirty-day month maximum and max+1">
 	<node_order><![CDATA[8]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-034 - Thirty-day month maximum and max+1.</p><p><b>Test design technique:</b> BVA - month-specific maximum and max+1; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
@@ -1484,7 +1484,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="174" name="TC-C-035 - Month range min-1/min/max/max+1">
+<testcase internalid="1643" name="TC-C-035 - Month range min-1/min/max/max+1">
 	<node_order><![CDATA[9]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-035 - Month range min-1/min/max/max+1.</p><p><b>Test design technique:</b> BVA - month min-1/min/max/max+1; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
@@ -1522,7 +1522,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="178" name="TC-C-036 - Date string shape and optional absence partitions">
+<testcase internalid="1647" name="TC-C-036 - Date string shape and optional absence partitions">
 	<node_order><![CDATA[10]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-036 - Date string shape and optional absence partitions.</p><p><b>Test design technique:</b> EP - valid-format and invalid-format date partitions; unit harness</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006</p>]]></summary>
@@ -1572,11 +1572,11 @@
 		</requirement>
 	</requirements>
 </testcase>
-</testsuite><testsuite id="183" name="TS-C4 - Local-day decisions and date formatting" >
+</testsuite><testsuite id="1652" name="TS-C4 - Local-day decisions and date formatting" >
 <node_order><![CDATA[4]]></node_order>
 <details><![CDATA[<p>Fixed Asia/Baghdad reference day, explicit date-relation &#215; completion decision table, local midnight boundary and stable formatting.</p>]]></details>
 
-<testcase internalid="184" name="TC-C-037 - Fixed local yesterday-today-tomorrow by completion state">
+<testcase internalid="1653" name="TC-C-037 - Fixed local yesterday-today-tomorrow by completion state">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-037 - Fixed local yesterday-today-tomorrow by completion state.</p><p><b>Test design technique:</b> Decision Table - date relation by completion state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
@@ -1620,7 +1620,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="188" name="TC-C-038 - Overdue result changes when a task becomes Completed">
+<testcase internalid="1657" name="TC-C-038 - Overdue result changes when a task becomes Completed">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-038 - Overdue result changes when a task becomes Completed.</p><p><b>Test design technique:</b> State Transition - active overdue to Completed exempt state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
@@ -1671,7 +1671,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="193" name="TC-C-039 - Due-date relation follows local calendar day, not UTC parsing">
+<testcase internalid="1662" name="TC-C-039 - Due-date relation follows local calendar day, not UTC parsing">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-039 - Due-date relation follows local calendar day, not UTC parsing.</p><p><b>Test design technique:</b> BVA - local day boundary around midnight; unit harness</p><p><b>Requirements:</b> REQ-C-007, REQ-C-008</p>]]></summary>
@@ -1685,20 +1685,27 @@
 <steps>
 <step>
 	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Under TZ=Asia/Baghdad call todayString(new Date(value)) for 2026-10-26T20:59:59.999Z, 2026-10-26T21:00:00.000Z and 2026-10-26T21:00:00.001Z.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned dates are 2026-10-26, 2026-10-27 and 2026-10-27 respectively: immediately before, at and after local midnight.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
 	<actions><![CDATA[<p>Under TZ=Asia/Baghdad, construct new Date(&#x27;2026-10-26T21:30:00Z&#x27;) and pass it to todayString.</p>]]></actions>
 	<expectedresults><![CDATA[<p>The instant is 2026-10-27 00:30 in Baghdad and todayString returns &quot;2026-10-27&quot;.</p>]]></expectedresults>
 	<execution_type><![CDATA[1]]></execution_type>
 </step>
 
 <step>
-	<step_number><![CDATA[2]]></step_number>
+	<step_number><![CDATA[3]]></step_number>
 	<actions><![CDATA[<p>Call isOverdue({dueDate:&#x27;2026-10-27&#x27;,status:&#x27;To Do&#x27;}, todayString(theFixedDate)).</p>]]></actions>
 	<expectedresults><![CDATA[<p>The result is false because the due date is the local current calendar day, even though the UTC timestamp is on the prior date.</p>]]></expectedresults>
 	<execution_type><![CDATA[1]]></execution_type>
 </step>
 
 <step>
-	<step_number><![CDATA[3]]></step_number>
+	<step_number><![CDATA[4]]></step_number>
 	<actions><![CDATA[<p>Call isOverdue({dueDate:&#x27;2026-10-26&#x27;,status:&#x27;To Do&#x27;}, todayString(theFixedDate)).</p>]]></actions>
 	<expectedresults><![CDATA[<p>The result is true; the prior local calendar day is overdue.</p>]]></expectedresults>
 	<execution_type><![CDATA[1]]></execution_type>
@@ -1722,7 +1729,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="198" name="TC-C-040 - Due-date formatting is stable for a fixed date">
+<testcase internalid="1667" name="TC-C-040 - Due-date formatting is stable for a fixed date">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-C-040 - Due-date formatting is stable for a fixed date.</p><p><b>Test design technique:</b> EP - valid display-format partition</p><p><b>Requirements:</b> REQ-C-008</p>]]></summary>
@@ -1760,10 +1767,10 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="202" name="TC-C-041 - Local today helpers use fixed local date rather than wall clock">
+<testcase internalid="1671" name="TC-C-041 - Local today helpers use fixed local date rather than wall clock">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
-	<summary><![CDATA[<p>TC-C-041 - Local today helpers use fixed local date rather than wall clock.</p><p><b>Test design technique:</b> BVA - fixed local Date at date boundary; unit harness</p><p><b>Requirements:</b> REQ-C-008</p>]]></summary>
+	<summary><![CDATA[<p>TC-C-041 - Local today helpers use fixed local date rather than wall clock.</p><p><b>Test design technique:</b> Use Case - fixed local clock and reproducible date formatting; unit harness</p><p><b>Requirements:</b> REQ-C-008</p>]]></summary>
 	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only; set TZ=Asia/Baghdad before starting Node so local Date construction is explicit.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>
 	<importance><![CDATA[2]]></importance>

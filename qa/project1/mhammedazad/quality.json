@@ -7,32 +7,11 @@
   "test_cases": 41,
   "covered_requirements": 14,
   "coverage_percent": 100,
-  "verified_at_utc": "2026-10-26T21:54:06.025160+00:00",
-  "verification_source": "Actual TestLink XML-RPC/web records; direct Docker SQL unavailable in sandbox",
-  "actual_cases": 41,
-  "actual_steps": 135,
-  "actual_requirement_links": 83,
-  "actual_mapping_matches_design": true,
+  "database_cases": 41,
+  "database_steps": 135,
+  "database_requirement_links": 83,
+  "actual_db_mapping_matches_design": true,
   "all_cases_authored_by": "mhammedazad",
-  "all_requirements_authored_by": "mhammedazad",
-  "all_cases_in_plan_and_assigned_to_member_on_build": true,
-  "plan": "Project 1 - Test Case Design",
-  "build": "TaskFlow main@5133a6c",
-  "not_run_cases": 41,
-  "cases_with_execution_result": 0,
-  "specification_authors": {
-    "SRS-B-EDIT": "mhammedazad",
-    "SRS-B-CANCEL": "mhammedazad",
-    "SRS-B-DELETE": "mhammedazad"
-  },
-  "child_suites": {
-    "TS-B1 - Prefilled editing and committed changes": 18,
-    "TS-B2 - Editing cancellation and draft isolation": 9,
-    "TS-B3 - Deletion confirmation and repeated targeting": 14
-  },
-  "project_role": {
-    "name": "senior tester",
-    "role_id": 6
-  },
-  "account_name": "MhammedAzad"
+  "all_cases_in_plan": true,
+  "execution_results_total": 0
 }

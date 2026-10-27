@@ -1,0 +1,1814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="1491" name="C - Lanya Faraidun - Status, dates and counts" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>Tester: Lanya Faraidun (Member 3, C). SECJ3343 Project 1, Group TaskFlow. Baseline: TaskFlow main@5133a6c. Scope: TF-REQ-004/005/006/016/017; priority and status partitions, list transitions, summary totals, Completed rendering, optional and valid/invalid due dates, calendar boundaries, overdue rules, local-day behavior, and date formatting. Requirements cite README.md and the implementing src/ paths. Reference local day: 2026-10-27, 12:00 Asia/Baghdad (UTC+03:00); date harnesses pass this value explicitly and do not depend on the wall clock. All cases are designed/manual and remain Not Run until actually executed.</p><p>Reproducible UI clock: set the disposable browser timezone to Asia/Baghdad. After loading the case fixture and reloading, run in DevTools: window.CRealDate=Date; window.CFixed=Date.parse("2026-10-27T12:00:00+03:00"); window.Date=class extends CRealDate {constructor(...a){super(...(a.length?a:[CFixed]))} static now(){return CFixed}}; then type a temporary search query and clear it to force a React render. This freezes application Date calls for this page only; reload restores Date. For Node utility checks run TZ=Asia/Baghdad node --input-type=module and import functions from the cited src/utils/*.js files. Each manually seeded task needs a distinct string id, a title of at least 3 code points, description "", valid priority/status, dueDate "" unless specified, and createdAt/updatedAt 2026-01-01T00:00:00.000Z. Summary fixtures named A/B/C use valid titles Task A/Task B/Task C.</p>]]></details>
+<testsuite id="1492" name="TS-C1 - Priority and status partitions" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[<p>Valid enum choices plus invalid string, casing, type, missing and simultaneous invalid partitions. Unit harness is explicitly called out where native controls block tampering.</p>]]></details>
+
+<testcase internalid="1493" name="TC-C-001 - Accepted priority partition: Low">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-001 - Accepted priority partition: Low.</p><p><b>Test design technique:</b> EP - valid priority enumeration partition</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one saved task titled Priority fixture, priority Medium, status To Do, dueDate empty.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open Edit Task for the fixture &quot;Priority fixture&quot; and inspect Priority.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The Priority select contains exactly &quot;Low&quot;, &quot;Medium&quot; and &quot;High&quot;; its current value is &quot;Medium&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select &quot;Low&quot; and click Save Changes.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The dialog closes; the card shows the &quot;Low&quot; priority badge; toast &quot;Task updated successfully.&quot; appears; storage contains priority &quot;Low&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1497" name="TC-C-002 - Accepted priority partition: Medium">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-002 - Accepted priority partition: Medium.</p><p><b>Test design technique:</b> EP - valid priority enumeration partition</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one saved task titled Priority fixture, priority Medium, status To Do, dueDate empty.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open Edit Task for the fixture &quot;Priority fixture&quot; and inspect Priority.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The Priority select contains exactly &quot;Low&quot;, &quot;Medium&quot; and &quot;High&quot;; its current value is &quot;Medium&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select &quot;Medium&quot; and click Save Changes.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The dialog closes; the card shows the &quot;Medium&quot; priority badge; toast &quot;Task updated successfully.&quot; appears; storage contains priority &quot;Medium&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1501" name="TC-C-003 - Accepted priority partition: High">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-003 - Accepted priority partition: High.</p><p><b>Test design technique:</b> EP - valid priority enumeration partition</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one saved task titled Priority fixture, priority Medium, status To Do, dueDate empty.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open Edit Task for the fixture &quot;Priority fixture&quot; and inspect Priority.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The Priority select contains exactly &quot;Low&quot;, &quot;Medium&quot; and &quot;High&quot;; its current value is &quot;Medium&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select &quot;High&quot; and click Save Changes.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The dialog closes; the card shows the &quot;High&quot; priority badge; toast &quot;Task updated successfully.&quot; appears; storage contains priority &quot;High&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1505" name="TC-C-004 - Accepted status partition: To Do">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-004 - Accepted status partition: To Do.</p><p><b>Test design technique:</b> EP - valid status enumeration partition</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status In Progress, priority Medium and empty dueDate. Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Inspect the status select on card &quot;Status fixture&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The select is labelled &quot;Change status of Status fixture&quot; and offers exactly &quot;To Do&quot;, &quot;In Progress&quot; and &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select &quot;To Do&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge reads &quot;To Do&quot;; toast &quot;Task status updated.&quot; appears; saved status is &quot;To Do&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1509" name="TC-C-005 - Accepted status partition: In Progress">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-005 - Accepted status partition: In Progress.</p><p><b>Test design technique:</b> EP - valid status enumeration partition</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate. Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Inspect the status select on card &quot;Status fixture&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The select is labelled &quot;Change status of Status fixture&quot; and offers exactly &quot;To Do&quot;, &quot;In Progress&quot; and &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select &quot;In Progress&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge reads &quot;In Progress&quot;; toast &quot;Task status updated.&quot; appears; saved status is &quot;In Progress&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1513" name="TC-C-006 - Accepted status partition: Completed">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-006 - Accepted status partition: Completed.</p><p><b>Test design technique:</b> EP - valid status enumeration partition</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Status fixture with status To Do, priority Medium and empty dueDate. Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Inspect the status select on card &quot;Status fixture&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The select is labelled &quot;Change status of Status fixture&quot; and offers exactly &quot;To Do&quot;, &quot;In Progress&quot; and &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Select &quot;Completed&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge reads &quot;Completed&quot;; toast &quot;Task status updated.&quot; appears; saved status is &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1517" name="TC-C-007 - Reject unsupported priority string in validator harness">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-007 - Reject unsupported priority string in validator harness.</p><p><b>Test design technique:</b> EP - invalid priority enumeration partition; unit harness</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: native Priority select cannot submit an unsupported option. Do not call this a browser form test.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Run validateTask({title:&#x27;Valid task&#x27;,description:&#x27;&#x27;,priority:&#x27;Urgent&#x27;,status:&#x27;To Do&#x27;,dueDate:&#x27;&#x27;}) in the Node harness.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned errors object contains priority: &quot;Please select a valid priority.&quot; and no title, status or dueDate error.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Run the same fixture with priority:&#x27;low&#x27;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned priority error remains exactly &quot;Please select a valid priority.&quot;; the comparison is case-sensitive.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1521" name="TC-C-008 - Reject non-string and missing priority values in validator harness">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-008 - Reject non-string and missing priority values in validator harness.</p><p><b>Test design technique:</b> EP - invalid priority type partitions; unit harness</p><p><b>Requirements:</b> REQ-C-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: HTML select controls cannot produce null or an omitted priority field.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Call validateTask with priority:null, then with the priority property omitted; keep all other required values valid.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both calls return priority: &quot;Please select a valid priority.&quot;; there is no exception.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1524" name="TC-C-009 - Reject unsupported status string in validator harness">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-009 - Reject unsupported status string in validator harness.</p><p><b>Test design technique:</b> EP - invalid status enumeration partition; unit harness</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: native Status select cannot submit an unsupported option.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Run validateTask({title:&#x27;Valid task&#x27;,description:&#x27;&#x27;,priority:&#x27;Medium&#x27;,status:&#x27;Blocked&#x27;,dueDate:&#x27;&#x27;}) in the Node harness.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned errors object contains status: &quot;Please select a valid status.&quot; and no title, priority or dueDate error.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Run the same fixture with status:&#x27;completed&#x27;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned status error remains exactly &quot;Please select a valid status.&quot;; the comparison is case-sensitive.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1528" name="TC-C-010 - Reject non-string and missing status values in validator harness">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-010 - Reject non-string and missing status values in validator harness.</p><p><b>Test design technique:</b> EP - invalid status type partitions; unit harness</p><p><b>Requirements:</b> REQ-C-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: HTML select controls cannot produce a numeric or omitted status value.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Call validateTask with status:42, then with the status property omitted; keep all other required values valid.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both calls return status: &quot;Please select a valid status.&quot;; there is no exception.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1531" name="TC-C-011 - Report both invalid enum fields together">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-011 - Report both invalid enum fields together.</p><p><b>Test design technique:</b> Decision Table - priority invalid AND status invalid; unit harness</p><p><b>Requirements:</b> REQ-C-001, REQ-C-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: native controls offer only valid enum values.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Call validateTask with priority:&#x27;Urgent&#x27; and status:&#x27;Blocked&#x27;, keeping title, description and dueDate valid.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned object contains both priority: &quot;Please select a valid priority.&quot; and status: &quot;Please select a valid status.&quot;; no other keys are present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change only priority to &#x27;High&#x27; and call again.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only status: &quot;Please select a valid status.&quot; remains.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Change status to &#x27;Completed&#x27; and call again.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned errors object is empty.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="1536" name="TS-C2 - Status transitions, summaries and Completed tasks" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>All six distinct directed transitions, same-state behavior for all three states, filter-independent summary decision table and Completed presentation/exemption.</p>]]></details>
+
+<testcase internalid="1537" name="TC-C-012 - Status transition To Do to In Progress">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-012 - Status transition To Do to In Progress.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status To Do, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With one card &quot;Transition fixture&quot; in state &quot;To Do&quot;, record its updatedAt from localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge and Change status select both show &quot;To Do&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;In Progress&quot; in Change status of Transition fixture.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The badge and select show &quot;In Progress&quot;; toast &quot;Task status updated.&quot; appears; storage status is &quot;In Progress&quot; and updatedAt is later than the recorded value.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect the list and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains; its id, title, priority and dueDate are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1542" name="TC-C-013 - Status transition To Do to Completed">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-013 - Status transition To Do to Completed.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status To Do, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With one card &quot;Transition fixture&quot; in state &quot;To Do&quot;, record its updatedAt from localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge and Change status select both show &quot;To Do&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Completed&quot; in Change status of Transition fixture.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The badge and select show &quot;Completed&quot;; toast &quot;Task status updated.&quot; appears; storage status is &quot;Completed&quot; and updatedAt is later than the recorded value.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect the list and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains; its id, title, priority and dueDate are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1547" name="TC-C-014 - Status transition In Progress to To Do">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-014 - Status transition In Progress to To Do.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status In Progress, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With one card &quot;Transition fixture&quot; in state &quot;In Progress&quot;, record its updatedAt from localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge and Change status select both show &quot;In Progress&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;To Do&quot; in Change status of Transition fixture.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The badge and select show &quot;To Do&quot;; toast &quot;Task status updated.&quot; appears; storage status is &quot;To Do&quot; and updatedAt is later than the recorded value.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect the list and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains; its id, title, priority and dueDate are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1552" name="TC-C-015 - Status transition In Progress to Completed">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-015 - Status transition In Progress to Completed.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status In Progress, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With one card &quot;Transition fixture&quot; in state &quot;In Progress&quot;, record its updatedAt from localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge and Change status select both show &quot;In Progress&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Completed&quot; in Change status of Transition fixture.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The badge and select show &quot;Completed&quot;; toast &quot;Task status updated.&quot; appears; storage status is &quot;Completed&quot; and updatedAt is later than the recorded value.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect the list and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains; its id, title, priority and dueDate are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1557" name="TC-C-016 - Status transition Completed to To Do">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-016 - Status transition Completed to To Do.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status Completed, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With one card &quot;Transition fixture&quot; in state &quot;Completed&quot;, record its updatedAt from localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge and Change status select both show &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;To Do&quot; in Change status of Transition fixture.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The badge and select show &quot;To Do&quot;; toast &quot;Task status updated.&quot; appears; storage status is &quot;To Do&quot; and updatedAt is later than the recorded value.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect the list and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains; its id, title, priority and dueDate are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1562" name="TC-C-017 - Status transition Completed to In Progress">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-017 - Status transition Completed to In Progress.</p><p><b>Test design technique:</b> State Transition - source state to distinct destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Transition fixture, status Completed, priority Medium, dueDate empty; no filters active. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With one card &quot;Transition fixture&quot; in state &quot;Completed&quot;, record its updatedAt from localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card status badge and Change status select both show &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;In Progress&quot; in Change status of Transition fixture.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The badge and select show &quot;In Progress&quot;; toast &quot;Task status updated.&quot; appears; storage status is &quot;In Progress&quot; and updatedAt is later than the recorded value.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect the list and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Exactly one task remains; its id, title, priority and dueDate are unchanged.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1567" name="TC-C-018 - Same-state selection behavior for To Do">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-018 - Same-state selection behavior for To Do.</p><p><b>Test design technique:</b> State Transition - same source and destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load one task &quot;Same state fixture&quot; with status &quot;To Do&quot; and record updatedAt.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card badge and select both show &quot;To Do&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>In DevTools dispatch a bubbling change event on that card&#x27;s status select with its current value.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The status remains unchanged; toast &quot;Task status updated.&quot; appears; changeStatus writes a new updatedAt timestamp.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>There is still exactly one task with the same id and status; only updatedAt is refreshed among the recorded task fields.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1572" name="TC-C-019 - Same-state selection behavior for In Progress">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-019 - Same-state selection behavior for In Progress.</p><p><b>Test design technique:</b> State Transition - same source and destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load one task &quot;Same state fixture&quot; with status &quot;In Progress&quot; and record updatedAt.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card badge and select both show &quot;In Progress&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>In DevTools dispatch a bubbling change event on that card&#x27;s status select with its current value.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The status remains unchanged; toast &quot;Task status updated.&quot; appears; changeStatus writes a new updatedAt timestamp.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>There is still exactly one task with the same id and status; only updatedAt is refreshed among the recorded task fields.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1577" name="TC-C-020 - Same-state selection behavior for Completed">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-020 - Same-state selection behavior for Completed.</p><p><b>Test design technique:</b> State Transition - same source and destination state</p><p><b>Requirements:</b> REQ-C-002, REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: one task titled Same state fixture, priority Medium, dueDate empty. Trigger change event explicitly because selecting the already selected native option does not normally emit change. Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load one task &quot;Same state fixture&quot; with status &quot;Completed&quot; and record updatedAt.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card badge and select both show &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>In DevTools dispatch a bubbling change event on that card&#x27;s status select with its current value.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The status remains unchanged; toast &quot;Task status updated.&quot; appears; changeStatus writes a new updatedAt timestamp.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspect localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>There is still exactly one task with the same id and status; only updatedAt is refreshed among the recorded task fields.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status values and validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1582" name="TC-C-021 - Summary totals ignore search filtering">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-021 - Summary totals ignore search filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use the exact five-task fixture above, no other saved tasks.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load five tasks: A (To Do/Low), B (To Do/High), C (In Progress/Medium), needle work (In Progress/High), needle done (Completed/High).</p>]]></actions>
+	<expectedresults><![CDATA[<p>SummaryCards shows &quot;Total Tasks&quot; 5, &quot;To Do&quot; 2, &quot;In Progress&quot; 2 and &quot;Completed&quot; 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Type &quot;needle&quot; in the search input.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only matching cards change; summary remains Total Tasks 5, To Do 2, In Progress 2, Completed 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Read all four summary cards after the list refresh.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The four counts remain 5, 2, 2 and 1 respectively, regardless of the number of visible cards.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1587" name="TC-C-022 - Summary totals ignore status filtering">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-022 - Summary totals ignore status filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use the exact five-task fixture above, no other saved tasks.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load five tasks: A (To Do/Low), B (To Do/High), C (In Progress/Medium), needle work (In Progress/High), needle done (Completed/High).</p>]]></actions>
+	<expectedresults><![CDATA[<p>SummaryCards shows &quot;Total Tasks&quot; 5, &quot;To Do&quot; 2, &quot;In Progress&quot; 2 and &quot;Completed&quot; 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Status filter to &quot;Completed&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only the completed card remains visible; summary remains Total Tasks 5, To Do 2, In Progress 2, Completed 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Read all four summary cards after the list refresh.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The four counts remain 5, 2, 2 and 1 respectively, regardless of the number of visible cards.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1592" name="TC-C-023 - Summary totals ignore priority filtering">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-023 - Summary totals ignore priority filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use the exact five-task fixture above, no other saved tasks.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load five tasks: A (To Do/Low), B (To Do/High), C (In Progress/Medium), needle work (In Progress/High), needle done (Completed/High).</p>]]></actions>
+	<expectedresults><![CDATA[<p>SummaryCards shows &quot;Total Tasks&quot; 5, &quot;To Do&quot; 2, &quot;In Progress&quot; 2 and &quot;Completed&quot; 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Set Priority filter to &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only High priority cards remain visible; summary remains Total Tasks 5, To Do 2, In Progress 2, Completed 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Read all four summary cards after the list refresh.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The four counts remain 5, 2, 2 and 1 respectively, regardless of the number of visible cards.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1597" name="TC-C-024 - Summary totals ignore combined filtering">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-024 - Summary totals ignore combined filtering.</p><p><b>Test design technique:</b> Decision Table - summary calculation independent of visible result set</p><p><b>Requirements:</b> REQ-C-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use the exact five-task fixture above, no other saved tasks.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load five tasks: A (To Do/Low), B (To Do/High), C (In Progress/Medium), needle work (In Progress/High), needle done (Completed/High).</p>]]></actions>
+	<expectedresults><![CDATA[<p>SummaryCards shows &quot;Total Tasks&quot; 5, &quot;To Do&quot; 2, &quot;In Progress&quot; 2 and &quot;Completed&quot; 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Search for &quot;needle&quot; while Status is Completed and Priority is High.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The list reflects the combined filters (one matching completed card); summary remains Total Tasks 5, To Do 2, In Progress 2, Completed 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Read all four summary cards after the list refresh.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The four counts remain 5, 2, 2 and 1 respectively, regardless of the number of visible cards.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status change and summary totals]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1602" name="TC-C-025 - Completed overdue card has completed styling and no overdue treatment">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-025 - Completed overdue card has completed styling and no overdue treatment.</p><p><b>Test design technique:</b> Decision Table - overdue date AND Completed state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use the fixed local day from COMMON. Fixture title: Completed yesterday; dueDate 2026-10-26; status Completed.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With fixed local today 2026-10-27, load a Completed task due 2026-10-26.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card has class &quot;completed&quot; and status badge &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect the due-date line and badges.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The line reads &quot;Due: Oct 26, 2026&quot; without overdue red styling; no &quot;Overdue&quot; or &quot;Due today&quot; badge is rendered.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Completed task presentation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Overdue and due-today decision]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1606" name="TC-C-026 - Completed task due today omits Due today badge">
+	<node_order><![CDATA[15]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-026 - Completed task due today omits Due today badge.</p><p><b>Test design technique:</b> Decision Table - today date AND Completed state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: Completed today, dueDate 2026-10-27, status Completed; fixed local reference date 2026-10-27.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With fixed local today 2026-10-27, load a Completed task due 2026-10-27.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card has class &quot;completed&quot; and status badge &quot;Completed&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect its date badges.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Neither &quot;Due today&quot; nor &quot;Overdue&quot; is shown.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Completed task presentation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Overdue and due-today decision]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="1610" name="TS-C3 - Optional dates and calendar validation" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>Optional/valid/invalid dates, browser sanitization distinguished from validator rejection, exact format and month/day/leap-year boundaries.</p>]]></details>
+
+<testcase internalid="1611" name="TC-C-027 - Empty due date is a valid optional value">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-027 - Empty due date is a valid optional value.</p><p><b>Test design technique:</b> EP - absent optional due-date partition</p><p><b>Requirements:</b> REQ-C-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture starts with no tasks. Use title Optional date fixture, Medium priority and To Do status.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task and inspect Due Date.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The native date input is blank and the hint reads &quot;Optional&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Create a task with valid required fields and leave Due Date blank.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The task is saved; no due-date error appears; localStorage dueDate is the empty string; the card has no &quot;Due:&quot; line.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional due date and real calendar validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1615" name="TC-C-028 - Valid leap-day date is retained and formatted">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-028 - Valid leap-day date is retained and formatted.</p><p><b>Test design technique:</b> EP - valid optional date partition</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006, REQ-C-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture: empty task list; title Leap fixture, valid enums.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Create a task and set Due Date to 2028-02-29.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The native date input displays 2028-02-29 and has aria-invalid=&quot;false&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Save and inspect the card and localStorage.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Saved dueDate is &quot;2028-02-29&quot;; the card line reads &quot;Due: Feb 29, 2028&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional due date and real calendar validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Local calendar day and date display]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1619" name="TC-C-029 - Native date input sanitizes impossible date before validator">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-029 - Native date input sanitizes impossible date before validator.</p><p><b>Test design technique:</b> Error Guessing - native date sanitization boundary</p><p><b>Requirements:</b> REQ-C-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use Chrome native input[type=date]. This case verifies browser sanitization and does not claim validateTask rejected the impossible date.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Open New Task; in DevTools assign &#x27;2026-02-29&#x27; to input[name=dueDate].value and read the value back.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The native date input value is the empty string because 2026-02-29 is not a real date; the form has no due-date error because the field is optional.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect aria-invalid and submit the otherwise valid task.</p>]]></actions>
+	<expectedresults><![CDATA[<p>aria-invalid remains &quot;false&quot; for dueDate; creation is accepted with dueDate &quot;&quot; and no &quot;Please enter a valid date (YYYY-MM-DD).&quot; message.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional due date and real calendar validation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1623" name="TC-C-030 - Validator rejects impossible calendar date independently of native control">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-030 - Validator rejects impossible calendar date independently of native control.</p><p><b>Test design technique:</b> EP - invalid date partition; unit harness</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: import validateTask from src/utils/validation.js; do not claim native form rejection.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Run validateTask with dueDate:&#x27;2026-02-29&#x27; and all other fields valid.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned errors object contains dueDate: &quot;Please enter a valid date (YYYY-MM-DD).&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Repeat with dueDate:&#x27;2026-13-01&#x27;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The same exact dueDate error is returned; no other field error is present.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional due date and real calendar validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1627" name="TC-C-031 - Leap-year divisibility decision table">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-031 - Leap-year divisibility decision table.</p><p><b>Test design technique:</b> Decision Table - Gregorian leap-year rule; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: use fixed date strings; the check is independent of the current day.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Call isValidDateString for 2024-02-29, 2000-02-29, 1900-02-29 and 2100-02-29.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Results respectively are true, true, false and false: divisible by 4 except century years unless divisible by 400.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Call validateTask for each date with other fields valid.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The first two produce no dueDate error; 1900 and 2100 produce &quot;Please enter a valid date (YYYY-MM-DD).&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1631" name="TC-C-032 - Day-of-month minimum and maximum boundaries">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-032 - Day-of-month minimum and maximum boundaries.</p><p><b>Test design technique:</b> BVA - day min-1/min/max/max+1; unit harness</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only: JavaScript object literals use exact YYYY-MM-DD strings.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for January 00, 01, 31 and 32 in year 2026.</p>]]></actions>
+	<expectedresults><![CDATA[<p>2026-01-00 is false (min-1); 2026-01-01 is true (minimum day); 2026-01-31 is true (maximum day); 2026-01-32 is false (max+1).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Check validateTask for the two invalid values.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Each invalid value returns dueDate: &quot;Please enter a valid date (YYYY-MM-DD).&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional due date and real calendar validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1635" name="TC-C-033 - Leap-February day maximum and max+1">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-033 - Leap-February day maximum and max+1.</p><p><b>Test design technique:</b> BVA - leap month day max/max+1; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only; fixed Gregorian dates.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for 2024-02-28, 2024-02-29 and 2024-02-30.</p>]]></actions>
+	<expectedresults><![CDATA[<p>February 28 and leap day February 29 are true; February 30 is false.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for 2023-02-28 and 2023-02-29.</p>]]></actions>
+	<expectedresults><![CDATA[<p>February 28 is true; February 29 is false in the non-leap year.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1639" name="TC-C-034 - Thirty-day month maximum and max+1">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-034 - Thirty-day month maximum and max+1.</p><p><b>Test design technique:</b> BVA - month-specific maximum and max+1; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only; verifies separate 30-day months.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for 2026-04-30 and 2026-04-31.</p>]]></actions>
+	<expectedresults><![CDATA[<p>April 30 is true (month maximum); April 31 is false (max+1).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for 2026-06-30 and 2026-06-31.</p>]]></actions>
+	<expectedresults><![CDATA[<p>June 30 is true; June 31 is false.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1643" name="TC-C-035 - Month range min-1/min/max/max+1">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-035 - Month range min-1/min/max/max+1.</p><p><b>Test design technique:</b> BVA - month min-1/min/max/max+1; unit harness</p><p><b>Requirements:</b> REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only. No application date range beyond calendar month boundaries is inferred.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for months 00, 01, 12 and 13 using year 2026 and day 01.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Month 00 is false (min-1); 01 is true (minimum); 12 is true (maximum); 13 is false (max+1).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Pass each value through validateTask.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Months 00 and 13 return &quot;Please enter a valid date (YYYY-MM-DD).&quot;; months 01 and 12 have no dueDate error.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1647" name="TC-C-036 - Date string shape and optional absence partitions">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-036 - Date string shape and optional absence partitions.</p><p><b>Test design technique:</b> EP - valid-format and invalid-format date partitions; unit harness</p><p><b>Requirements:</b> REQ-C-005, REQ-C-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only; no native input behavior is asserted.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Check isValidDateString for &#x27;2026-01-01&#x27;, &#x27;2026-1-01&#x27;, &#x27;26-01-01&#x27;, and &#x27;2026/01/01&#x27;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only exact four-two-two hyphenated YYYY-MM-DD is true.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Check validateTask with dueDate omitted, null and empty string.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All three absent-value forms are accepted without a dueDate error.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Check dueDate:&#x27;2026-1-01&#x27; in validateTask.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned dueDate error is exactly &quot;Please enter a valid date (YYYY-MM-DD).&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Optional due date and real calendar validation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Leap years and calendar boundaries]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="1652" name="TS-C4 - Local-day decisions and date formatting" >
+<node_order><![CDATA[4]]></node_order>
+<details><![CDATA[<p>Fixed Asia/Baghdad reference day, explicit date-relation &#215; completion decision table, local midnight boundary and stable formatting.</p>]]></details>
+
+<testcase internalid="1653" name="TC-C-037 - Fixed local yesterday-today-tomorrow by completion state">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-037 - Fixed local yesterday-today-tomorrow by completion state.</p><p><b>Test design technique:</b> Decision Table - date relation by completion state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Run the fixed-day harness, then inspect the matching card states in the disposable UI with the same frozen local day. Fix the test date explicitly; do not rely on October 2026 still being current.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set reference local today to 2026-10-27 (Asia/Baghdad). Evaluate fixtures for due date 2026-10-26 (yesterday), 2026-10-27 (today), 2026-10-28 (tomorrow) against status To Do and status Completed.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Decision table: Yesterday + To Do =&gt; isOverdue true, UI badge &quot;Overdue&quot; and red due-date style; Yesterday + Completed =&gt; false, no &quot;Overdue&quot; or &quot;Due today&quot;; Today + To Do =&gt; false, badge &quot;Due today&quot;; Today + Completed =&gt; false, no date badge; Tomorrow + To Do =&gt; false, no date badge; Tomorrow + Completed =&gt; false, no date badge.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Run the six isOverdue({dueDate,status}, &#x27;2026-10-27&#x27;) assertions in the Node harness.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only yesterday + To Do returns true; the other five return false.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Completed task presentation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Overdue and due-today decision]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1657" name="TC-C-038 - Overdue result changes when a task becomes Completed">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-038 - Overdue result changes when a task becomes Completed.</p><p><b>Test design technique:</b> State Transition - active overdue to Completed exempt state</p><p><b>Requirements:</b> REQ-C-004, REQ-C-007</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Fixture dueDate 2026-10-26. Fix the app-local clock to 2026-10-27T12:00:00+03:00 before asserting badges.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>With fixed today 2026-10-27, load task Overdue transition due 2026-10-26 in To Do.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card shows &quot;Overdue&quot; and its due-date line uses overdue styling.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Change its status to Completed.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The card gains class &quot;completed&quot;; badge &quot;Overdue&quot; disappears; due-date styling is no longer overdue; toast &quot;Task status updated.&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Change status back to In Progress.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Because its date is still yesterday, &quot;Overdue&quot; returns and the completed class is removed.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Priority, status transitions and task summaries]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Completed task presentation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Overdue and due-today decision]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1662" name="TC-C-039 - Due-date relation follows local calendar day, not UTC parsing">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-039 - Due-date relation follows local calendar day, not UTC parsing.</p><p><b>Test design technique:</b> BVA - local day boundary around midnight; unit harness</p><p><b>Requirements:</b> REQ-C-007, REQ-C-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only. Set process TZ=Asia/Baghdad and use fixed instant 2026-10-26T21:30:00Z; do not use new Date(&quot;YYYY-MM-DD&quot;) as the clock.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Under TZ=Asia/Baghdad call todayString(new Date(value)) for 2026-10-26T20:59:59.999Z, 2026-10-26T21:00:00.000Z and 2026-10-26T21:00:00.001Z.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned dates are 2026-10-26, 2026-10-27 and 2026-10-27 respectively: immediately before, at and after local midnight.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Under TZ=Asia/Baghdad, construct new Date(&#x27;2026-10-26T21:30:00Z&#x27;) and pass it to todayString.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The instant is 2026-10-27 00:30 in Baghdad and todayString returns &quot;2026-10-27&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Call isOverdue({dueDate:&#x27;2026-10-27&#x27;,status:&#x27;To Do&#x27;}, todayString(theFixedDate)).</p>]]></actions>
+	<expectedresults><![CDATA[<p>The result is false because the due date is the local current calendar day, even though the UTC timestamp is on the prior date.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Call isOverdue({dueDate:&#x27;2026-10-26&#x27;,status:&#x27;To Do&#x27;}, todayString(theFixedDate)).</p>]]></actions>
+	<expectedresults><![CDATA[<p>The result is true; the prior local calendar day is overdue.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Overdue and due-today decision]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Local calendar day and date display]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1667" name="TC-C-040 - Due-date formatting is stable for a fixed date">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-040 - Due-date formatting is stable for a fixed date.</p><p><b>Test design technique:</b> EP - valid display-format partition</p><p><b>Requirements:</b> REQ-C-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Use exact local calendar date values. This formatting assertion is independent of current date/time.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Load tasks due 2026-02-09, 2028-02-29 and 2026-12-31.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Cards display respectively &quot;Due: Feb 9, 2026&quot;, &quot;Due: Feb 29, 2028&quot; and &quot;Due: Dec 31, 2026&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Call formatDueDate with those same strings in the utility harness.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The returned strings are respectively &quot;Feb 9, 2026&quot;, &quot;Feb 29, 2028&quot; and &quot;Dec 31, 2026&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Local calendar day and date display]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="1671" name="TC-C-041 - Local today helpers use fixed local date rather than wall clock">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-C-041 - Local today helpers use fixed local date rather than wall clock.</p><p><b>Test design technique:</b> Use Case - fixed local clock and reproducible date formatting; unit harness</p><p><b>Requirements:</b> REQ-C-008</p>]]></summary>
+	<preconditions><![CDATA[<p>Use a dedicated disposable Chrome profile on TaskFlow http://localhost:5173, baseline main@5133a6c. Use Asia/Baghdad (UTC+03:00) and fixed local reference 2026-10-27 12:00; for date utility/harness checks pass &quot;2026-10-27&quot; explicitly or construct new Date(2026, 9, 27, 12, 0, 0) under TZ=Asia/Baghdad. Never use the current wall clock for a today/yesterday/tomorrow assertion. Clear only this profile&#8217;s taskflow_tasks/taskflow_tasks_backup before each independent UI fixture. Local storage is available. In unit-harness cases run node from the repository root and import the cited src/utils module; harness-only cases do not claim a UI execution. Unit harness only; set TZ=Asia/Baghdad before starting Node so local Date construction is explicit.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Under TZ=Asia/Baghdad create new Date(2026, 9, 27, 12, 0, 0); call todayString(date).</p>]]></actions>
+	<expectedresults><![CDATA[<p>The result is exactly &quot;2026-10-27&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Call formatToday(date).</p>]]></actions>
+	<expectedresults><![CDATA[<p>The result is exactly &quot;Tuesday, October 27, 2026&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Repeat on a machine whose wall clock is after October 2026 using the same constructed Date.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both expected results remain the fixed October 27, 2026 local values; neither assertion depends on the machine current date.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Due dates, local calendar rules and formatting]]></req_spec_title>
+			<doc_id><![CDATA[REQ-C-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Local calendar day and date display]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite></testsuite>

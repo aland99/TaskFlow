@@ -23,3 +23,8 @@ Baseline: TaskFlow `main@5133a6c`; SECJ3343 Project 1, Group TaskFlow.
 ## Deliverables not produced here
 
 No TestLink user/project/plan/build, imported cases, author/count/link audit, requirements/test suites XML export, TestLink-generated PDFs, visual PDF review or browser execution evidence exists from this run. These require the local TestLink database and browser permission. The lecturer's existing assigned project was not touched. No execution or peer-review results are claimed.
+
+
+## Leader integration, 27 October 2026
+
+The original environment notes above are historical. All five members were loaded and audited on the leader laptop, and individual PDFs/XML were regenerated after scoped design review. Final authoritative counts/mappings and PDF verification are in ../final/group-audit.json and ../final/pdf-verification.json; review corrections are documented in ../GROUP_REVIEW.md. Original author login and stable IDs are preserved. No full manual execution or passing results are claimed.

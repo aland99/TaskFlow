@@ -1,4 +1,6 @@
-# Send one prompt to each teammate
+# Historical named handoff prompts
+
+All member PRs are now merged. The original prompts were used: actual submissions assign Mhamad to B and Lanya to C. Follow the final roster in README.md/team.json; the named prompts below record the earlier provisional assignment.
 
 Each member must run their own prompt, review their test design and open their own PR.
 No invitation is needed: work in a personal fork. All dates are 2026.

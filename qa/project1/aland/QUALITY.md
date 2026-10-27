@@ -57,3 +57,8 @@ the lecturer's **existing assigned project**, so import the XML there and check 
 
 The final combined PDFs, database-derived traceability matrix PDF and group submission zip are intentionally
 deferred until the leader says **members are done** and the four member PRs have been reviewed and merged.
+
+
+## Leader integration, 27 October 2026
+
+The original environment notes above are historical. All five members were loaded and audited on the leader laptop, and individual PDFs/XML were regenerated after scoped design review. Final authoritative counts/mappings and PDF verification are in ../final/group-audit.json and ../final/pdf-verification.json; review corrections are documented in ../GROUP_REVIEW.md. Original author login and stable IDs are preserved. No full manual execution or passing results are claimed.

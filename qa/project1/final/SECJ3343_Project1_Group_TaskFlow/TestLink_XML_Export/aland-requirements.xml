@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirement-specification>
+<req_spec title="Task creation and text validation" doc_id="SRS-A-CREATE">
+<type>2</type><node_order>1</node_order>
+<total_req>14</total_req>
+<scope><![CDATA[<p>README.md TF-REQ-001,002,003,007,008; creation defaults from TF-REQ-004/005/006. Derived acceptance requirements from implemented behavior; no separate customer SRS exists. src/components/TaskFormModal.jsx, Modal.jsx; src/utils/validation.js, tasks.js; src/App.jsx.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-A-001]]></docid><title><![CDATA[Required trimmed title]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>A blank or whitespace-only title shall show &quot;Title is required.&quot; and prevent creation. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/utils/validation.js validateTask; src/components/TaskFormModal.jsx handleSubmit; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-002]]></docid><title><![CDATA[Title inclusive length boundaries]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>Trimmed title length shall be 3 through 80 Unicode code points inclusive. Below 3 shows &quot;Title must be at least 3 characters.&quot; Above 80 shows &quot;Title must be 80 characters or fewer.&quot; Inputs have no maxLength. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/utils/validation.js TITLE_MIN/TITLE_MAX/countChars; src/components/TaskFormModal.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-003]]></docid><title><![CDATA[Trim and Unicode normalization]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>Leading/trailing title and description whitespace shall be removed before counting and saving. Each Unicode code point, including a single emoji, counts as one. Combining sequences consist of multiple code points; no Unicode canonical normalization occurs. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/utils/validation.js countChars/validateTask; src/utils/tasks.js normalizeValues; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-004]]></docid><title><![CDATA[Optional description maximum]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>Description may be empty and shall accept up to 500 trimmed Unicode code points. At 501 it shall show &quot;Description must be 500 characters or fewer.&quot; and prevent creation. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/utils/validation.js DESCRIPTION_MAX/validateTask; src/components/TaskFormModal.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-005]]></docid><title><![CDATA[Live trimmed counters]]></title>
+<version>1</version><revision>1</revision><node_order>5</node_order>
+<description><![CDATA[<p>The title and description counters shall display &quot;n / 80&quot; and &quot;n / 500&quot; using trimmed code point counts. counter-over/red shall apply only when n exceeds the maximum. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskFormModal.jsx titleLength/descriptionLength; src/App.css .counter-over; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-006]]></docid><title><![CDATA[Creation form defaults]]></title>
+<version>1</version><revision>1</revision><node_order>6</node_order>
+<description><![CDATA[<p>Opening &quot;+ New Task&quot; shall show &quot;New Task&quot;, blank title/description/date, priority &quot;Medium&quot;, status &quot;To Do&quot;, &quot;Cancel&quot; and &quot;Create Task&quot;. Empty date saves as an empty string. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskFormModal.jsx EMPTY_FORM; src/utils/tasks.js normalizeValues; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-007]]></docid><title><![CDATA[Successful creation and persistence]]></title>
+<version>1</version><revision>1</revision><node_order>7</node_order>
+<description><![CDATA[<p>A valid submission shall close the form, add exactly one task, save it to taskflow_tasks and immediately show &quot;Task created successfully.&quot; The saved object has a nonempty generated id and identical valid ISO createdAt/updatedAt on creation. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/App.jsx createTask/commit; src/utils/tasks.js buildTask; src/utils/storage.js saveTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-008]]></docid><title><![CDATA[All creation values retained]]></title>
+<version>1</version><revision>1</revision><node_order>8</node_order>
+<description><![CDATA[<p>A valid creation shall preserve selected priority/status/date and save trimmed title/description without altering internal spaces or line breaks. Duplicate task titles are allowed and receive distinct ids. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskFormModal.jsx handleSubmit; src/utils/tasks.js buildTask/normalizeValues; src/App.jsx createTask; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-009]]></docid><title><![CDATA[Cancel creation through every close path]]></title>
+<version>1</version><revision>1</revision><node_order>9</node_order>
+<description><![CDATA[<p>Cancel, Close (X), Escape and pressing the dark backdrop shall close New Task and discard unsaved values, without creating or persisting a task or showing a success toast. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskFormModal.jsx; src/components/Modal.jsx onKeyDown/onMouseDown/onClose; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-010]]></docid><title><![CDATA[Fresh creation form on reopen]]></title>
+<version>1</version><revision>1</revision><node_order>10</node_order>
+<description><![CDATA[<p>After dismissal or successful creation, opening New Task again shall use EMPTY_FORM and clear previously displayed validation errors. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/App.jsx conditional TaskFormModal mounting; src/components/TaskFormModal.jsx useState; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-011]]></docid><title><![CDATA[Error timing and focus]]></title>
+<version>1</version><revision>1</revision><node_order>11</node_order>
+<description><![CDATA[<p>Before the first submit validation errors shall stay hidden. Invalid submit shall keep the modal open, show all relevant field errors, set aria-invalid and focus the first invalid field (title before description). Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskFormModal.jsx submitted/errors/handleSubmit/invalid; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-012]]></docid><title><![CDATA[Live recovery after failed submit]]></title>
+<version>1</version><revision>1</revision><node_order>12</node_order>
+<description><![CDATA[<p>After the first failed submit, errors shall update on each edit. Correcting every invalid field shall permit one successful creation on the next submit. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskFormModal.jsx handleChange/submitted/handleSubmit; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-013]]></docid><title><![CDATA[Creation entry points]]></title>
+<version>1</version><revision>1</revision><node_order>13</node_order>
+<description><![CDATA[<p>With no tasks the page shall show &quot;No tasks yet&quot;, &quot;Tasks you create will appear here.&quot; and &quot;Create your first task&quot;. That button shall open the same New Task form as &quot;+ New Task&quot;. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskList.jsx empty state; src/App.jsx onCreate; src/components/EmptyState.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-A-014]]></docid><title><![CDATA[Safe literal text rendering]]></title>
+<version>1</version><revision>1</revision><node_order>14</node_order>
+<description><![CDATA[<p>Task title and description shall render as literal React text, including HTML-like content, without creating injected markup or executing scripts. Source: README.md (Requirements traceability / Exact messages / Behaviour notes); src/components/TaskCard.jsx task.title/task.description; src/components/TaskFormModal.jsx controlled values; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+</requirement-specification>

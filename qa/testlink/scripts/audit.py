@@ -2,6 +2,7 @@
 import csv
 import importlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -35,14 +36,15 @@ def audit(name):
               f"JOIN req_specs s ON s.id=r.srs_id JOIN nodes_hierarchy n ON n.id=c.testcase_id "
               f"JOIN tcversions v ON v.id=c.tcversion_id WHERE s.testproject_id={pid} AND r.req_doc_id LIKE 'REQ-{data.LETTER}-%' "
               f"AND c.is_active=1 ORDER BY r.req_doc_id,v.tc_external_id")
-    actual={(r,n.split(' - ',1)[0]) for r,n,_ in links}
+    stable_id=lambda name: re.match(r'TC-[A-Z]-[0-9]{3}',name).group(0)
+    actual={(r,stable_id(n)) for r,n,_ in links}
     expected={(rid,c['id']) for c in cases for rid in c['reqs']}
     assert actual==expected, f'Actual DB coverage differs: missing {expected-actual}, extra {actual-expected}'
     out=ROOT/'qa/project1'/name
     out.mkdir(parents=True,exist_ok=True)
     with (out/'traceability.csv').open('w',newline='') as f:
         writer=csv.writer(f,lineterminator='\n'); writer.writerow(['Requirement','Stable case ID','TestLink external ID'])
-        writer.writerows((r,n.split(' - ',1)[0],f'{PREFIX}-{ext}') for r,n,ext in links)
+        writer.writerows((r,stable_id(n),f'{PREFIX}-{ext}') for r,n,ext in links)
     result.update({'database_cases':len(rows),'database_steps':sum(int(r[4]) for r in rows),
                    'database_requirement_links':len(links),'actual_db_mapping_matches_design':True,
                    'all_cases_authored_by':data.AUTHOR,'all_cases_in_plan':True,

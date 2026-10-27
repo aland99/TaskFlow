@@ -1,8 +1,8 @@
 """Member D search, filter, sorting and list feedback design. Manual cases; no results claimed."""
 AUTHOR = 'ahmed'
-FULL_NAME = 'AhmedAzad240358'
+FULL_NAME = 'Ahmed'
 LETTER = 'D'
-TOP_SUITE = 'D - AhmedAzad240358 - Search filters and sorting'
+TOP_SUITE = 'D - Ahmed - Search filters and sorting'
 TOP_SUITE_DETAILS = (
     '<p>Member 4 / D, baseline TaskFlow main@5133a6c. Test basis: README.md TF-REQ-019 and Behaviour notes. '
     'Code: src/utils/tasks.js filterAndSortTasks/SORT_OPTIONS; src/components/TaskToolbar.jsx, TopBar.jsx, '
@@ -155,15 +155,15 @@ S3 = [
   ('Reload CORE without changing "Sort by".','"Newest first" is selected; order: "Undated Later", "Alpha-100% (urgent)", "Gamma Review", "Alpha Support", "Alpha Planning", "Beta Launch".')]),
  c(26,'Oldest first orders creation oldest first','EP - Oldest sort','REQ-D-008 REQ-D-009',[
   ('Choose "Oldest first" from "Sort by".','Order: "Beta Launch", "Alpha Planning", "Alpha Support", "Gamma Review", "Alpha-100% (urgent)", "Undated Later".')]),
- c(27,'Due soonest orders dates and ties then undated last','BVA - equal due dates and blank boundary','REQ-D-008 REQ-D-009 REQ-D-010',[
+ c(27,'Due soonest orders dates and ties then undated last','EP - earlier/later/equal/absent due-date partitions','REQ-D-008 REQ-D-009 REQ-D-010',[
   ('Choose "Due date: soonest".','Order: "Alpha Support", "Beta Launch", "Alpha Planning", "Alpha-100% (urgent)", "Undated Later", "Gamma Review".'),
   ('Inspect the 2026-11-20 tie and undated pair.','Newer "Alpha Support" precedes "Beta Launch"; undated tasks are last, newest "Undated Later" before "Gamma Review".')],importance=1),
- c(28,'Due latest reverses date order and keeps tie/blank rules','BVA - latest date and blank boundary','REQ-D-008 REQ-D-009 REQ-D-010',[
+ c(28,'Due latest reverses date order and keeps tie/blank rules','EP - descending date partitions with equal and absent dates','REQ-D-008 REQ-D-009 REQ-D-010',[
   ('Choose "Due date: latest".','Order: "Alpha-100% (urgent)", "Alpha Planning", "Alpha Support", "Beta Launch", "Undated Later", "Gamma Review".'),
   ('Inspect tied and undated tasks.','For 2026-11-20, newer "Alpha Support" precedes "Beta Launch"; undated tasks are last and newest first.')],importance=1),
- c(29,'Soonest sort places both undated tasks last','BVA - empty due-date partition','REQ-D-010',[
+ c(29,'Soonest sort places both undated tasks last','EP - empty due-date partition','REQ-D-010',[
   ('Choose "Due date: soonest".','The last two cards are "Undated Later", then "Gamma Review"; all dated tasks precede them.')]),
- c(30,'Latest sort places both undated tasks last','BVA - empty due-date partition','REQ-D-010',[
+ c(30,'Latest sort places both undated tasks last','EP - empty due-date partition','REQ-D-010',[
   ('Choose "Due date: latest".','The last two cards are "Undated Later", then "Gamma Review"; all dated tasks precede them.')]),
 ]
 
@@ -203,3 +203,17 @@ SUITES = [
  {'name':'TS-D4 - Empty states and clearing behavior','details':'Decision-table empty-state precedence and state transitions for Clear search, toolbar Clear Filters and empty-state Clear filters.','cases':S4},
 ]
 
+
+# Leader review: preserve authored IDs/counts; correct precise query oracles.
+_review_cases = {case['id']:case for suite in SUITES for case in suite['cases']}
+for _case in _review_cases.values():
+    _case['steps'] = [(a.replace('\\"', '"'), e.replace('\\"', '"')) for a,e in _case['steps']]
+_review_cases['TC-D-008']['reqs'] = ['REQ-D-003']  # punctuation matches the title, not description
+_review_cases['TC-D-005']['steps'] = [
+    ('Using the CORE fixture, change only d1.description to "Alpha billing dashboard" in stored JSON, reload, then enter "alpha" in Search.',
+     'Alpha Planning, Alpha Support, Alpha-100% (urgent), and Gamma Review appear once each. Alpha Planning matches both title and description but is not duplicated; Gamma Review matches description only.'),
+    ('Inspect result text.', 'It reads "Showing 4 of 6 tasks".')]
+_review_cases['TC-D-024']['steps'] = [
+    ('Enter "billing", choose Status "In Progress", Priority "High".', 'Only "Alpha Support" appears; it meets all three conditions.'),
+    ('Keep query and status; select Priority "Low".', 'The title is exactly No tasks match "billing"; button "Clear search". Nonblank search takes precedence even when filters also exclude all tasks.'),
+    ('Keep query "billing"; set Status "To Do" and Priority "High".', 'Only "Alpha Planning" appears. Its description contains billing and it has To Do/High.')]

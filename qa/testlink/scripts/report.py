@@ -64,6 +64,9 @@ def printed(query):
     }</style>'''
     html = re.sub(r'(<table\b[^>]*class="tc"[^>]*>)',
                   r'\1<colgroup><col style="width:12%"><col style="width:44%"><col style="width:44%"></colgroup>', html)
+    # Stable IDs must remain copyable and unbroken in related-case cells.
+    html = re.sub(r'\b((?:TC|REQ)-[A-E]-[0-9]{3})\b',
+                  r'<span style="white-space:nowrap">\1</span>', html)
     return html.replace("<head>", f'<head><base href="{BASE}/lib/results/">', 1).replace('</head>', css+'</head>')
 
 
@@ -89,14 +92,17 @@ top = sql(f"SELECT id FROM nodes_hierarchy WHERE node_type_id=2 AND parent_id={P
 if not top:
     sys.exit(f"suite '{data.TOP_SUITE}' not in TestLink - run load.py {NAME} first")
 SUITE = top[0][0]
-pdf(printed(f"type=testspec&level=testsuite&id={SUITE}"), f"{cap}_TestLink_Test_Case_Report.pdf")
+if '--basis-only' not in sys.argv:
+    pdf(printed(f"type=testspec&level=testsuite&id={SUITE}"), f"{cap}_TestLink_Test_Case_Report.pdf")
 
 # test basis: this tester's requirement specs only, one document
 docs = [printed(f"type=reqspec&level=reqspec&id={sid}")
         for (sid,) in [sql(f"SELECT id FROM req_specs WHERE doc_id='{s['doc_id']}'")[0] for s in data.REQ_SPECS]]
 body = lambda h: h.split("<body", 1)[1].split(">", 1)[1].rsplit("</body>", 1)[0]  # noqa: E731
-pdf(docs[0].rsplit("</body>", 1)[0] + "".join(body(d) for d in docs[1:]) + "</body></html>",
+pdf(docs[0].rsplit("</body>", 1)[0] + "".join('<div style="break-before:page"></div>'+body(d) for d in docs[1:]) + "</body></html>",
     f"{cap}_Test_Basis_Requirements.pdf")
+if '--basis-only' in sys.argv:
+    sys.exit()
 
 page = get(f"/lib/testcases/tcExport.php?containerID={SUITE}&tproject_id={PID}&useRecursion=1")
 xml = get("/lib/testcases/tcExport.php", {

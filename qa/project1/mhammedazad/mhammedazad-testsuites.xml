@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite id="36" name="B - MhammedAzad - Editing and deletion" >
-<node_order><![CDATA[0]]></node_order>
-<details><![CDATA[<p>Member 2 / B: MhammedAzad. Group TaskFlow; leader Aland Karwan. SECJ3343 Project 1 Test Case Design, due 27 October 2026. Basis: README.md TF-REQ-009 through TF-REQ-015 and editing persistence in TF-REQ-018, TaskFlow main@5133a6c. Code-derived refinements are identified in the requirements.</p><p>Scope: prefilled edits, valid and rejected edits, identity/timestamps, every edit dismissal path, priority edit persistence, exact deletion confirmation, every deletion dismissal path, intended-target isolation and repeated operations. Creation, text boundary sweeps, enum/date partitions, counts/status transitions, queries, general storage recovery and navigation belong to other members. Their actions are setup only. All cases are manual and Not Run.</p><p>Each case independently resets ONLY a disposable Chrome profile at http://localhost:5173 using the complete fixture instructions in its preconditions. Never use personal task storage. Read ISO timestamps in stored JSON, not the minute-resolution Created label. Observe specified success messages within three seconds. Numbered steps are generated from the ordered action/expected-result tuples.</p>]]></details>
-<testsuite id="38" name="TS-B1 - Prefilled editing and committed changes" >
+<testsuite id="1250" name="B - Mhamad - Editing and deletion" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>Member 2 / B: Mhamad (GitHub MhammedAzad). Group TaskFlow; leader Aland Karwan. SECJ3343 Project 1 Test Case Design, due 27 October 2026. Basis: README.md TF-REQ-009 through TF-REQ-015 and editing persistence in TF-REQ-018, TaskFlow main@5133a6c. Code-derived refinements are identified in the requirements.</p><p>Scope: prefilled edits, valid and rejected edits, identity/timestamps, every edit dismissal path, priority edit persistence, exact deletion confirmation, every deletion dismissal path, intended-target isolation and repeated operations. Creation, text boundary sweeps, enum/date partitions, counts/status transitions, queries, general storage recovery and navigation belong to other members. Their actions are setup only. All cases are manual and Not Run.</p><p>Each case independently resets ONLY a disposable Chrome profile at http://localhost:5173 using the complete fixture instructions in its preconditions. Never use personal task storage. Read ISO timestamps in stored JSON, not the day-resolution Created label. Observe specified success messages within three seconds. Numbered steps are generated from the ordered action/expected-result tuples.</p>]]></details>
+<testsuite id="1251" name="TS-B1 - Prefilled editing and committed changes" >
 <node_order><![CDATA[1]]></node_order>
 <details><![CDATA[<p>18 independent manual cases; valid/rejected edits, atomicity, identity/timestamps, latest-value/target isolation and priority persistence. Representative invalid text inputs exercise edit rejection; A owns comprehensive text boundaries; C owns enum/date semantics.</p>]]></details>
 
-<testcase internalid="39" name="TC-B-001 - Prefill all saved fields">
+<testcase internalid="1252" name="TC-B-001 - Prefill all saved fields">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-001 - Prefill all saved fields.</p><p><b>Test design technique:</b> Use Case - selected existing task opens for edit</p><p><b>Requirements:</b> REQ-B-001</p>]]></summary>
@@ -55,7 +55,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="44" name="TC-B-002 - Prefill empty optional fields">
+<testcase internalid="1257" name="TC-B-002 - Prefill empty optional fields">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-002 - Prefill empty optional fields.</p><p><b>Test design technique:</b> EP - existing task with absent optional content</p><p><b>Requirements:</b> REQ-B-001</p>]]></summary>
@@ -104,7 +104,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="49" name="TC-B-003 - Save title-only edit with identity retained">
+<testcase internalid="1262" name="TC-B-003 - Save title-only edit with identity retained">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-003 - Save title-only edit with identity retained.</p><p><b>Test design technique:</b> Use Case - single-field edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
@@ -159,7 +159,7 @@
 	</requirements>
 </testcase>
 
-<testcase internalid="54" name="TC-B-004 - Save description-only edit">
+<testcase internalid="1267" name="TC-B-004 - Save description-only edit">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-004 - Save description-only edit.</p><p><b>Test design technique:</b> Use Case - optional text edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
@@ -216,7 +216,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="59" name="TC-B-005 - Save all editable fields together">
+<testcase internalid="1272" name="TC-B-005 - Save all editable fields together">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-005 - Save all editable fields together.</p><p><b>Test design technique:</b> Use Case - complete valid edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-006</p>]]></summary>
@@ -284,7 +284,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="65" name="TC-B-006 - Clear existing optional description and date">
+<testcase internalid="1278" name="TC-B-006 - Clear existing optional description and date">
 	<node_order><![CDATA[6]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-006 - Clear existing optional description and date.</p><p><b>Test design technique:</b> EP - valid removal of optional values during edit</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
@@ -346,7 +346,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="71" name="TC-B-007 - Save unchanged form still updates metadata">
+<testcase internalid="1284" name="TC-B-007 - Save unchanged form still updates metadata">
 	<node_order><![CDATA[7]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-007 - Save unchanged form still updates metadata.</p><p><b>Test design technique:</b> Error Guessing - no-op submit still calls updateTask</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003</p>]]></summary>
@@ -394,7 +394,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="75" name="TC-B-008 - Edit one same-title sibling only">
+<testcase internalid="1288" name="TC-B-008 - Edit one same-title sibling only">
 	<node_order><![CDATA[8]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-008 - Edit one same-title sibling only.</p><p><b>Test design technique:</b> Error Guessing - target identity differs despite equal titles</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-007</p>]]></summary>
@@ -455,7 +455,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="80" name="TC-B-009 - Repeat edits to the same task">
+<testcase internalid="1293" name="TC-B-009 - Repeat edits to the same task">
 	<node_order><![CDATA[9]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-009 - Repeat edits to the same task.</p><p><b>Test design technique:</b> State Transition - saved original -&gt; saved revision one -&gt; saved revision two</p><p><b>Requirements:</b> REQ-B-001, REQ-B-003, REQ-B-007</p>]]></summary>
@@ -523,7 +523,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="86" name="TC-B-010 - Edit different tasks in sequence">
+<testcase internalid="1299" name="TC-B-010 - Edit different tasks in sequence">
 	<node_order><![CDATA[10]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-010 - Edit different tasks in sequence.</p><p><b>Test design technique:</b> State Transition - A edit saved -&gt; B edit opened</p><p><b>Requirements:</b> REQ-B-001, REQ-B-007</p>]]></summary>
@@ -578,7 +578,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="91" name="TC-B-011 - Reject blank-title edit atomically">
+<testcase internalid="1304" name="TC-B-011 - Reject blank-title edit atomically">
 	<node_order><![CDATA[11]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-011 - Reject blank-title edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
@@ -634,7 +634,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="97" name="TC-B-012 - Reject short-title edit atomically">
+<testcase internalid="1310" name="TC-B-012 - Reject short-title edit atomically">
 	<node_order><![CDATA[12]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-012 - Reject short-title edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
@@ -690,7 +690,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="103" name="TC-B-013 - Reject overlong-title edit atomically">
+<testcase internalid="1316" name="TC-B-013 - Reject overlong-title edit atomically">
 	<node_order><![CDATA[13]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-013 - Reject overlong-title edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
@@ -746,7 +746,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="109" name="TC-B-014 - Reject overlong-description edit atomically">
+<testcase internalid="1322" name="TC-B-014 - Reject overlong-description edit atomically">
 	<node_order><![CDATA[14]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-014 - Reject overlong-description edit atomically.</p><p><b>Test design technique:</b> EP - representative invalid edit partition</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
@@ -802,7 +802,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="115" name="TC-B-015 - Reject two invalid fields without partial save">
+<testcase internalid="1328" name="TC-B-015 - Reject two invalid fields without partial save">
 	<node_order><![CDATA[15]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-015 - Reject two invalid fields without partial save.</p><p><b>Test design technique:</b> Decision Table - title valid=No, description valid=No, remaining fields valid=Yes; action=reject entire edit</p><p><b>Requirements:</b> REQ-B-004</p>]]></summary>
@@ -858,7 +858,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="121" name="TC-B-016 - Correct rejected edit and save once">
+<testcase internalid="1334" name="TC-B-016 - Correct rejected edit and save once">
 	<node_order><![CDATA[16]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-016 - Correct rejected edit and save once.</p><p><b>Test design technique:</b> State Transition - edit draft -&gt; rejected draft -&gt; corrected saved task</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-004, REQ-B-005</p>]]></summary>
@@ -925,7 +925,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="126" name="TC-B-017 - Save priority edit and retain it after reload">
+<testcase internalid="1339" name="TC-B-017 - Save priority edit and retain it after reload">
 	<node_order><![CDATA[17]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-017 - Save priority edit and retain it after reload.</p><p><b>Test design technique:</b> Use Case - priority-only edit persistence</p><p><b>Requirements:</b> REQ-B-002, REQ-B-003, REQ-B-006</p>]]></summary>
@@ -993,7 +993,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="132" name="TC-B-018 - Latest repeated priority edit wins">
+<testcase internalid="1345" name="TC-B-018 - Latest repeated priority edit wins">
 	<node_order><![CDATA[18]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-018 - Latest repeated priority edit wins.</p><p><b>Test design technique:</b> State Transition - saved Low -&gt; saved High -&gt; saved Medium</p><p><b>Requirements:</b> REQ-B-003, REQ-B-006, REQ-B-007</p>]]></summary>
@@ -1053,11 +1053,11 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 		</requirement>
 	</requirements>
 </testcase>
-</testsuite><testsuite id="137" name="TS-B2 - Editing cancellation and draft isolation" >
+</testsuite><testsuite id="1350" name="TS-B2 - Editing cancellation and draft isolation" >
 <node_order><![CDATA[2]]></node_order>
 <details><![CDATA[<p>9 independent manual cases; Cancel, Close X, Escape, dark backdrop, invalid/unchanged drafts, clean reopening, interior hit testing and abandoned priority changes. Dialog focus/navigation accessibility is owned by E.</p>]]></details>
 
-<testcase internalid="138" name="TC-B-019 - Discard dirty edit using Cancel button">
+<testcase internalid="1351" name="TC-B-019 - Discard dirty edit using Cancel button">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-019 - Discard dirty edit using Cancel button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
@@ -1119,7 +1119,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="144" name="TC-B-020 - Discard dirty edit using Close X button">
+<testcase internalid="1357" name="TC-B-020 - Discard dirty edit using Close X button">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-020 - Discard dirty edit using Close X button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
@@ -1181,7 +1181,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="150" name="TC-B-021 - Discard dirty edit using Escape key">
+<testcase internalid="1363" name="TC-B-021 - Discard dirty edit using Escape key">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-021 - Discard dirty edit using Escape key.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
@@ -1243,7 +1243,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="156" name="TC-B-022 - Discard dirty edit using dark backdrop">
+<testcase internalid="1369" name="TC-B-022 - Discard dirty edit using dark backdrop">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-022 - Discard dirty edit using dark backdrop.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; dirty editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
@@ -1305,7 +1305,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="162" name="TC-B-023 - Cancel a rejected draft">
+<testcase internalid="1375" name="TC-B-023 - Cancel a rejected draft">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-023 - Cancel a rejected draft.</p><p><b>Test design technique:</b> State Transition - rejected editing -&gt; closed without commit</p><p><b>Requirements:</b> REQ-B-004, REQ-B-008</p>]]></summary>
@@ -1360,7 +1360,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="167" name="TC-B-024 - Cancel untouched edit without advancing timestamp">
+<testcase internalid="1380" name="TC-B-024 - Cancel untouched edit without advancing timestamp">
 	<node_order><![CDATA[6]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-024 - Cancel untouched edit without advancing timestamp.</p><p><b>Test design technique:</b> EP - unchanged edit dismissed rather than saved</p><p><b>Requirements:</b> REQ-B-008</p>]]></summary>
@@ -1402,7 +1402,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="171" name="TC-B-025 - Reopen after rejected draft dismissal clears draft and errors">
+<testcase internalid="1384" name="TC-B-025 - Reopen after rejected draft dismissal clears draft and errors">
 	<node_order><![CDATA[7]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-025 - Reopen after rejected draft dismissal clears draft and errors.</p><p><b>Test design technique:</b> State Transition - rejected editing -&gt; closed -&gt; fresh editing</p><p><b>Requirements:</b> REQ-B-001, REQ-B-008, REQ-B-009</p>]]></summary>
@@ -1470,7 +1470,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="177" name="TC-B-026 - Clicking inside edit modal does not discard draft">
+<testcase internalid="1390" name="TC-B-026 - Clicking inside edit modal does not discard draft">
 	<node_order><![CDATA[8]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-026 - Clicking inside edit modal does not discard draft.</p><p><b>Test design technique:</b> Error Guessing - bubbling mousedown from interior</p><p><b>Requirements:</b> REQ-B-010</p>]]></summary>
@@ -1519,7 +1519,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="182" name="TC-B-027 - Cancel priority-only change then reload">
+<testcase internalid="1395" name="TC-B-027 - Cancel priority-only change then reload">
 	<node_order><![CDATA[9]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-027 - Cancel priority-only change then reload.</p><p><b>Test design technique:</b> Use Case - abandoned priority edit persistence</p><p><b>Requirements:</b> REQ-B-008, REQ-B-009</p>]]></summary>
@@ -1573,11 +1573,11 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 		</requirement>
 	</requirements>
 </testcase>
-</testsuite><testsuite id="187" name="TS-B3 - Deletion confirmation and repeated targeting" >
+</testsuite><testsuite id="1400" name="TS-B3 - Deletion confirmation and repeated targeting" >
 <node_order><![CDATA[3]]></node_order>
 <details><![CDATA[<p>14 independent manual cases; exact current-title warning, confirm, all four dismissal paths, interior click, sole/duplicate-title task identities, repeated/mixed operations. No execution or passing result is implied.</p>]]></details>
 
-<testcase internalid="188" name="TC-B-028 - Exact confirmation before any deletion">
+<testcase internalid="1401" name="TC-B-028 - Exact confirmation before any deletion">
 	<node_order><![CDATA[1]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-028 - Exact confirmation before any deletion.</p><p><b>Test design technique:</b> Use Case - request deletion without confirmation</p><p><b>Requirements:</b> REQ-B-011</p>]]></summary>
@@ -1626,7 +1626,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="193" name="TC-B-029 - Confirmation uses latest saved title and punctuation">
+<testcase internalid="1406" name="TC-B-029 - Confirmation uses latest saved title and punctuation">
 	<node_order><![CDATA[2]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-029 - Confirmation uses latest saved title and punctuation.</p><p><b>Test design technique:</b> Error Guessing - stale title or quote interpolation</p><p><b>Requirements:</b> REQ-B-001, REQ-B-002, REQ-B-011</p>]]></summary>
@@ -1694,7 +1694,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="199" name="TC-B-030 - Confirm deletion leaves siblings intact">
+<testcase internalid="1412" name="TC-B-030 - Confirm deletion leaves siblings intact">
 	<node_order><![CDATA[3]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-030 - Confirm deletion leaves siblings intact.</p><p><b>Test design technique:</b> Use Case - requested deletion -&gt; confirmed removal</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012</p>]]></summary>
@@ -1742,7 +1742,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="203" name="TC-B-031 - Confirm deletion of the sole remaining task">
+<testcase internalid="1416" name="TC-B-031 - Confirm deletion of the sole remaining task">
 	<node_order><![CDATA[4]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-031 - Confirm deletion of the sole remaining task.</p><p><b>Test design technique:</b> EP - one-task deletion partition</p><p><b>Requirements:</b> REQ-B-012</p>]]></summary>
@@ -1791,7 +1791,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="208" name="TC-B-032 - Delete only intended same-title sibling">
+<testcase internalid="1421" name="TC-B-032 - Delete only intended same-title sibling">
 	<node_order><![CDATA[5]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-032 - Delete only intended same-title sibling.</p><p><b>Test design technique:</b> Error Guessing - duplicate titles must not select by title</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012</p>]]></summary>
@@ -1846,7 +1846,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="213" name="TC-B-033 - Dismiss deletion using Cancel button">
+<testcase internalid="1426" name="TC-B-033 - Dismiss deletion using Cancel button">
 	<node_order><![CDATA[6]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-033 - Dismiss deletion using Cancel button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
@@ -1895,7 +1895,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="218" name="TC-B-034 - Dismiss deletion using Close X button">
+<testcase internalid="1431" name="TC-B-034 - Dismiss deletion using Close X button">
 	<node_order><![CDATA[7]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-034 - Dismiss deletion using Close X button.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
@@ -1944,7 +1944,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="223" name="TC-B-035 - Dismiss deletion using Escape key">
+<testcase internalid="1436" name="TC-B-035 - Dismiss deletion using Escape key">
 	<node_order><![CDATA[8]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-035 - Dismiss deletion using Escape key.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
@@ -1993,7 +1993,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="228" name="TC-B-036 - Dismiss deletion using dark backdrop">
+<testcase internalid="1441" name="TC-B-036 - Dismiss deletion using dark backdrop">
 	<node_order><![CDATA[9]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-036 - Dismiss deletion using dark backdrop.</p><p><b>Test design technique:</b> State Transition - saved task -&gt; awaiting confirmation -&gt; saved task retained</p><p><b>Requirements:</b> REQ-B-013</p>]]></summary>
@@ -2042,7 +2042,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="233" name="TC-B-037 - Interior deletion click is not a confirmation or dismissal">
+<testcase internalid="1446" name="TC-B-037 - Interior deletion click is not a confirmation or dismissal">
 	<node_order><![CDATA[10]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-037 - Interior deletion click is not a confirmation or dismissal.</p><p><b>Test design technique:</b> Error Guessing - event bubbling within confirmation dialog</p><p><b>Requirements:</b> REQ-B-010, REQ-B-011, REQ-B-013</p>]]></summary>
@@ -2103,7 +2103,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="238" name="TC-B-038 - Reopen after canceled deletion targets newly selected task">
+<testcase internalid="1451" name="TC-B-038 - Reopen after canceled deletion targets newly selected task">
 	<node_order><![CDATA[11]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-038 - Reopen after canceled deletion targets newly selected task.</p><p><b>Test design technique:</b> State Transition - A confirmation canceled -&gt; B confirmation opened</p><p><b>Requirements:</b> REQ-B-011, REQ-B-013, REQ-B-014</p>]]></summary>
@@ -2164,7 +2164,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="243" name="TC-B-039 - Repeated cancellation then one confirmed deletion">
+<testcase internalid="1456" name="TC-B-039 - Repeated cancellation then one confirmed deletion">
 	<node_order><![CDATA[12]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-039 - Repeated cancellation then one confirmed deletion.</p><p><b>Test design technique:</b> State Transition - confirmation -&gt; cancel -&gt; confirmation -&gt; cancel -&gt; confirmation -&gt; removed</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012, REQ-B-013, REQ-B-014</p>]]></summary>
@@ -2231,7 +2231,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="248" name="TC-B-040 - Consecutive deletions never reuse old target">
+<testcase internalid="1461" name="TC-B-040 - Consecutive deletions never reuse old target">
 	<node_order><![CDATA[13]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-040 - Consecutive deletions never reuse old target.</p><p><b>Test design technique:</b> State Transition - three saved -&gt; A removed -&gt; B removed</p><p><b>Requirements:</b> REQ-B-011, REQ-B-012, REQ-B-014</p>]]></summary>
@@ -2292,7 +2292,7 @@ Bring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>]]></expect
 	</requirements>
 </testcase>
 
-<testcase internalid="253" name="TC-B-041 - Canceled edit does not contaminate subsequent deletion">
+<testcase internalid="1466" name="TC-B-041 - Canceled edit does not contaminate subsequent deletion">
 	<node_order><![CDATA[14]]></node_order>
 	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>TC-B-041 - Canceled edit does not contaminate subsequent deletion.</p><p><b>Test design technique:</b> State Transition - dirty editing -&gt; canceled -&gt; deletion confirmation -&gt; removed</p><p><b>Requirements:</b> REQ-B-008, REQ-B-011, REQ-B-012, REQ-B-014</p>]]></summary>

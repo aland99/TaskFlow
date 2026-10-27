@@ -253,7 +253,7 @@ date_cases += [
         ('Load tasks due 2026-02-09, 2028-02-29 and 2026-12-31.', 'Cards display respectively "Due: Feb 9, 2026", "Due: Feb 29, 2028" and "Due: Dec 31, 2026".'),
         ('Call formatDueDate with those same strings in the utility harness.', 'The returned strings are respectively "Feb 9, 2026", "Feb 29, 2028" and "Dec 31, 2026".'),
     ], pre='Use exact local calendar date values. This formatting assertion is independent of current date/time.'),
-    case(41, 'Local today helpers use fixed local date rather than wall clock', 'BVA - fixed local Date at date boundary; unit harness', 'REQ-C-008', [
+    case(41, 'Local today helpers use fixed local date rather than wall clock', 'Use Case - fixed local clock and reproducible date formatting; unit harness', 'REQ-C-008', [
         ("Under TZ=Asia/Baghdad create new Date(2026, 9, 27, 12, 0, 0); call todayString(date).", 'The result is exactly "2026-10-27".'),
         ("Call formatToday(date).", 'The result is exactly "Tuesday, October 27, 2026".'),
         ('Repeat on a machine whose wall clock is after October 2026 using the same constructed Date.', 'Both expected results remain the fixed October 27, 2026 local values; neither assertion depends on the machine current date.'),
@@ -274,3 +274,26 @@ SUITES = [
      'details': 'Fixed Asia/Baghdad reference day, explicit date-relation × completion decision table, local midnight boundary and stable formatting.',
      'cases': date_cases[10:]},
 ]
+
+# Leader review: use a distinct initial status so native selects really emit change.
+for _case in enum_cases:
+    if _case['id'] in ('TC-C-004','TC-C-005','TC-C-006'):
+        _target = ('To Do','In Progress','Completed')[int(_case['id'][-3:])-4]
+        _initial = 'In Progress' if _target == 'To Do' else 'To Do'
+        _case['pre'] = _case['pre'].replace('with status To Do,', 'with status '+_initial+',')
+        _case['pre'] += ' Initial saved updatedAt is 2026-01-01T00:00:00.000Z; the reference clock is later.'
+for _suite in SUITES:
+    for _case in _suite['cases']:
+        if 'transition' in _case['name'].lower() or 'Same-state' in _case['name']:
+            _case['pre'] += ' Seed createdAt and updatedAt as 2026-01-01T00:00:00.000Z so the first reference-clock mutation advances updatedAt.'
+TOP_SUITE_DETAILS += ('<p>Reproducible UI clock: set the disposable browser timezone to Asia/Baghdad. After loading the case fixture and reloading, run in DevTools: '
+    'window.CRealDate=Date; window.CFixed=Date.parse("2026-10-27T12:00:00+03:00"); '
+    'window.Date=class extends CRealDate {constructor(...a){super(...(a.length?a:[CFixed]))} static now(){return CFixed}}; '
+    'then type a temporary search query and clear it to force a React render. This freezes application Date calls for this page only; reload restores Date. '
+    'For Node utility checks run TZ=Asia/Baghdad node --input-type=module and import functions from the cited src/utils/*.js files. '
+    'Each manually seeded task needs a distinct string id, a title of at least 3 code points, description "", valid priority/status, dueDate "" unless specified, '
+    'and createdAt/updatedAt 2026-01-01T00:00:00.000Z. Summary fixtures named A/B/C use valid titles Task A/Task B/Task C.</p>')
+_midnight = next(c for s in SUITES for c in s['cases'] if c['id']=='TC-C-039')
+_midnight['steps'].insert(0, (
+    "Under TZ=Asia/Baghdad call todayString(new Date(value)) for 2026-10-26T20:59:59.999Z, 2026-10-26T21:00:00.000Z and 2026-10-26T21:00:00.001Z.",
+    'The returned dates are 2026-10-26, 2026-10-27 and 2026-10-27 respectively: immediately before, at and after local midnight.'))

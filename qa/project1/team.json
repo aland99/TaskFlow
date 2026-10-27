@@ -4,34 +4,48 @@
     "letter": "A",
     "login": "aland",
     "name": "Aland Karwan",
-    "area": "Creation and text validation"
+    "area": "Creation and text validation",
+    "github": "aland99",
+    "data_file": "aland_testdata.py"
   },
   {
     "slot": 2,
     "letter": "B",
-    "login": "lanya",
-    "name": "Lanya",
-    "area": "Editing and deletion"
+    "login": "mhammedazad",
+    "name": "Mhamad",
+    "area": "Editing and deletion",
+    "github": "MhammedAzad",
+    "data_file": "mhammedazad_testdata.py",
+    "pr": 1
   },
   {
     "slot": 3,
     "letter": "C",
-    "login": "mhamad",
-    "name": "Mhamad",
-    "area": "Status, priority, calendar dates and summary counts"
+    "login": "lanya",
+    "name": "Lanya Faraidun",
+    "area": "Status, priority, calendar dates and summary counts",
+    "github": "LanyaaFaraidun",
+    "data_file": "lanya_testdata.py",
+    "pr": 2
   },
   {
     "slot": 4,
     "letter": "D",
     "login": "ahmed",
     "name": "Ahmed",
-    "area": "Search, filters, sorting and filtered empty states"
+    "area": "Search, filters, sorting and filtered empty states",
+    "github": "AhmedAzad240358",
+    "data_file": "ahmed_testdata.py",
+    "pr": 3
   },
   {
     "slot": 5,
     "letter": "E",
     "login": "rasan",
-    "name": "Rasan",
-    "area": "Storage recovery, navigation, responsive layout and accessibility"
+    "name": "Rasan soran",
+    "area": "Storage recovery, navigation, responsive layout and accessibility",
+    "github": "Rasan21",
+    "data_file": "rasan_testdata.py",
+    "pr": 4
   }
 ]
