@@ -28,7 +28,7 @@ Verification/: actual database audit, CSV mappings, PDF checks and group review 
 
 IDENTITY RECONCILIATION
 The original prompts inferred GitHub names. Mhamad submitted B as mhammedazad (GitHub MhammedAzad); Lanya submitted C. Actual authored areas and IDs are preserved.
-Every member contributed their own PR (#1 through #4); Aland reviewed/integrated and generated all reports locally.
+Each of the four teammates contributed a PR (#1 through #4). Aland authored area A, reviewed/integrated the work and generated all reports locally.
 Rasan could not run TestLink in his environment; his original designs were imported and printed on the leader laptop.
 
 SUBMISSION ACTIONS
