@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-10-26T21:24:25.137Z",
+  "browser": "156.0.8078.48",
+  "kind": "Automated design-oracle spot checks; not full execution of all manual cases. No TestLink execution results were recorded.",
+  "results": [
+    {
+      "check": "Five fields prefilled",
+      "design_case_ids": [
+        "TC-B-001"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Title edit preserves identity/timestamps and siblings",
+      "design_case_ids": [
+        "TC-B-003"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Invalid edit blocks whole update",
+      "design_case_ids": [
+        "TC-B-011"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Corrected invalid draft commits",
+      "design_case_ids": [
+        "TC-B-016"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "All four edit close paths discard drafts",
+      "design_case_ids": [
+        "TC-B-019",
+        "TC-B-020",
+        "TC-B-021",
+        "TC-B-022"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Priority edit survives reload/reopen",
+      "design_case_ids": [
+        "TC-B-017"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Exact warning and all four delete close paths preserve data",
+      "design_case_ids": [
+        "TC-B-028",
+        "TC-B-033",
+        "TC-B-034",
+        "TC-B-035",
+        "TC-B-036"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Confirm removes only selected id",
+      "design_case_ids": [
+        "TC-B-030"
+      ],
+      "outcome": "observed as expected"
+    },
+    {
+      "check": "Duplicate-title deletion uses id",
+      "design_case_ids": [
+        "TC-B-032"
+      ],
+      "outcome": "observed as expected"
+    }
+  ]
+}

@@ -1,0 +1,2047 @@
+{
+  "plan": {
+    "id": "37",
+    "name": "Project 1 - Test Case Design",
+    "notes": "SECJ3343 Project 1 manual case design; no execution results claimed.",
+    "active": "1",
+    "is_public": "1",
+    "testproject_id": "1"
+  },
+  "build": {
+    "id": "1",
+    "testplan_id": "37",
+    "name": "TaskFlow main@5133a6c",
+    "notes": "<p>https://github.com/aland99/TaskFlow main@5133a6c; design only.</p>",
+    "active": "1",
+    "is_open": "1",
+    "release_date": "",
+    "closed_on_date": "",
+    "creation_ts": "2026-10-26 21:45:39"
+  },
+  "assigned_member_id": 7,
+  "records": [
+    {
+      "tcase_name": "TC-B-001 - Prefill all saved fields",
+      "tcase_id": "39",
+      "tc_id": "39",
+      "tcversion_id": "40",
+      "version": "1",
+      "external_id": "1",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "1",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-1",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "41",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "42",
+          "step_number": "2",
+          "actions": "<p>Inspect the five form controls without changing or submitting them.</p>",
+          "expected_results": "<p>Task Title &quot;Prepare sprint review&quot;; Description &quot;Agenda draft&quot;; Priority &quot;Low&quot;; Status &quot;In Progress&quot;; Due Date value &quot;2028-02-29&quot;. No saved value has been replaced by a creation default.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "43",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes; no edit is committed.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-002 - Prefill empty optional fields",
+      "tcase_id": "44",
+      "tc_id": "44",
+      "tcversion_id": "45",
+      "version": "1",
+      "external_id": "2",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "2",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-2",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "46",
+          "step_number": "1",
+          "actions": "<p>For this case only, before opening edit, set B.description to &quot;&quot; in stored JSON and reload; recapture bBefore.</p>",
+          "expected_results": "<p>Fixture B is available with description &quot;&quot; and dueDate &quot;&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "47",
+          "step_number": "2",
+          "actions": "<p>Click &quot;Edit Book meeting room&quot;.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; has title &quot;Book meeting room&quot;, empty Description and Due Date, &quot;Medium&quot;, &quot;To Do&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "48",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes without saving.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-003 - Save title-only edit with identity retained",
+      "tcase_id": "49",
+      "tc_id": "49",
+      "tcversion_id": "50",
+      "version": "1",
+      "external_id": "3",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "3",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-3",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "51",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "52",
+          "step_number": "2",
+          "actions": "<p>Replace Task Title with &quot;Prepare final sprint review&quot;; leave other controls unchanged.</p>",
+          "expected_results": "<p>Draft title is &quot;Prepare final sprint review&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "53",
+          "step_number": "3",
+          "actions": "<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>",
+          "expected_results": "<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.title is &quot;Prepare final sprint review&quot;; description, priority, status and dueDate equal bBefore A.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-004 - Save description-only edit",
+      "tcase_id": "54",
+      "tc_id": "54",
+      "tcversion_id": "55",
+      "version": "1",
+      "external_id": "4",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "4",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-4",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "56",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "57",
+          "step_number": "2",
+          "actions": "<p>Replace Description with &quot;Final agenda\nBring demo&quot;.</p>",
+          "expected_results": "<p>Draft retains the two entered lines.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "58",
+          "step_number": "3",
+          "actions": "<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>",
+          "expected_results": "<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.description is exactly &quot;Final agenda\nBring demo&quot;; A title/priority/status/dueDate stay unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-005 - Save all editable fields together",
+      "tcase_id": "59",
+      "tc_id": "59",
+      "tcversion_id": "60",
+      "version": "1",
+      "external_id": "5",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "5",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-5",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "61",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "62",
+          "step_number": "2",
+          "actions": "<p>Enter title &quot;Review launch plan&quot;, description &quot;Review checklist&quot;; select High, Completed; set Due Date to 2028-03-15.</p>",
+          "expected_results": "<p>Draft contains those five values (status/date selection is setup, not a validation or status/count assertion).</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "63",
+          "step_number": "3",
+          "actions": "<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>",
+          "expected_results": "<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A stores &quot;Review launch plan&quot;, &quot;Review checklist&quot;, &quot;High&quot;, &quot;Completed&quot;, &quot;2028-03-15&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "64",
+          "step_number": "4",
+          "actions": "<p>Reopen &quot;Edit Review launch plan&quot;.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; contains all five saved values.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-006 - Clear existing optional description and date",
+      "tcase_id": "65",
+      "tc_id": "65",
+      "tcversion_id": "66",
+      "version": "1",
+      "external_id": "6",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "6",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-6",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "67",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "68",
+          "step_number": "2",
+          "actions": "<p>Clear Description and Due Date; leave the other values unchanged.</p>",
+          "expected_results": "<p>Both optional controls are empty.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "69",
+          "step_number": "3",
+          "actions": "<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>",
+          "expected_results": "<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.description and A.dueDate are both &quot;&quot;; other editable values remain unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "70",
+          "step_number": "4",
+          "actions": "<p>Reopen A edit.</p>",
+          "expected_results": "<p>Description and Due Date are empty in &quot;Edit Task&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-007 - Save unchanged form still updates metadata",
+      "tcase_id": "71",
+      "tc_id": "71",
+      "tcversion_id": "72",
+      "version": "1",
+      "external_id": "7",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "7",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-7",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "73",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "74",
+          "step_number": "2",
+          "actions": "<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>",
+          "expected_results": "<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. All five editable values equal bBefore A; only updatedAt changes.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-008 - Edit one same-title sibling only",
+      "tcase_id": "75",
+      "tc_id": "75",
+      "tcversion_id": "76",
+      "version": "1",
+      "external_id": "8",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "8",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-8",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "77",
+          "step_number": "1",
+          "actions": "<p>Before opening edit, set B.title to &quot;Prepare sprint review&quot; in stored JSON; reload; recapture bBefore.</p>",
+          "expected_results": "<p>A and B share the title but retain ids b-alpha and b-beta and distinct descriptions.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "78",
+          "step_number": "2",
+          "actions": "<p>Within the card whose description is &quot;Room 4&quot;, click Edit; replace Description with &quot;Room 7&quot;.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens with B&#x27;s values and accepts the draft description.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "79",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Save Changes&quot;; inspect JSON by id.</p>",
+          "expected_results": "<p>&quot;Task updated successfully.&quot;; only b-beta.description becomes &quot;Room 7&quot; and its updatedAt advances. Its id/createdAt stay unchanged; A and C equal bBefore. There are still three objects.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-009 - Repeat edits to the same task",
+      "tcase_id": "80",
+      "tc_id": "80",
+      "tcversion_id": "81",
+      "version": "1",
+      "external_id": "9",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "9",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-9",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "82",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "83",
+          "step_number": "2",
+          "actions": "<p>Set Description to &quot;Revision one&quot;; save; inspect A JSON and record first updatedAt.</p>",
+          "expected_results": "<p>&quot;Task updated successfully.&quot;; A.description &quot;Revision one&quot;; original id/createdAt preserved.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "84",
+          "step_number": "3",
+          "actions": "<p>Wait at least 1 second; reopen A edit, set Description to &quot;Revision two&quot;; save.</p>",
+          "expected_results": "<p>Form initially shows &quot;Revision one&quot;; closes with &quot;Task updated successfully.&quot; after save.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "85",
+          "step_number": "4",
+          "actions": "<p>Inspect JSON by id.</p>",
+          "expected_results": "<p>Only A contains &quot;Revision two&quot;; updatedAt is later than the first save. No extra object; B/C unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-010 - Edit different tasks in sequence",
+      "tcase_id": "86",
+      "tc_id": "86",
+      "tcversion_id": "87",
+      "version": "1",
+      "external_id": "10",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "10",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-10",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "88",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "89",
+          "step_number": "2",
+          "actions": "<p>Set Description to &quot;A revised&quot;; click &quot;Save Changes&quot;; then click &quot;Edit Book meeting room&quot;.</p>",
+          "expected_results": "<p>Edit success toast; new &quot;Edit Task&quot; shows B: &quot;Book meeting room&quot;, &quot;Room 4&quot;, &quot;Medium&quot;, &quot;To Do&quot;, empty date.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "90",
+          "step_number": "3",
+          "actions": "<p>Set Description to &quot;B revised&quot;; save; inspect JSON.</p>",
+          "expected_results": "<p>&quot;Task updated successfully.&quot;; A has &quot;A revised&quot;, B has &quot;B revised&quot;. Their original ids/createdAt remain; C unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-011 - Reject blank-title edit atomically",
+      "tcase_id": "91",
+      "tc_id": "91",
+      "tcversion_id": "92",
+      "version": "1",
+      "external_id": "11",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "11",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-11",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "93",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "94",
+          "step_number": "2",
+          "actions": "<p>Replace Task Title with three spaces. Also select High as a proposed valid edit.</p>",
+          "expected_results": "<p>Draft is entered; stored A still has Low.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "95",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; stays open. &quot;Title is required.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "96",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes; original A remains.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-012 - Reject short-title edit atomically",
+      "tcase_id": "97",
+      "tc_id": "97",
+      "tcversion_id": "98",
+      "version": "1",
+      "external_id": "12",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "12",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-12",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "99",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "100",
+          "step_number": "2",
+          "actions": "<p>Replace Task Title with &quot;ab&quot;. Also select High as a proposed valid edit.</p>",
+          "expected_results": "<p>Draft is entered; stored A still has Low.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "101",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; stays open. &quot;Title must be at least 3 characters.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "102",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes; original A remains.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-013 - Reject overlong-title edit atomically",
+      "tcase_id": "103",
+      "tc_id": "103",
+      "tcversion_id": "104",
+      "version": "1",
+      "external_id": "13",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "13",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-13",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "105",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "106",
+          "step_number": "2",
+          "actions": "<p>Use DevTools copy(&quot;x&quot;.repeat(81)); close Console and paste into Task Title. Also select High as a proposed valid edit.</p>",
+          "expected_results": "<p>Draft is entered; stored A still has Low.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "107",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; stays open. &quot;Title must be 80 characters or fewer.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "108",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes; original A remains.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-014 - Reject overlong-description edit atomically",
+      "tcase_id": "109",
+      "tc_id": "109",
+      "tcversion_id": "110",
+      "version": "1",
+      "external_id": "14",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "14",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-14",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "111",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "112",
+          "step_number": "2",
+          "actions": "<p>Use DevTools copy(&quot;d&quot;.repeat(501)); close Console and paste into Description. Also select High as a proposed valid edit.</p>",
+          "expected_results": "<p>Draft is entered; stored A still has Low.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "113",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; stays open. &quot;Description must be 500 characters or fewer.&quot; is displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "114",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes; original A remains.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-015 - Reject two invalid fields without partial save",
+      "tcase_id": "115",
+      "tc_id": "115",
+      "tcversion_id": "116",
+      "version": "1",
+      "external_id": "15",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "15",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-15",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "117",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "118",
+          "step_number": "2",
+          "actions": "<p>Clear Task Title; paste exactly 501 copies of d into Description using copy(&quot;d&quot;.repeat(501)). Also select High as a proposed valid edit.</p>",
+          "expected_results": "<p>Draft is entered; stored A still has Low.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "119",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Save Changes&quot;; inspect stored JSON without reloading.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; stays open. Both &quot;Title is required.&quot; and &quot;Description must be 500 characters or fewer.&quot; are displayed. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears. Priority remains Low in saved A; the valid field change is not partially saved.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "120",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes; original A remains.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-016 - Correct rejected edit and save once",
+      "tcase_id": "121",
+      "tc_id": "121",
+      "tcversion_id": "122",
+      "version": "1",
+      "external_id": "16",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "16",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-16",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "123",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "124",
+          "step_number": "2",
+          "actions": "<p>Clear Task Title; set Description to &quot;Revised agenda&quot;; click &quot;Save Changes&quot;.</p>",
+          "expected_results": "<p>&quot;Title is required.&quot;; &quot;Edit Task&quot; stays open; Description draft remains &quot;Revised agenda&quot;; stored JSON equals bBefore.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "125",
+          "step_number": "3",
+          "actions": "<p>Replace Task Title with &quot;Prepare corrected review&quot;; click &quot;Save Changes&quot;; inspect JSON.</p>",
+          "expected_results": "<p>Form closes; &quot;Task updated successfully.&quot;; A stores corrected title and &quot;Revised agenda&quot;; same id/createdAt, later updatedAt. Three objects; B and C unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tcase_id": "126",
+      "tc_id": "126",
+      "tcversion_id": "127",
+      "version": "1",
+      "external_id": "17",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "17",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-17",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "128",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "129",
+          "step_number": "2",
+          "actions": "<p>Change Priority from Low to High; leave every other form value unchanged.</p>",
+          "expected_results": "<p>Priority control shows &quot;High&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "130",
+          "step_number": "3",
+          "actions": "<p>Record new Date().toISOString() in Console immediately before save; close Console, click &quot;Save Changes&quot;, observe toast, record the time again and inspect saved JSON.</p>",
+          "expected_results": "<p>Dialog closes; &quot;Task updated successfully.&quot; appears. Stored array has the same three ids; A retains id b-alpha and createdAt 2026-01-01T09:00:00.000Z; updatedAt is valid ISO, later than 2026-01-02T10:00:00.000Z and within the recorded save interval. B and C are field-for-field unchanged from bBefore. A.priority &quot;High&quot;; its other form values are unchanged; A card badge &quot;High&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "131",
+          "step_number": "4",
+          "actions": "<p>Reload; inspect A JSON; reopen A edit.</p>",
+          "expected_results": "<p>A.priority is still &quot;High&quot;; &quot;Edit Task&quot; Priority is &quot;High&quot;; id and createdAt remain the original values.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-018 - Latest repeated priority edit wins",
+      "tcase_id": "132",
+      "tc_id": "132",
+      "tcversion_id": "133",
+      "version": "1",
+      "external_id": "18",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "18",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-18",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "134",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "135",
+          "step_number": "2",
+          "actions": "<p>Choose High; save; record A.updatedAt; wait at least 1 second; reopen A edit.</p>",
+          "expected_results": "<p>&quot;Task updated successfully.&quot;; reopened Priority is &quot;High&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "136",
+          "step_number": "3",
+          "actions": "<p>Choose Medium; save; reload; inspect A JSON and reopen edit.</p>",
+          "expected_results": "<p>&quot;Task updated successfully.&quot; at save; latest saved/control/card priority is &quot;Medium&quot;. Same id/createdAt; updatedAt later than the first save. B/C unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-019 - Discard dirty edit using Cancel button",
+      "tcase_id": "138",
+      "tc_id": "138",
+      "tcversion_id": "139",
+      "version": "1",
+      "external_id": "19",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "19",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-19",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "140",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "141",
+          "step_number": "2",
+          "actions": "<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>",
+          "expected_results": "<p>Draft values are visible in &quot;Edit Task&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "142",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "143",
+          "step_number": "4",
+          "actions": "<p>Reopen A edit.</p>",
+          "expected_results": "<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-020 - Discard dirty edit using Close X button",
+      "tcase_id": "144",
+      "tc_id": "144",
+      "tcversion_id": "145",
+      "version": "1",
+      "external_id": "20",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "20",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-20",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "146",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "147",
+          "step_number": "2",
+          "actions": "<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>",
+          "expected_results": "<p>Draft values are visible in &quot;Edit Task&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "148",
+          "step_number": "3",
+          "actions": "<p>Click the dialog X button with accessible label &quot;Close&quot;.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "149",
+          "step_number": "4",
+          "actions": "<p>Reopen A edit.</p>",
+          "expected_results": "<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-021 - Discard dirty edit using Escape key",
+      "tcase_id": "150",
+      "tc_id": "150",
+      "tcversion_id": "151",
+      "version": "1",
+      "external_id": "21",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "21",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-21",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "152",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "153",
+          "step_number": "2",
+          "actions": "<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>",
+          "expected_results": "<p>Draft values are visible in &quot;Edit Task&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "154",
+          "step_number": "3",
+          "actions": "<p>Press Escape while Task Title is focused.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "155",
+          "step_number": "4",
+          "actions": "<p>Reopen A edit.</p>",
+          "expected_results": "<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-022 - Discard dirty edit using dark backdrop",
+      "tcase_id": "156",
+      "tc_id": "156",
+      "tcversion_id": "157",
+      "version": "1",
+      "external_id": "22",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "22",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-22",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "158",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "159",
+          "step_number": "2",
+          "actions": "<p>Change title to &quot;Discarded draft&quot;, Description to &quot;Unsaved agenda&quot; and Priority to High.</p>",
+          "expected_results": "<p>Draft values are visible in &quot;Edit Task&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "160",
+          "step_number": "3",
+          "actions": "<p>Press and release the mouse on the dark backdrop outside the white dialog.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "161",
+          "step_number": "4",
+          "actions": "<p>Reopen A edit.</p>",
+          "expected_results": "<p>Title &quot;Prepare sprint review&quot;, Description &quot;Agenda draft&quot;, Priority &quot;Low&quot;; no discarded values.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-023 - Cancel a rejected draft",
+      "tcase_id": "162",
+      "tc_id": "162",
+      "tcversion_id": "163",
+      "version": "1",
+      "external_id": "23",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "23",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-23",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "164",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "165",
+          "step_number": "2",
+          "actions": "<p>Clear Task Title; click &quot;Save Changes&quot;.</p>",
+          "expected_results": "<p>&quot;Title is required.&quot;; dialog stays open; saved JSON unchanged.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "166",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;; inspect JSON.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-024 - Cancel untouched edit without advancing timestamp",
+      "tcase_id": "167",
+      "tc_id": "167",
+      "tcversion_id": "168",
+      "version": "1",
+      "external_id": "24",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "24",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-24",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "169",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "170",
+          "step_number": "2",
+          "actions": "<p>Without touching any field, click &quot;Cancel&quot;; inspect raw JSON.</p>",
+          "expected_results": "<p>Dialog closes. All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tcase_id": "171",
+      "tc_id": "171",
+      "tcversion_id": "172",
+      "version": "1",
+      "external_id": "25",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "25",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-25",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "173",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "174",
+          "step_number": "2",
+          "actions": "<p>Clear title; set Description to &quot;Abandoned revision&quot;; click &quot;Save Changes&quot;.</p>",
+          "expected_results": "<p>&quot;Title is required.&quot;; draft Description remains &quot;Abandoned revision&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "175",
+          "step_number": "3",
+          "actions": "<p>Press Escape; reopen A edit.</p>",
+          "expected_results": "<p>New &quot;Edit Task&quot; contains &quot;Prepare sprint review&quot; and &quot;Agenda draft&quot;; previous &quot;Title is required.&quot; is absent.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "176",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;; inspect JSON.</p>",
+          "expected_results": "<p>All stored objects equal bBefore field-for-field, including id, createdAt and updatedAt. No &quot;Task updated successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-026 - Clicking inside edit modal does not discard draft",
+      "tcase_id": "177",
+      "tc_id": "177",
+      "tcversion_id": "178",
+      "version": "1",
+      "external_id": "26",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "26",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-26",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "179",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "180",
+          "step_number": "2",
+          "actions": "<p>Set Description to &quot;Interior draft&quot;; click the &quot;Edit Task&quot; heading, then click the Description control.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; remains open with &quot;Interior draft&quot;; neither click saves or discards it.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "181",
+          "step_number": "3",
+          "actions": "<p>Inspect stored JSON without reload; then click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Stored JSON equals bBefore; Cancel closes the draft.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-027 - Cancel priority-only change then reload",
+      "tcase_id": "182",
+      "tc_id": "182",
+      "tcversion_id": "183",
+      "version": "1",
+      "external_id": "27",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "27",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-27",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "184",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "185",
+          "step_number": "2",
+          "actions": "<p>Choose High; click &quot;Cancel&quot;; reload and inspect A JSON; reopen A edit.</p>",
+          "expected_results": "<p>A.priority stays &quot;Low&quot; in JSON and the form; no &quot;Task updated successfully.&quot; from cancellation; all fields and timestamps equal bBefore A.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "186",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes without saving.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-028 - Exact confirmation before any deletion",
+      "tcase_id": "188",
+      "tc_id": "188",
+      "tcversion_id": "189",
+      "version": "1",
+      "external_id": "28",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "28",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-28",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "190",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "191",
+          "step_number": "2",
+          "actions": "<p>Read the dialog heading, full text and buttons; inspect JSON without reloading.</p>",
+          "expected_results": "<p>Heading &quot;Delete Task&quot;; text exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone. Buttons &quot;Cancel&quot;, &quot;Confirm Delete&quot;; all saved objects still equal bBefore.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "192",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Dialog closes without deleting.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tcase_id": "193",
+      "tc_id": "193",
+      "tcversion_id": "194",
+      "version": "1",
+      "external_id": "29",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "29",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-29",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "195",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "196",
+          "step_number": "2",
+          "actions": "<p>Set title to the exact text Review &quot;Beta&quot; &amp; notes; save; click Delete on that newly titled card.</p>",
+          "expected_results": "<p>&quot;Task updated successfully.&quot; at save; &quot;Delete Task&quot; opens for b-alpha.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "197",
+          "step_number": "3",
+          "actions": "<p>Read full confirmation text.</p>",
+          "expected_results": "<p>Exactly: Are you sure you want to delete &quot;Review &quot;Beta&quot; &amp; notes&quot;? This cannot be undone. Original title &quot;Prepare sprint review&quot; is not used in the confirmation; no deletion yet.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "198",
+          "step_number": "4",
+          "actions": "<p>Click &quot;Cancel&quot;.</p>",
+          "expected_results": "<p>Edited task remains saved with its current title.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-030 - Confirm deletion leaves siblings intact",
+      "tcase_id": "199",
+      "tc_id": "199",
+      "tcversion_id": "200",
+      "version": "1",
+      "external_id": "30",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "30",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-30",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "201",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "202",
+          "step_number": "2",
+          "actions": "<p>Click &quot;Confirm Delete&quot;; observe toast, inspect stored objects, then reload.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes; &quot;Task deleted successfully.&quot; appears. Only b-alpha is absent from taskflow_tasks; B and C are unchanged, including all timestamps. Reload still contains exactly B and C.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-031 - Confirm deletion of the sole remaining task",
+      "tcase_id": "203",
+      "tc_id": "203",
+      "tcversion_id": "204",
+      "version": "1",
+      "external_id": "31",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "31",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-31",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "205",
+          "step_number": "1",
+          "actions": "<p>Before opening deletion, replace stored array with only fixture A; reload; recapture bBefore.</p>",
+          "expected_results": "<p>Exactly the valid fixture A is present (fixture setup only).</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "206",
+          "step_number": "2",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "207",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Confirm Delete&quot;; observe toast; inspect taskflow_tasks and reload.</p>",
+          "expected_results": "<p>Dialog closes with &quot;Task deleted successfully.&quot;; taskflow_tasks is [] and remains [] after reload; no task with id b-alpha exists. Empty-state copy/counts are outside this assertion.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-032 - Delete only intended same-title sibling",
+      "tcase_id": "208",
+      "tc_id": "208",
+      "tcversion_id": "209",
+      "version": "1",
+      "external_id": "32",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "32",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-32",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "210",
+          "step_number": "1",
+          "actions": "<p>Before deletion set B.title to &quot;Prepare sprint review&quot; in stored JSON; reload; recapture bBefore.</p>",
+          "expected_results": "<p>A/B share a title and retain different ids/descriptions.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "211",
+          "step_number": "2",
+          "actions": "<p>Within the card with Description &quot;Room 4&quot;, click Delete.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; says exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "212",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Confirm Delete&quot;; inspect JSON and reload.</p>",
+          "expected_results": "<p>&quot;Task deleted successfully.&quot;; only b-beta is removed; A and C exactly equal their bBefore objects. The remaining same-title card is A with &quot;Agenda draft&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-033 - Dismiss deletion using Cancel button",
+      "tcase_id": "213",
+      "tc_id": "213",
+      "tcversion_id": "214",
+      "version": "1",
+      "external_id": "33",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "33",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-33",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "215",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "216",
+          "step_number": "2",
+          "actions": "<p>Click &quot;Cancel&quot;. Inspect stored JSON.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "217",
+          "step_number": "3",
+          "actions": "<p>Reload; inspect saved JSON again.</p>",
+          "expected_results": "<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-034 - Dismiss deletion using Close X button",
+      "tcase_id": "218",
+      "tc_id": "218",
+      "tcversion_id": "219",
+      "version": "1",
+      "external_id": "34",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "34",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-34",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "220",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "221",
+          "step_number": "2",
+          "actions": "<p>Click X with accessible label &quot;Close&quot;. Inspect stored JSON.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "222",
+          "step_number": "3",
+          "actions": "<p>Reload; inspect saved JSON again.</p>",
+          "expected_results": "<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-035 - Dismiss deletion using Escape key",
+      "tcase_id": "223",
+      "tc_id": "223",
+      "tcversion_id": "224",
+      "version": "1",
+      "external_id": "35",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "35",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-35",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "225",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "226",
+          "step_number": "2",
+          "actions": "<p>Press Escape while the dialog is open. Inspect stored JSON.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "227",
+          "step_number": "3",
+          "actions": "<p>Reload; inspect saved JSON again.</p>",
+          "expected_results": "<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-036 - Dismiss deletion using dark backdrop",
+      "tcase_id": "228",
+      "tc_id": "228",
+      "tcversion_id": "229",
+      "version": "1",
+      "external_id": "36",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "36",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-36",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "230",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "231",
+          "step_number": "2",
+          "actions": "<p>Press and release on the dark backdrop outside the white dialog. Inspect stored JSON.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes. All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "232",
+          "step_number": "3",
+          "actions": "<p>Reload; inspect saved JSON again.</p>",
+          "expected_results": "<p>All three original objects remain, including b-alpha and its unchanged timestamps.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tcase_id": "233",
+      "tc_id": "233",
+      "tcversion_id": "234",
+      "version": "1",
+      "external_id": "37",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "37",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-37",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "235",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "236",
+          "step_number": "2",
+          "actions": "<p>Click the warning paragraph (not a button).</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; stays open with exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone. No object is changed or removed.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "237",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Cancel&quot;; inspect JSON.</p>",
+          "expected_results": "<p>All three saved objects equal bBefore field-for-field including timestamps; A is still present. No &quot;Task deleted successfully.&quot; appears.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tcase_id": "238",
+      "tc_id": "238",
+      "tcversion_id": "239",
+      "version": "1",
+      "external_id": "38",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "38",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-38",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "240",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "241",
+          "step_number": "2",
+          "actions": "<p>Click &quot;Cancel&quot;; click &quot;Delete Book meeting room&quot;.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; now says exactly: Are you sure you want to delete &quot;Book meeting room&quot;? This cannot be undone. A is not used as the new confirmation target.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "242",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Confirm Delete&quot;; inspect JSON.</p>",
+          "expected_results": "<p>&quot;Task deleted successfully.&quot;; only b-beta is removed. A and C equal bBefore.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tcase_id": "243",
+      "tc_id": "243",
+      "tcversion_id": "244",
+      "version": "1",
+      "external_id": "39",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "39",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-39",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "245",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "246",
+          "step_number": "2",
+          "actions": "<p>Click &quot;Cancel&quot;; reopen A Delete; press Escape; reopen A Delete.</p>",
+          "expected_results": "<p>Both dismissals retain all original objects; each reopened dialog contains exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "247",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Confirm Delete&quot; once; inspect JSON and reload.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes; &quot;Task deleted successfully.&quot; appears. Only b-alpha is absent from taskflow_tasks; B and C are unchanged, including all timestamps. Reload still contains exactly B and C. There is no second pending deletion dialog.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tcase_id": "248",
+      "tc_id": "248",
+      "tcversion_id": "249",
+      "version": "1",
+      "external_id": "40",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "40",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-40",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "250",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Delete Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; opens; A is still present.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "251",
+          "step_number": "2",
+          "actions": "<p>Confirm Delete A, then click &quot;Delete Book meeting room&quot;.</p>",
+          "expected_results": "<p>First toast &quot;Task deleted successfully.&quot;; second dialog warns exactly: Are you sure you want to delete &quot;Book meeting room&quot;? This cannot be undone.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "252",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Confirm Delete&quot; on B; observe toast; inspect JSON; reload.</p>",
+          "expected_results": "<p>Second &quot;Task deleted successfully.&quot;; only fixture C remains, identical field-for-field to bBefore C; both b-alpha and b-beta are absent.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    },
+    {
+      "tcase_name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tcase_id": "253",
+      "tc_id": "253",
+      "tcversion_id": "254",
+      "version": "1",
+      "external_id": "41",
+      "execution_type": "1",
+      "status": "1",
+      "feature_id": "41",
+      "platform_id": "0",
+      "platform_name": "",
+      "execution_order": "1",
+      "exec_status": "n",
+      "execution_duration": "",
+      "full_external_id": "TF-41",
+      "exec_id": "0",
+      "tcversion_number": "",
+      "exec_on_build": "",
+      "exec_on_tplan": "",
+      "steps": [
+        {
+          "id": "255",
+          "step_number": "1",
+          "actions": "<p>Click &quot;Edit Prepare sprint review&quot; on A.</p>",
+          "expected_results": "<p>&quot;Edit Task&quot; opens for A with &quot;Cancel&quot; and &quot;Save Changes&quot;.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "256",
+          "step_number": "2",
+          "actions": "<p>Replace title with &quot;Unsaved deletion title&quot;; click &quot;Cancel&quot;; click &quot;Delete Prepare sprint review&quot;.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; shows exactly Are you sure you want to delete &quot;Prepare sprint review&quot;? This cannot be undone. The abandoned title is not used.</p>",
+          "active": "1",
+          "execution_type": "1"
+        },
+        {
+          "id": "257",
+          "step_number": "3",
+          "actions": "<p>Click &quot;Confirm Delete&quot;; inspect JSON and reload.</p>",
+          "expected_results": "<p>&quot;Delete Task&quot; closes; &quot;Task deleted successfully.&quot; appears. Only b-alpha is absent from taskflow_tasks; B and C are unchanged, including all timestamps. Reload still contains exactly B and C.</p>",
+          "active": "1",
+          "execution_type": "1"
+        }
+      ]
+    }
+  ]
+}

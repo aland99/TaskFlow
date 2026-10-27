@@ -1,0 +1,12 @@
+[
+  {
+    "author": "mhammedazad",
+    "letter": "B",
+    "specifications": 3,
+    "requirements": 14,
+    "suites": 3,
+    "test_cases": 41,
+    "covered_requirements": 14,
+    "coverage_percent": 100
+  }
+]

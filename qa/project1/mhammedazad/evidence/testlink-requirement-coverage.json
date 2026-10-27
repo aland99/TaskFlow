@@ -1,0 +1,943 @@
+{
+  "REQ-B-001": [
+    {
+      "id": "39",
+      "tcase_id": "39",
+      "name": "TC-B-001 - Prefill all saved fields",
+      "tcase_name": "TC-B-001 - Prefill all saved fields",
+      "tc_external_id": "1",
+      "version": "1",
+      "tcversion_id": "40",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "44",
+      "tcase_id": "44",
+      "name": "TC-B-002 - Prefill empty optional fields",
+      "tcase_name": "TC-B-002 - Prefill empty optional fields",
+      "tc_external_id": "2",
+      "version": "1",
+      "tcversion_id": "45",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "80",
+      "tcase_id": "80",
+      "name": "TC-B-009 - Repeat edits to the same task",
+      "tcase_name": "TC-B-009 - Repeat edits to the same task",
+      "tc_external_id": "9",
+      "version": "1",
+      "tcversion_id": "81",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "86",
+      "tcase_id": "86",
+      "name": "TC-B-010 - Edit different tasks in sequence",
+      "tcase_name": "TC-B-010 - Edit different tasks in sequence",
+      "tc_external_id": "10",
+      "version": "1",
+      "tcversion_id": "87",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "171",
+      "tcase_id": "171",
+      "name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tcase_name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tc_external_id": "25",
+      "version": "1",
+      "tcversion_id": "172",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "193",
+      "tcase_id": "193",
+      "name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tcase_name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tc_external_id": "29",
+      "version": "1",
+      "tcversion_id": "194",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-002": [
+    {
+      "id": "49",
+      "tcase_id": "49",
+      "name": "TC-B-003 - Save title-only edit with identity retained",
+      "tcase_name": "TC-B-003 - Save title-only edit with identity retained",
+      "tc_external_id": "3",
+      "version": "1",
+      "tcversion_id": "50",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "54",
+      "tcase_id": "54",
+      "name": "TC-B-004 - Save description-only edit",
+      "tcase_name": "TC-B-004 - Save description-only edit",
+      "tc_external_id": "4",
+      "version": "1",
+      "tcversion_id": "55",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "59",
+      "tcase_id": "59",
+      "name": "TC-B-005 - Save all editable fields together",
+      "tcase_name": "TC-B-005 - Save all editable fields together",
+      "tc_external_id": "5",
+      "version": "1",
+      "tcversion_id": "60",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "65",
+      "tcase_id": "65",
+      "name": "TC-B-006 - Clear existing optional description and date",
+      "tcase_name": "TC-B-006 - Clear existing optional description and date",
+      "tc_external_id": "6",
+      "version": "1",
+      "tcversion_id": "66",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "71",
+      "tcase_id": "71",
+      "name": "TC-B-007 - Save unchanged form still updates metadata",
+      "tcase_name": "TC-B-007 - Save unchanged form still updates metadata",
+      "tc_external_id": "7",
+      "version": "1",
+      "tcversion_id": "72",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "75",
+      "tcase_id": "75",
+      "name": "TC-B-008 - Edit one same-title sibling only",
+      "tcase_name": "TC-B-008 - Edit one same-title sibling only",
+      "tc_external_id": "8",
+      "version": "1",
+      "tcversion_id": "76",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "121",
+      "tcase_id": "121",
+      "name": "TC-B-016 - Correct rejected edit and save once",
+      "tcase_name": "TC-B-016 - Correct rejected edit and save once",
+      "tc_external_id": "16",
+      "version": "1",
+      "tcversion_id": "122",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "126",
+      "tcase_id": "126",
+      "name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tcase_name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tc_external_id": "17",
+      "version": "1",
+      "tcversion_id": "127",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "193",
+      "tcase_id": "193",
+      "name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tcase_name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tc_external_id": "29",
+      "version": "1",
+      "tcversion_id": "194",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-003": [
+    {
+      "id": "49",
+      "tcase_id": "49",
+      "name": "TC-B-003 - Save title-only edit with identity retained",
+      "tcase_name": "TC-B-003 - Save title-only edit with identity retained",
+      "tc_external_id": "3",
+      "version": "1",
+      "tcversion_id": "50",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "54",
+      "tcase_id": "54",
+      "name": "TC-B-004 - Save description-only edit",
+      "tcase_name": "TC-B-004 - Save description-only edit",
+      "tc_external_id": "4",
+      "version": "1",
+      "tcversion_id": "55",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "59",
+      "tcase_id": "59",
+      "name": "TC-B-005 - Save all editable fields together",
+      "tcase_name": "TC-B-005 - Save all editable fields together",
+      "tc_external_id": "5",
+      "version": "1",
+      "tcversion_id": "60",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "65",
+      "tcase_id": "65",
+      "name": "TC-B-006 - Clear existing optional description and date",
+      "tcase_name": "TC-B-006 - Clear existing optional description and date",
+      "tc_external_id": "6",
+      "version": "1",
+      "tcversion_id": "66",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "71",
+      "tcase_id": "71",
+      "name": "TC-B-007 - Save unchanged form still updates metadata",
+      "tcase_name": "TC-B-007 - Save unchanged form still updates metadata",
+      "tc_external_id": "7",
+      "version": "1",
+      "tcversion_id": "72",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "75",
+      "tcase_id": "75",
+      "name": "TC-B-008 - Edit one same-title sibling only",
+      "tcase_name": "TC-B-008 - Edit one same-title sibling only",
+      "tc_external_id": "8",
+      "version": "1",
+      "tcversion_id": "76",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "80",
+      "tcase_id": "80",
+      "name": "TC-B-009 - Repeat edits to the same task",
+      "tcase_name": "TC-B-009 - Repeat edits to the same task",
+      "tc_external_id": "9",
+      "version": "1",
+      "tcversion_id": "81",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "121",
+      "tcase_id": "121",
+      "name": "TC-B-016 - Correct rejected edit and save once",
+      "tcase_name": "TC-B-016 - Correct rejected edit and save once",
+      "tc_external_id": "16",
+      "version": "1",
+      "tcversion_id": "122",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "126",
+      "tcase_id": "126",
+      "name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tcase_name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tc_external_id": "17",
+      "version": "1",
+      "tcversion_id": "127",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "132",
+      "tcase_id": "132",
+      "name": "TC-B-018 - Latest repeated priority edit wins",
+      "tcase_name": "TC-B-018 - Latest repeated priority edit wins",
+      "tc_external_id": "18",
+      "version": "1",
+      "tcversion_id": "133",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-004": [
+    {
+      "id": "91",
+      "tcase_id": "91",
+      "name": "TC-B-011 - Reject blank-title edit atomically",
+      "tcase_name": "TC-B-011 - Reject blank-title edit atomically",
+      "tc_external_id": "11",
+      "version": "1",
+      "tcversion_id": "92",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "97",
+      "tcase_id": "97",
+      "name": "TC-B-012 - Reject short-title edit atomically",
+      "tcase_name": "TC-B-012 - Reject short-title edit atomically",
+      "tc_external_id": "12",
+      "version": "1",
+      "tcversion_id": "98",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "103",
+      "tcase_id": "103",
+      "name": "TC-B-013 - Reject overlong-title edit atomically",
+      "tcase_name": "TC-B-013 - Reject overlong-title edit atomically",
+      "tc_external_id": "13",
+      "version": "1",
+      "tcversion_id": "104",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "109",
+      "tcase_id": "109",
+      "name": "TC-B-014 - Reject overlong-description edit atomically",
+      "tcase_name": "TC-B-014 - Reject overlong-description edit atomically",
+      "tc_external_id": "14",
+      "version": "1",
+      "tcversion_id": "110",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "115",
+      "tcase_id": "115",
+      "name": "TC-B-015 - Reject two invalid fields without partial save",
+      "tcase_name": "TC-B-015 - Reject two invalid fields without partial save",
+      "tc_external_id": "15",
+      "version": "1",
+      "tcversion_id": "116",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "121",
+      "tcase_id": "121",
+      "name": "TC-B-016 - Correct rejected edit and save once",
+      "tcase_name": "TC-B-016 - Correct rejected edit and save once",
+      "tc_external_id": "16",
+      "version": "1",
+      "tcversion_id": "122",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "162",
+      "tcase_id": "162",
+      "name": "TC-B-023 - Cancel a rejected draft",
+      "tcase_name": "TC-B-023 - Cancel a rejected draft",
+      "tc_external_id": "23",
+      "version": "1",
+      "tcversion_id": "163",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-005": [
+    {
+      "id": "121",
+      "tcase_id": "121",
+      "name": "TC-B-016 - Correct rejected edit and save once",
+      "tcase_name": "TC-B-016 - Correct rejected edit and save once",
+      "tc_external_id": "16",
+      "version": "1",
+      "tcversion_id": "122",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-006": [
+    {
+      "id": "59",
+      "tcase_id": "59",
+      "name": "TC-B-005 - Save all editable fields together",
+      "tcase_name": "TC-B-005 - Save all editable fields together",
+      "tc_external_id": "5",
+      "version": "1",
+      "tcversion_id": "60",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "126",
+      "tcase_id": "126",
+      "name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tcase_name": "TC-B-017 - Save priority edit and retain it after reload",
+      "tc_external_id": "17",
+      "version": "1",
+      "tcversion_id": "127",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "132",
+      "tcase_id": "132",
+      "name": "TC-B-018 - Latest repeated priority edit wins",
+      "tcase_name": "TC-B-018 - Latest repeated priority edit wins",
+      "tc_external_id": "18",
+      "version": "1",
+      "tcversion_id": "133",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-007": [
+    {
+      "id": "75",
+      "tcase_id": "75",
+      "name": "TC-B-008 - Edit one same-title sibling only",
+      "tcase_name": "TC-B-008 - Edit one same-title sibling only",
+      "tc_external_id": "8",
+      "version": "1",
+      "tcversion_id": "76",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "80",
+      "tcase_id": "80",
+      "name": "TC-B-009 - Repeat edits to the same task",
+      "tcase_name": "TC-B-009 - Repeat edits to the same task",
+      "tc_external_id": "9",
+      "version": "1",
+      "tcversion_id": "81",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "86",
+      "tcase_id": "86",
+      "name": "TC-B-010 - Edit different tasks in sequence",
+      "tcase_name": "TC-B-010 - Edit different tasks in sequence",
+      "tc_external_id": "10",
+      "version": "1",
+      "tcversion_id": "87",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "132",
+      "tcase_id": "132",
+      "name": "TC-B-018 - Latest repeated priority edit wins",
+      "tcase_name": "TC-B-018 - Latest repeated priority edit wins",
+      "tc_external_id": "18",
+      "version": "1",
+      "tcversion_id": "133",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-008": [
+    {
+      "id": "138",
+      "tcase_id": "138",
+      "name": "TC-B-019 - Discard dirty edit using Cancel button",
+      "tcase_name": "TC-B-019 - Discard dirty edit using Cancel button",
+      "tc_external_id": "19",
+      "version": "1",
+      "tcversion_id": "139",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "144",
+      "tcase_id": "144",
+      "name": "TC-B-020 - Discard dirty edit using Close X button",
+      "tcase_name": "TC-B-020 - Discard dirty edit using Close X button",
+      "tc_external_id": "20",
+      "version": "1",
+      "tcversion_id": "145",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "150",
+      "tcase_id": "150",
+      "name": "TC-B-021 - Discard dirty edit using Escape key",
+      "tcase_name": "TC-B-021 - Discard dirty edit using Escape key",
+      "tc_external_id": "21",
+      "version": "1",
+      "tcversion_id": "151",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "156",
+      "tcase_id": "156",
+      "name": "TC-B-022 - Discard dirty edit using dark backdrop",
+      "tcase_name": "TC-B-022 - Discard dirty edit using dark backdrop",
+      "tc_external_id": "22",
+      "version": "1",
+      "tcversion_id": "157",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "162",
+      "tcase_id": "162",
+      "name": "TC-B-023 - Cancel a rejected draft",
+      "tcase_name": "TC-B-023 - Cancel a rejected draft",
+      "tc_external_id": "23",
+      "version": "1",
+      "tcversion_id": "163",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "167",
+      "tcase_id": "167",
+      "name": "TC-B-024 - Cancel untouched edit without advancing timestamp",
+      "tcase_name": "TC-B-024 - Cancel untouched edit without advancing timestamp",
+      "tc_external_id": "24",
+      "version": "1",
+      "tcversion_id": "168",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "171",
+      "tcase_id": "171",
+      "name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tcase_name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tc_external_id": "25",
+      "version": "1",
+      "tcversion_id": "172",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "182",
+      "tcase_id": "182",
+      "name": "TC-B-027 - Cancel priority-only change then reload",
+      "tcase_name": "TC-B-027 - Cancel priority-only change then reload",
+      "tc_external_id": "27",
+      "version": "1",
+      "tcversion_id": "183",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "253",
+      "tcase_id": "253",
+      "name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tcase_name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tc_external_id": "41",
+      "version": "1",
+      "tcversion_id": "254",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-009": [
+    {
+      "id": "138",
+      "tcase_id": "138",
+      "name": "TC-B-019 - Discard dirty edit using Cancel button",
+      "tcase_name": "TC-B-019 - Discard dirty edit using Cancel button",
+      "tc_external_id": "19",
+      "version": "1",
+      "tcversion_id": "139",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "144",
+      "tcase_id": "144",
+      "name": "TC-B-020 - Discard dirty edit using Close X button",
+      "tcase_name": "TC-B-020 - Discard dirty edit using Close X button",
+      "tc_external_id": "20",
+      "version": "1",
+      "tcversion_id": "145",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "150",
+      "tcase_id": "150",
+      "name": "TC-B-021 - Discard dirty edit using Escape key",
+      "tcase_name": "TC-B-021 - Discard dirty edit using Escape key",
+      "tc_external_id": "21",
+      "version": "1",
+      "tcversion_id": "151",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "156",
+      "tcase_id": "156",
+      "name": "TC-B-022 - Discard dirty edit using dark backdrop",
+      "tcase_name": "TC-B-022 - Discard dirty edit using dark backdrop",
+      "tc_external_id": "22",
+      "version": "1",
+      "tcversion_id": "157",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "171",
+      "tcase_id": "171",
+      "name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tcase_name": "TC-B-025 - Reopen after rejected draft dismissal clears draft and errors",
+      "tc_external_id": "25",
+      "version": "1",
+      "tcversion_id": "172",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "182",
+      "tcase_id": "182",
+      "name": "TC-B-027 - Cancel priority-only change then reload",
+      "tcase_name": "TC-B-027 - Cancel priority-only change then reload",
+      "tc_external_id": "27",
+      "version": "1",
+      "tcversion_id": "183",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-010": [
+    {
+      "id": "177",
+      "tcase_id": "177",
+      "name": "TC-B-026 - Clicking inside edit modal does not discard draft",
+      "tcase_name": "TC-B-026 - Clicking inside edit modal does not discard draft",
+      "tc_external_id": "26",
+      "version": "1",
+      "tcversion_id": "178",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "233",
+      "tcase_id": "233",
+      "name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tcase_name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tc_external_id": "37",
+      "version": "1",
+      "tcversion_id": "234",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-011": [
+    {
+      "id": "188",
+      "tcase_id": "188",
+      "name": "TC-B-028 - Exact confirmation before any deletion",
+      "tcase_name": "TC-B-028 - Exact confirmation before any deletion",
+      "tc_external_id": "28",
+      "version": "1",
+      "tcversion_id": "189",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "193",
+      "tcase_id": "193",
+      "name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tcase_name": "TC-B-029 - Confirmation uses latest saved title and punctuation",
+      "tc_external_id": "29",
+      "version": "1",
+      "tcversion_id": "194",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "199",
+      "tcase_id": "199",
+      "name": "TC-B-030 - Confirm deletion leaves siblings intact",
+      "tcase_name": "TC-B-030 - Confirm deletion leaves siblings intact",
+      "tc_external_id": "30",
+      "version": "1",
+      "tcversion_id": "200",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "208",
+      "tcase_id": "208",
+      "name": "TC-B-032 - Delete only intended same-title sibling",
+      "tcase_name": "TC-B-032 - Delete only intended same-title sibling",
+      "tc_external_id": "32",
+      "version": "1",
+      "tcversion_id": "209",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "233",
+      "tcase_id": "233",
+      "name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tcase_name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tc_external_id": "37",
+      "version": "1",
+      "tcversion_id": "234",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "238",
+      "tcase_id": "238",
+      "name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tcase_name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tc_external_id": "38",
+      "version": "1",
+      "tcversion_id": "239",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "243",
+      "tcase_id": "243",
+      "name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tcase_name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tc_external_id": "39",
+      "version": "1",
+      "tcversion_id": "244",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "248",
+      "tcase_id": "248",
+      "name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tcase_name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tc_external_id": "40",
+      "version": "1",
+      "tcversion_id": "249",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "253",
+      "tcase_id": "253",
+      "name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tcase_name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tc_external_id": "41",
+      "version": "1",
+      "tcversion_id": "254",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-012": [
+    {
+      "id": "199",
+      "tcase_id": "199",
+      "name": "TC-B-030 - Confirm deletion leaves siblings intact",
+      "tcase_name": "TC-B-030 - Confirm deletion leaves siblings intact",
+      "tc_external_id": "30",
+      "version": "1",
+      "tcversion_id": "200",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "203",
+      "tcase_id": "203",
+      "name": "TC-B-031 - Confirm deletion of the sole remaining task",
+      "tcase_name": "TC-B-031 - Confirm deletion of the sole remaining task",
+      "tc_external_id": "31",
+      "version": "1",
+      "tcversion_id": "204",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "208",
+      "tcase_id": "208",
+      "name": "TC-B-032 - Delete only intended same-title sibling",
+      "tcase_name": "TC-B-032 - Delete only intended same-title sibling",
+      "tc_external_id": "32",
+      "version": "1",
+      "tcversion_id": "209",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "243",
+      "tcase_id": "243",
+      "name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tcase_name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tc_external_id": "39",
+      "version": "1",
+      "tcversion_id": "244",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "248",
+      "tcase_id": "248",
+      "name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tcase_name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tc_external_id": "40",
+      "version": "1",
+      "tcversion_id": "249",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "253",
+      "tcase_id": "253",
+      "name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tcase_name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tc_external_id": "41",
+      "version": "1",
+      "tcversion_id": "254",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-013": [
+    {
+      "id": "213",
+      "tcase_id": "213",
+      "name": "TC-B-033 - Dismiss deletion using Cancel button",
+      "tcase_name": "TC-B-033 - Dismiss deletion using Cancel button",
+      "tc_external_id": "33",
+      "version": "1",
+      "tcversion_id": "214",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "218",
+      "tcase_id": "218",
+      "name": "TC-B-034 - Dismiss deletion using Close X button",
+      "tcase_name": "TC-B-034 - Dismiss deletion using Close X button",
+      "tc_external_id": "34",
+      "version": "1",
+      "tcversion_id": "219",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "223",
+      "tcase_id": "223",
+      "name": "TC-B-035 - Dismiss deletion using Escape key",
+      "tcase_name": "TC-B-035 - Dismiss deletion using Escape key",
+      "tc_external_id": "35",
+      "version": "1",
+      "tcversion_id": "224",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "228",
+      "tcase_id": "228",
+      "name": "TC-B-036 - Dismiss deletion using dark backdrop",
+      "tcase_name": "TC-B-036 - Dismiss deletion using dark backdrop",
+      "tc_external_id": "36",
+      "version": "1",
+      "tcversion_id": "229",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "233",
+      "tcase_id": "233",
+      "name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tcase_name": "TC-B-037 - Interior deletion click is not a confirmation or dismissal",
+      "tc_external_id": "37",
+      "version": "1",
+      "tcversion_id": "234",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "238",
+      "tcase_id": "238",
+      "name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tcase_name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tc_external_id": "38",
+      "version": "1",
+      "tcversion_id": "239",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "243",
+      "tcase_id": "243",
+      "name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tcase_name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tc_external_id": "39",
+      "version": "1",
+      "tcversion_id": "244",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ],
+  "REQ-B-014": [
+    {
+      "id": "238",
+      "tcase_id": "238",
+      "name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tcase_name": "TC-B-038 - Reopen after canceled deletion targets newly selected task",
+      "tc_external_id": "38",
+      "version": "1",
+      "tcversion_id": "239",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "243",
+      "tcase_id": "243",
+      "name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tcase_name": "TC-B-039 - Repeated cancellation then one confirmed deletion",
+      "tc_external_id": "39",
+      "version": "1",
+      "tcversion_id": "244",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "248",
+      "tcase_id": "248",
+      "name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tcase_name": "TC-B-040 - Consecutive deletions never reuse old target",
+      "tc_external_id": "40",
+      "version": "1",
+      "tcversion_id": "249",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    },
+    {
+      "id": "253",
+      "tcase_id": "253",
+      "name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tcase_name": "TC-B-041 - Canceled edit does not contaminate subsequent deletion",
+      "tc_external_id": "41",
+      "version": "1",
+      "tcversion_id": "254",
+      "can_be_deleted": "1",
+      "is_obsolete": "0"
+    }
+  ]
+}

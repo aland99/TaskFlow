@@ -1,0 +1,10 @@
+{
+  "test_cases": 41,
+  "child_suites": 3,
+  "requirements": 14,
+  "specifications": 3,
+  "steps": 135,
+  "active_exported_requirement_links": 83,
+  "exported_content_matches_design": true,
+  "bidirectional_mapping_matches_design_and_api_audit": true
+}

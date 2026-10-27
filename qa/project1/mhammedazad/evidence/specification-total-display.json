@@ -1,0 +1,15 @@
+{
+  "status": "Known TestLink 1.9.20 aggregate display limitation; preserved honestly",
+  "specification_totals_shown": {
+    "SRS-B-EDIT": "N/A (7/0)",
+    "SRS-B-CANCEL": "N/A (3/0)",
+    "SRS-B-DELETE": "N/A (4/0)"
+  },
+  "actual_defined_requirements": 14,
+  "actual_covered_requirements": 14,
+  "actual_active_links": 83,
+  "actual_coverage_percent": 100,
+  "explanation": "This TestLink revision omits total_req when creating a specification revision and does not update it through the edit form. Its optional aggregate expected-total field remains zero. Every individual requirement shows 100% coverage, and actual native getReqCoverage results match all 83 declared links.",
+  "correction_attempt": "Member-owned edit form retained the stable specification revision and author but did not persist the count; direct read-only Docker metadata access was denied because session escalation is disabled. Shared tooling and upstream TestLink code were not changed.",
+  "verification_source": "quality.json, xml-review.json, evidence/testlink-requirement-coverage.json and final TestLink-generated requirement PDF"
+}
