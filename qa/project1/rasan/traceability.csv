@@ -1,0 +1,43 @@
+requirement_id,test_case_id,suite
+REQ-E-002,TC-E-001,TS-E1 - Storage loading and recovery
+REQ-E-001,TC-E-002,TS-E1 - Storage loading and recovery
+REQ-E-002,TC-E-003,TS-E1 - Storage loading and recovery
+REQ-E-002,TC-E-004,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-005,TS-E1 - Storage loading and recovery
+REQ-E-004,TC-E-005,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-006,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-007,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-008,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-009,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-010,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-011,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-012,TS-E1 - Storage loading and recovery
+REQ-E-004,TC-E-013,TS-E1 - Storage loading and recovery
+REQ-E-004,TC-E-014,TS-E1 - Storage loading and recovery
+REQ-E-003,TC-E-015,TS-E1 - Storage loading and recovery
+REQ-E-005,TC-E-016,TS-E2 - Storage failures warnings and navigation
+REQ-E-002,TC-E-017,TS-E2 - Storage failures warnings and navigation
+REQ-E-007,TC-E-018,TS-E2 - Storage failures warnings and navigation
+REQ-E-007,TC-E-019,TS-E2 - Storage failures warnings and navigation
+REQ-E-002,TC-E-020,TS-E2 - Storage failures warnings and navigation
+REQ-E-006,TC-E-020,TS-E2 - Storage failures warnings and navigation
+REQ-E-006,TC-E-021,TS-E2 - Storage failures warnings and navigation
+REQ-E-008,TC-E-022,TS-E2 - Storage failures warnings and navigation
+REQ-E-008,TC-E-023,TS-E2 - Storage failures warnings and navigation
+REQ-E-009,TC-E-024,TS-E2 - Storage failures warnings and navigation
+REQ-E-009,TC-E-025,TS-E2 - Storage failures warnings and navigation
+REQ-E-010,TC-E-026,TS-E2 - Storage failures warnings and navigation
+REQ-E-010,TC-E-027,TS-E2 - Storage failures warnings and navigation
+REQ-E-010,TC-E-028,TS-E2 - Storage failures warnings and navigation
+REQ-E-010,TC-E-029,TS-E2 - Storage failures warnings and navigation
+REQ-E-011,TC-E-030,TS-E2 - Storage failures warnings and navigation
+REQ-E-011,TC-E-031,TS-E2 - Storage failures warnings and navigation
+REQ-E-009,TC-E-032,TS-E2 - Storage failures warnings and navigation
+REQ-E-011,TC-E-032,TS-E2 - Storage failures warnings and navigation
+REQ-E-012,TC-E-033,TS-E3 - Dialog focus and toast accessibility
+REQ-E-012,TC-E-034,TS-E3 - Dialog focus and toast accessibility
+REQ-E-012,TC-E-035,TS-E3 - Dialog focus and toast accessibility
+REQ-E-013,TC-E-036,TS-E3 - Dialog focus and toast accessibility
+REQ-E-007,TC-E-037,TS-E3 - Dialog focus and toast accessibility
+REQ-E-013,TC-E-037,TS-E3 - Dialog focus and toast accessibility
+REQ-E-013,TC-E-038,TS-E3 - Dialog focus and toast accessibility

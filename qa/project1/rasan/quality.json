@@ -1,0 +1,17 @@
+{
+  "basis": "module structure only; not TestLink database audit",
+  "results": {
+    "author": "rasan",
+    "letter": "E",
+    "specifications": 1,
+    "requirements": 13,
+    "suites": 3,
+    "test_cases": 38,
+    "covered_requirements": 13,
+    "coverage_percent": 100
+  },
+  "pdfs_generated": false,
+  "testlink_imported": false,
+  "browser_execution": false,
+  "peer_review": false
+}
