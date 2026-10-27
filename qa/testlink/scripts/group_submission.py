@@ -191,7 +191,7 @@ def package(destination=None):
               'The lecturer server has not been accessed and no university submission has been made by this tooling.',
               'Upload the required TestLink case report and test basis through the course submission channel; include the matrix/supporting files where permitted.','']
     (PACK/'README.txt').write_text('\n'.join(lines))
-    manifest={str(p.relative_to(PACK)):p.stat().st_size for p in sorted(PACK.rglob('*')) if p.is_file()}
+    manifest={str(p.relative_to(PACK)):p.stat().st_size for p in sorted(PACK.rglob('*')) if p.is_file() and p.name!='manifest.json'}
     (PACK/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     destination=Path(destination) if destination else OUT/(LABEL+'.zip')
     with zipfile.ZipFile(destination,'w',zipfile.ZIP_DEFLATED) as z:
