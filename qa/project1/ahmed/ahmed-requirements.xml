@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirement-specification>
+<req_spec title="Search, filters, sorting and result feedback" doc_id="SRS-D-SEARCH-FILTER-SORT">
+<type>2</type><node_order>1</node_order>
+<total_req>14</total_req>
+<scope><![CDATA[<p>Member 4 / D only. README.md TF-REQ-019 and Behaviour notes; code-derived details in src/utils/tasks.js, src/components/TaskToolbar.jsx, TopBar.jsx, TaskList.jsx, and src/App.jsx. Fixture setup is not an assertion about CRUD, storage, status transitions, summary counts, or navigation.</p>]]></scope>
+<requirement>
+<docid><![CDATA[REQ-D-001]]></docid><title><![CDATA[Trimmed case-insensitive title substring]]></title>
+<version>1</version><revision>1</revision><node_order>1</node_order>
+<description><![CDATA[<p>A nonblank trimmed query shall match a case-insensitive substring of title. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/utils/tasks.js filterAndSortTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-002]]></docid><title><![CDATA[Description substring and title-or-description]]></title>
+<version>1</version><revision>1</revision><node_order>2</node_order>
+<description><![CDATA[<p>A nonblank query shall match a case-insensitive substring in description or title; either field is sufficient. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/utils/tasks.js filterAndSortTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-003]]></docid><title><![CDATA[Blank query and literal punctuation]]></title>
+<version>1</version><revision>1</revision><node_order>3</node_order>
+<description><![CDATA[<p>A query that becomes empty after trim shall not restrict results. Punctuation is literal substring data; no query length limit is specified. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/utils/tasks.js filterAndSortTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-004]]></docid><title><![CDATA[Synchronized search boxes]]></title>
+<version>1</version><revision>1</revision><node_order>4</node_order>
+<description><![CDATA[<p>TopBar and TaskToolbar inputs shall share the same controlled query; typing in either changes the other input and visible results. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/App.jsx search state; src/components/TopBar.jsx; src/components/TaskToolbar.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-005]]></docid><title><![CDATA[Status filter partitions]]></title>
+<version>1</version><revision>1</revision><node_order>5</node_order>
+<description><![CDATA[<p>All Statuses includes all tasks; To Do, In Progress, and Completed include tasks of only the selected status. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/components/TaskToolbar.jsx; src/utils/tasks.js filterAndSortTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-006]]></docid><title><![CDATA[Priority filter partitions]]></title>
+<version>1</version><revision>1</revision><node_order>6</node_order>
+<description><![CDATA[<p>All Priorities includes all tasks; Low, Medium, and High include tasks of only the selected priority. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/components/TaskToolbar.jsx; src/utils/tasks.js filterAndSortTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-007]]></docid><title><![CDATA[Search/status/priority AND decision table]]></title>
+<version>1</version><revision>1</revision><node_order>7</node_order>
+<description><![CDATA[<p>Visible tasks satisfy status AND priority AND query; query condition is title OR description match. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); README.md TF-REQ-019 / Behaviour notes; src/utils/tasks.js filterAndSortTasks; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-008]]></docid><title><![CDATA[Four sorts and newest default]]></title>
+<version>1</version><revision>1</revision><node_order>8</node_order>
+<description><![CDATA[<p>Newest first is the default; choices are Newest first, Oldest first, Due date: soonest, and Due date: latest. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/utils/tasks.js SORT_OPTIONS/filterAndSortTasks; src/components/TaskToolbar.jsx; src/App.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-009]]></docid><title><![CDATA[Creation order and due-date tie order]]></title>
+<version>1</version><revision>1</revision><node_order>9</node_order>
+<description><![CDATA[<p>Newest orders createdAt descending; Oldest orders createdAt ascending. Tasks with equal due dates are ordered by newest createdAt first. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/utils/tasks.js filterAndSortTasks comparators/byDueDate; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-010]]></docid><title><![CDATA[Undated-last behavior]]></title>
+<version>1</version><revision>1</revision><node_order>10</node_order>
+<description><![CDATA[<p>Due-date sorts place every dated task before undated tasks; undated tasks are ordered newest createdAt first. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); README.md Behaviour notes; src/utils/tasks.js filterAndSortTasks byDueDate; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-011]]></docid><title><![CDATA[Singular and plural result counts]]></title>
+<version>1</version><revision>1</revision><node_order>11</node_order>
+<description><![CDATA[<p>When results exist, display Showing &lt;visible&gt; of &lt;total&gt; task for total 1 and Showing &lt;visible&gt; of &lt;total&gt; tasks otherwise; total counts all tasks before filters. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/components/TaskList.jsx result-count; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-012]]></docid><title><![CDATA[No-result message precedence and actions]]></title>
+<version>1</version><revision>1</revision><node_order>12</node_order>
+<description><![CDATA[<p>With zero total tasks show No tasks yet / Tasks you create will appear here. / Create your first task. Otherwise zero results with nonblank trimmed search show No tasks match &quot;&lt;query&gt;&quot; / Try a different search term. / Clear search. With blank search show No tasks match the current filters / Try changing or clearing your filters. / Clear filters. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); README.md Exact messages / Empty states; src/components/TaskList.jsx; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-013]]></docid><title><![CDATA[Clear search preserves filters and sort]]></title>
+<version>1</version><revision>1</revision><node_order>13</node_order>
+<description><![CDATA[<p>The search empty-state Clear search action clears only search and preserves status, priority, and sort. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/components/TaskList.jsx onClearSearch; src/App.jsx setSearch; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+<requirement>
+<docid><![CDATA[REQ-D-014]]></docid><title><![CDATA[Both Clear Filters actions reset all controls]]></title>
+<version>1</version><revision>1</revision><node_order>14</node_order>
+<description><![CDATA[<p>Toolbar Clear Filters and filter-empty-state Clear filters clear search, set status and priority to All, and restore newest sort. Source: README.md (TF-REQ-019 / Behaviour notes / Exact messages); src/App.jsx clearFilters; src/components/TaskToolbar.jsx; src/components/TaskList.jsx onClearFilters; baseline main@5133a6c.</p>]]></description>
+<status><![CDATA[V]]></status><type><![CDATA[3]]></type>
+<expected_coverage>1</expected_coverage>
+</requirement>
+</req_spec>
+</requirement-specification>

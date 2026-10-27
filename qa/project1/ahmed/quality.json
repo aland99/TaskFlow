@@ -1,0 +1,25 @@
+{
+  "author": "ahmed",
+  "letter": "D",
+  "specifications": 1,
+  "requirements": 14,
+  "suites": 4,
+  "test_cases": 40,
+  "covered_requirements": 14,
+  "coverage_percent": 100,
+  "database_cases": 40,
+  "database_steps": 57,
+  "database_requirement_links": 81,
+  "actual_db_mapping_matches_design": true,
+  "all_cases_authored_by": "ahmed",
+  "all_cases_in_plan": true,
+  "execution_results_total": 0,
+  "testcase_xml_well_formed": true,
+  "requirement_xml_well_formed": true,
+  "case_report_pdf_pages": 32,
+  "requirements_pdf_pages": 9,
+  "visual_page_samples_reviewed": [
+    "case:1,16,32",
+    "requirements:1,5,9"
+  ]
+}

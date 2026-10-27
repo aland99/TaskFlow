@@ -1,0 +1,1622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="32" name="D - AhmedAzad240358 - Search filters and sorting" >
+<node_order><![CDATA[0]]></node_order>
+<details><![CDATA[<p>Member 4 / D, baseline TaskFlow main@5133a6c. Test basis: README.md TF-REQ-019 and Behaviour notes. Code: src/utils/tasks.js filterAndSortTasks/SORT_OPTIONS; src/components/TaskToolbar.jsx, TopBar.jsx, TaskList.jsx; src/App.jsx clearFilters.</p><p>Fixture CORE installed afresh before each independent case in a disposable Chrome profile through DevTools Console/localStorage taskflow_tasks, then location.reload(): six records, IDs d1-d6. d1: Alpha Planning | Build the billing dashboard | High | To Do | due 2026-11-30 | created 2026-01-10T08:00:00Z. d2: Alpha Support | Reconcile monthly billing | High | In Progress | due 2026-11-20 | created 2026-01-10T10:00:00Z. d3: Beta Launch | Prepare user notes | Medium | To Do | due 2026-11-20 | created 2026-01-05T09:00:00Z. d4: Gamma Review | Alpha appears in notes | Low | Completed | no due date | created 2026-01-15T08:00:00Z. d5: Alpha-100% (urgent) | Review [QA]? | Low | In Progress | due 2027-02-01 | created 2026-01-15T12:00:00Z. d6: Undated Later | No deadline | Medium | Completed | no due date | created 2026-01-20T08:00:00Z. For each record updatedAt equals createdAt; dueDate without a date is empty string. The explicit one-record and zero-record exceptions are stated in their case preconditions.</p><p>Reset taskflow_tasks and taskflow_tasks_backup before each case; fixture creation is setup only. Open http://localhost:5173, use Dashboard, and do not use UI CRUD as an assertion. Sort labels are Newest first, Oldest first, Due date: soonest, Due date: latest. Cases are manual and initially Not Run.</p>]]></details>
+<testsuite id="33" name="TS-D1 - Search and result feedback" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[<p>EP and error guessing for query boundaries, title/description match, shared inputs, literal punctuation, counts and no-hit feedback.</p>]]></details>
+
+<testcase internalid="34" name="TC-D-001 Empty query shows all tasks">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-001 Empty query shows all tasks.</p><p><b>Test design technique:</b> EP - empty query partition</p><p><b>Requirements:</b> REQ-D-003, REQ-D-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Leave both search inputs empty.</p>]]></actions>
+	<expectedresults><![CDATA[<p>All six cards appear; text reads &quot;Showing 6 of 6 tasks&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Blank query and literal punctuation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Singular and plural result counts]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="37" name="TC-D-002 Whitespace-only query is blank after trimming">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-002 Whitespace-only query is blank after trimming.</p><p><b>Test design technique:</b> EP - whitespace query partition</p><p><b>Requirements:</b> REQ-D-001, REQ-D-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter three spaces in toolbar &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>TopBar &quot;Search tasks&quot; also contains three spaces; all six cards remain visible.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect result text.</p>]]></actions>
+	<expectedresults><![CDATA[<p>It reads &quot;Showing 6 of 6 tasks&quot;; no empty state appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Blank query and literal punctuation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="41" name="TC-D-003 Case-insensitive title substring">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-003 Case-insensitive title substring.</p><p><b>Test design technique:</b> EP - title substring partition</p><p><b>Requirements:</b> REQ-D-001</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;pLaNn&quot; in toolbar &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Planning&quot; is visible.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="44" name="TC-D-004 Description-only substring">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-004 Description-only substring.</p><p><b>Test design technique:</b> EP - description partition</p><p><b>Requirements:</b> REQ-D-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;dashboard&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Planning&quot; is visible because dashboard occurs in its description.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="47" name="TC-D-005 Title OR description returns each match once">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-005 Title OR description returns each match once.</p><p><b>Test design technique:</b> Decision Table - title OR description</p><p><b>Requirements:</b> REQ-D-001, REQ-D-002, REQ-D-007, REQ-D-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;billing&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Alpha Planning&quot; and &quot;Alpha Support&quot; appear once each.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect result text.</p>]]></actions>
+	<expectedresults><![CDATA[<p>It reads &quot;Showing 2 of 6 tasks&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Search/status/priority AND decision table]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Singular and plural result counts]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="51" name="TC-D-006 Case-insensitive description substring">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-006 Case-insensitive description substring.</p><p><b>Test design technique:</b> EP - case partition in description</p><p><b>Requirements:</b> REQ-D-002</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;RECONCILE MONTHLY&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Support&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="54" name="TC-D-007 Nonmatch displays exact search empty state">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-007 Nonmatch displays exact search empty state.</p><p><b>Test design technique:</b> EP - no-match partition</p><p><b>Requirements:</b> REQ-D-003, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;  Qzx-No-Task  &quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The title reads &quot;No tasks match \&quot;Qzx-No-Task\&quot;&quot;; text reads &quot;Try a different search term.&quot;; button reads &quot;Clear search&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Blank query and literal punctuation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="57" name="TC-D-008 Percent and parentheses are literal search characters">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-008 Percent and parentheses are literal search characters.</p><p><b>Test design technique:</b> Error Guessing - punctuation</p><p><b>Requirements:</b> REQ-D-002, REQ-D-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;100% (urgent)&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha-100% (urgent)&quot; appears; punctuation is matched literally.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Blank query and literal punctuation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="60" name="TC-D-009 Square bracket and question mark are literal">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-009 Square bracket and question mark are literal.</p><p><b>Test design technique:</b> Error Guessing - regex-like punctuation</p><p><b>Requirements:</b> REQ-D-002, REQ-D-003</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;[QA]?&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha-100% (urgent)&quot; appears from description &quot;Review [QA]?&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Blank query and literal punctuation]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="63" name="TC-D-010 TopBar search synchronizes toolbar value and results">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-010 TopBar search synchronizes toolbar value and results.</p><p><b>Test design technique:</b> State Transition - TopBar query</p><p><b>Requirements:</b> REQ-D-001, REQ-D-004</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;support&quot; in TopBar input aria-label &quot;Search tasks&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Toolbar &quot;Search&quot; reads &quot;support&quot;; only &quot;Alpha Support&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Synchronized search boxes]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="66" name="TC-D-011 Toolbar search synchronizes TopBar value and results">
+	<node_order><![CDATA[11]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-011 Toolbar search synchronizes TopBar value and results.</p><p><b>Test design technique:</b> State Transition - toolbar query</p><p><b>Requirements:</b> REQ-D-001, REQ-D-004</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;launch&quot; in toolbar &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>TopBar &quot;Search tasks&quot; reads &quot;launch&quot;; only &quot;Beta Launch&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Synchronized search boxes]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="69" name="TC-D-012 One visible among six uses plural total wording">
+	<node_order><![CDATA[12]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-012 One visible among six uses plural total wording.</p><p><b>Test design technique:</b> EP - one visible among many total</p><p><b>Requirements:</b> REQ-D-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;dashboard&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>One card appears; text reads &quot;Showing 1 of 6 tasks&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Singular and plural result counts]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="72" name="TC-D-013 Several visible tasks use plural total wording">
+	<node_order><![CDATA[13]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-013 Several visible tasks use plural total wording.</p><p><b>Test design technique:</b> EP - many visible partition</p><p><b>Requirements:</b> REQ-D-001, REQ-D-002, REQ-D-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;alpha&quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Alpha Planning&quot;, &quot;Alpha Support&quot;, &quot;Alpha-100% (urgent)&quot;, and &quot;Gamma Review&quot; appear; text reads &quot;Showing 4 of 6 tasks&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Singular and plural result counts]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="75" name="TC-D-014 Single-task total uses singular wording">
+	<node_order><![CDATA[14]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-014 Single-task total uses singular wording.</p><p><b>Test design technique:</b> EP - total count one</p><p><b>Requirements:</b> REQ-D-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Use only one valid task record: id d1, title &quot;Alpha Planning&quot;, description &quot;Build dashboard&quot;, priority High, status To Do, dueDate &quot;2026-11-30&quot;, createdAt and updatedAt &quot;2026-01-10T08:00:00.000Z&quot;. Store it as the sole array item in taskflow_tasks and reload.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Inspect the Dashboard list after reload.</p>]]></actions>
+	<expectedresults><![CDATA[<p>One card appears; text reads &quot;Showing 1 of 1 task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Singular and plural result counts]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="78" name="TS-D2 - Status, priority and AND decision tables" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>EP for status and priority partitions; decision tables cover every non-All status-by-priority cell and combined query/status/priority logic.</p>]]></details>
+
+<testcase internalid="79" name="TC-D-015 To Do status partition">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-015 To Do status partition.</p><p><b>Test design technique:</b> EP - status partition To Do</p><p><b>Requirements:</b> REQ-D-005, REQ-D-011</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;To Do&quot; from &quot;Status&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Planning&quot; and &quot;Beta Launch&quot; appear; text reads &quot;Showing 2 of 6 tasks&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-011]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Singular and plural result counts]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="82" name="TC-D-016 In Progress status partition">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-016 In Progress status partition.</p><p><b>Test design technique:</b> EP - status partition In Progress</p><p><b>Requirements:</b> REQ-D-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;In Progress&quot; from &quot;Status&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Support&quot; and &quot;Alpha-100% (urgent)&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="85" name="TC-D-017 Completed status partition">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-017 Completed status partition.</p><p><b>Test design technique:</b> EP - status partition Completed</p><p><b>Requirements:</b> REQ-D-005</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Completed&quot; from &quot;Status&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Gamma Review&quot; and &quot;Undated Later&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="88" name="TC-D-018 High priority partition">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-018 High priority partition.</p><p><b>Test design technique:</b> EP - priority partition High</p><p><b>Requirements:</b> REQ-D-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;High&quot; from &quot;Priority&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Planning&quot; and &quot;Alpha Support&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="91" name="TC-D-019 Medium priority partition">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-019 Medium priority partition.</p><p><b>Test design technique:</b> EP - priority partition Medium</p><p><b>Requirements:</b> REQ-D-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Medium&quot; from &quot;Priority&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Beta Launch&quot; and &quot;Undated Later&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="94" name="TC-D-020 Low priority partition">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-020 Low priority partition.</p><p><b>Test design technique:</b> EP - priority partition Low</p><p><b>Requirements:</b> REQ-D-006</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Low&quot; from &quot;Priority&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Gamma Review&quot; and &quot;Alpha-100% (urgent)&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="97" name="TC-D-021 Decision table: To Do AND each priority">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-021 Decision table: To Do AND each priority.</p><p><b>Test design technique:</b> Decision Table - To Do by priority</p><p><b>Requirements:</b> REQ-D-005, REQ-D-006, REQ-D-007, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Select Status &quot;To Do&quot; and Priority &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Planning&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Keep Status &quot;To Do&quot;; select Priority &quot;Medium&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Beta Launch&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Keep Status &quot;To Do&quot;; select Priority &quot;Low&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks match the current filters&quot; and button &quot;Clear filters&quot; appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Search/status/priority AND decision table]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="102" name="TC-D-022 Decision table: In Progress AND each priority">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-022 Decision table: In Progress AND each priority.</p><p><b>Test design technique:</b> Decision Table - In Progress by priority</p><p><b>Requirements:</b> REQ-D-005, REQ-D-006, REQ-D-007, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Select Status &quot;In Progress&quot; and Priority &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Support&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Keep Status &quot;In Progress&quot;; select Priority &quot;Medium&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks match the current filters&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Keep Status &quot;In Progress&quot;; select Priority &quot;Low&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha-100% (urgent)&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Search/status/priority AND decision table]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="107" name="TC-D-023 Decision table: Completed AND each priority">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-023 Decision table: Completed AND each priority.</p><p><b>Test design technique:</b> Decision Table - Completed by priority</p><p><b>Requirements:</b> REQ-D-005, REQ-D-006, REQ-D-007, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Select Status &quot;Completed&quot; and Priority &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks match the current filters&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Keep Status &quot;Completed&quot;; select Priority &quot;Medium&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Undated Later&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Keep Status &quot;Completed&quot;; select Priority &quot;Low&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Gamma Review&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Search/status/priority AND decision table]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="112" name="TC-D-024 Decision table: query AND status AND priority">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-024 Decision table: query AND status AND priority.</p><p><b>Test design technique:</b> Decision Table - query/status/priority AND</p><p><b>Requirements:</b> REQ-D-001, REQ-D-002, REQ-D-005, REQ-D-006, REQ-D-007, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;billing&quot;, choose Status &quot;In Progress&quot;, Priority &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Only &quot;Alpha Support&quot; appears; it meets all three conditions.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Keep query and status; select Priority &quot;Low&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks match the current filters&quot; appears; no task satisfies all three.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Keep query &quot;billing&quot;; set Status &quot;To Do&quot; and Priority &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;No tasks match the current filters&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Trimmed case-insensitive title substring]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Description substring and title-or-description]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Search/status/priority AND decision table]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="117" name="TS-D3 - Sort orders and due-date boundaries" >
+<node_order><![CDATA[3]]></node_order>
+<details><![CDATA[<p>EP for each sort and default; BVA for equal due dates, creation-time tie order and undated-last behavior in both date sorts.</p>]]></details>
+
+<testcase internalid="118" name="TC-D-025 Newest first is default and orders creation newest first">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-025 Newest first is default and orders creation newest first.</p><p><b>Test design technique:</b> EP - default sort</p><p><b>Requirements:</b> REQ-D-008, REQ-D-009</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Reload CORE without changing &quot;Sort by&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Newest first&quot; is selected; order: &quot;Undated Later&quot;, &quot;Alpha-100% (urgent)&quot;, &quot;Gamma Review&quot;, &quot;Alpha Support&quot;, &quot;Alpha Planning&quot;, &quot;Beta Launch&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Four sorts and newest default]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation order and due-date tie order]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="121" name="TC-D-026 Oldest first orders creation oldest first">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-026 Oldest first orders creation oldest first.</p><p><b>Test design technique:</b> EP - Oldest sort</p><p><b>Requirements:</b> REQ-D-008, REQ-D-009</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Oldest first&quot; from &quot;Sort by&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Order: &quot;Beta Launch&quot;, &quot;Alpha Planning&quot;, &quot;Alpha Support&quot;, &quot;Gamma Review&quot;, &quot;Alpha-100% (urgent)&quot;, &quot;Undated Later&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Four sorts and newest default]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation order and due-date tie order]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="124" name="TC-D-027 Due soonest orders dates and ties then undated last">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-027 Due soonest orders dates and ties then undated last.</p><p><b>Test design technique:</b> BVA - equal due dates and blank boundary</p><p><b>Requirements:</b> REQ-D-008, REQ-D-009, REQ-D-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Due date: soonest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Order: &quot;Alpha Support&quot;, &quot;Beta Launch&quot;, &quot;Alpha Planning&quot;, &quot;Alpha-100% (urgent)&quot;, &quot;Undated Later&quot;, &quot;Gamma Review&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect the 2026-11-20 tie and undated pair.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Newer &quot;Alpha Support&quot; precedes &quot;Beta Launch&quot;; undated tasks are last, newest &quot;Undated Later&quot; before &quot;Gamma Review&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Four sorts and newest default]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation order and due-date tie order]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Undated-last behavior]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="128" name="TC-D-028 Due latest reverses date order and keeps tie/blank rules">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-028 Due latest reverses date order and keeps tie/blank rules.</p><p><b>Test design technique:</b> BVA - latest date and blank boundary</p><p><b>Requirements:</b> REQ-D-008, REQ-D-009, REQ-D-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Due date: latest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Order: &quot;Alpha-100% (urgent)&quot;, &quot;Alpha Planning&quot;, &quot;Alpha Support&quot;, &quot;Beta Launch&quot;, &quot;Undated Later&quot;, &quot;Gamma Review&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Inspect tied and undated tasks.</p>]]></actions>
+	<expectedresults><![CDATA[<p>For 2026-11-20, newer &quot;Alpha Support&quot; precedes &quot;Beta Launch&quot;; undated tasks are last and newest first.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Four sorts and newest default]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-009]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Creation order and due-date tie order]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Undated-last behavior]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="132" name="TC-D-029 Soonest sort places both undated tasks last">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-029 Soonest sort places both undated tasks last.</p><p><b>Test design technique:</b> BVA - empty due-date partition</p><p><b>Requirements:</b> REQ-D-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Due date: soonest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The last two cards are &quot;Undated Later&quot;, then &quot;Gamma Review&quot;; all dated tasks precede them.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Undated-last behavior]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="135" name="TC-D-030 Latest sort places both undated tasks last">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-030 Latest sort places both undated tasks last.</p><p><b>Test design technique:</b> BVA - empty due-date partition</p><p><b>Requirements:</b> REQ-D-010</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Due date: latest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The last two cards are &quot;Undated Later&quot;, then &quot;Gamma Review&quot;; all dated tasks precede them.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-010]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Undated-last behavior]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite><testsuite id="138" name="TS-D4 - Empty states and clearing behavior" >
+<node_order><![CDATA[4]]></node_order>
+<details><![CDATA[<p>Decision-table empty-state precedence and state transitions for Clear search, toolbar Clear Filters and empty-state Clear filters.</p>]]></details>
+
+<testcase internalid="139" name="TC-D-031 Search empty state echoes trimmed query">
+	<node_order><![CDATA[1]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-031 Search empty state echoes trimmed query.</p><p><b>Test design technique:</b> EP - search empty-state partition</p><p><b>Requirements:</b> REQ-D-003, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;  Missing task  &quot; in &quot;Search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title reads &quot;No tasks match \&quot;Missing task\&quot;&quot;; text reads &quot;Try a different search term.&quot;; button reads &quot;Clear search&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Blank query and literal punctuation]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="142" name="TC-D-032 Blank query and no matching filters show filter empty state">
+	<node_order><![CDATA[2]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-032 Blank query and no matching filters show filter empty state.</p><p><b>Test design technique:</b> EP - filter empty-state partition</p><p><b>Requirements:</b> REQ-D-005, REQ-D-006, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Leave search blank; select Status &quot;To Do&quot; and Priority &quot;Low&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title reads &quot;No tasks match the current filters&quot;; text reads &quot;Try changing or clearing your filters.&quot;; button reads &quot;Clear filters&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-005]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Status filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-006]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Priority filter partitions]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="145" name="TC-D-033 Search no-hit takes precedence over filter no-hit">
+	<node_order><![CDATA[3]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-033 Search no-hit takes precedence over filter no-hit.</p><p><b>Test design technique:</b> Decision Table - search-empty precedence</p><p><b>Requirements:</b> REQ-D-007, REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;NoSuchTask&quot; and choose Status &quot;Completed&quot;, Priority &quot;High&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Title reads &quot;No tasks match \&quot;NoSuchTask\&quot;&quot;; button reads &quot;Clear search&quot;; filter empty-state title is absent.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-007]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Search/status/priority AND decision table]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="148" name="TC-D-034 Zero total tasks takes precedence over query and filters">
+	<node_order><![CDATA[4]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-034 Zero total tasks takes precedence over query and filters.</p><p><b>Test design technique:</b> Decision Table - zero total tasks</p><p><b>Requirements:</b> REQ-D-012</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Use an empty task array instead of CORE: set taskflow_tasks to [] and remove taskflow_tasks_backup before reload; verify there are zero task records.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;Missing&quot; in &quot;Search&quot; and select Status &quot;Completed&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>The list shows &quot;No tasks yet&quot;, &quot;Tasks you create will appear here.&quot;, and button &quot;Create your first task&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-012]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[No-result message precedence and actions]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="151" name="TC-D-035 Clear search preserves status priority and sort">
+	<node_order><![CDATA[5]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-035 Clear search preserves status priority and sort.</p><p><b>Test design technique:</b> State Transition - search-empty to cleared</p><p><b>Requirements:</b> REQ-D-013</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Set Status &quot;In Progress&quot;, Priority &quot;Low&quot;, Sort by &quot;Due date: latest&quot;; search &quot;NoSuchTask&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Search empty state shows button &quot;Clear search&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Clear search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both search inputs are empty; Status remains &quot;In Progress&quot;, Priority &quot;Low&quot;, Sort by &quot;Due date: latest&quot;; &quot;Alpha-100% (urgent)&quot; appears.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-013]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Clear search preserves filters and sort]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="155" name="TC-D-036 Empty-state Clear filters restores all defaults">
+	<node_order><![CDATA[6]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-036 Empty-state Clear filters restores all defaults.</p><p><b>Test design technique:</b> State Transition - filter-empty to defaults</p><p><b>Requirements:</b> REQ-D-014</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Leave search blank; set Status &quot;To Do&quot;, Priority &quot;Low&quot;, Sort by &quot;Due date: latest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Filter empty state shows button &quot;Clear filters&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Clear filters&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both search inputs empty; Status &quot;All Statuses&quot;, Priority &quot;All Priorities&quot;, Sort by &quot;Newest first&quot;; all six cards return newest first.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Both Clear Filters actions reset all controls]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="159" name="TC-D-037 Toolbar Clear Filters resets synchronized controls and sort">
+	<node_order><![CDATA[7]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-037 Toolbar Clear Filters resets synchronized controls and sort.</p><p><b>Test design technique:</b> State Transition - controls to defaults</p><p><b>Requirements:</b> REQ-D-004, REQ-D-014</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[1]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Search &quot;billing&quot; in TopBar; set Status &quot;In Progress&quot;, Priority &quot;High&quot;, Sort by &quot;Due date: latest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Toolbar Search also reads &quot;billing&quot;; controls show the chosen values.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click toolbar button &quot;Clear Filters&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both search inputs are empty; Status &quot;All Statuses&quot;, Priority &quot;All Priorities&quot;, Sort by &quot;Newest first&quot;; all six cards appear.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Synchronized search boxes]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Both Clear Filters actions reset all controls]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="163" name="TC-D-038 Toolbar Clear Filters resets sort alone">
+	<node_order><![CDATA[8]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-038 Toolbar Clear Filters resets sort alone.</p><p><b>Test design technique:</b> State Transition - chosen sort to default</p><p><b>Requirements:</b> REQ-D-008, REQ-D-014</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Choose &quot;Oldest first&quot;; click toolbar &quot;Clear Filters&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>&quot;Newest first&quot; is selected and cards return to newest-first order.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-008]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Four sorts and newest default]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Both Clear Filters actions reset all controls]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="166" name="TC-D-039 Toolbar Clear Filters clears a matching query">
+	<node_order><![CDATA[9]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-039 Toolbar Clear Filters clears a matching query.</p><p><b>Test design technique:</b> State Transition - matching query to defaults</p><p><b>Requirements:</b> REQ-D-004, REQ-D-014</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Search &quot;billing&quot;; click toolbar &quot;Clear Filters&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both search inputs become empty; all six cards appear; text reads &quot;Showing 6 of 6 tasks&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Synchronized search boxes]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Both Clear Filters actions reset all controls]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="169" name="TC-D-040 Search and filter clear actions act in sequence">
+	<node_order><![CDATA[10]]></node_order>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>TC-D-040 Search and filter clear actions act in sequence.</p><p><b>Test design technique:</b> State Transition - search-empty then filter-empty</p><p><b>Requirements:</b> REQ-D-004, REQ-D-014</p>]]></summary>
+	<preconditions><![CDATA[<p>Independent setup: clear both TaskFlow storage keys and reload the app. Install the full six-record CORE fixture defined in TOP_SUITE_DETAILS and confirm six fixture cards.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Enter &quot;NoSuchTask&quot;; set Status &quot;To Do&quot;, Priority &quot;Low&quot;, and Sort by &quot;Due date: latest&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Search empty state shows button &quot;Clear search&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Click &quot;Clear search&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both search inputs are empty; Status remains &quot;To Do&quot;, Priority remains &quot;Low&quot;, Sort by remains &quot;Due date: latest&quot;; filter empty state now shows &quot;Clear filters&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Click empty-state &quot;Clear filters&quot;.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Both search inputs remain empty; Status &quot;All Statuses&quot;, Priority &quot;All Priorities&quot;, Sort by &quot;Newest first&quot;.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Synchronized search boxes]]></title>
+		</requirement>
+		<requirement>
+			<req_spec_title><![CDATA[Search, filters, sorting and result feedback]]></req_spec_title>
+			<doc_id><![CDATA[REQ-D-014]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Both Clear Filters actions reset all controls]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite></testsuite>
